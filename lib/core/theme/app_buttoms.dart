@@ -19,8 +19,8 @@ class PrimaryButton extends StatelessWidget {
     this.width,
     this.height,
     this.isLoading = false,
-    this.backgroundColor = AppColors.white,
-    this.textColor = AppColors.buttonText,
+    this.backgroundColor = AppColors.paypalColor,
+    this.textColor = AppColors.white,
     this.borderRadius = 8.0,
   });
 

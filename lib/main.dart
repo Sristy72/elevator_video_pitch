@@ -6,6 +6,10 @@ import 'package:karlfive/core/theme/app_theme.dart';
 import 'features/auth/presentation/screens/splash_screen.dart';
 import 'package:karlfive/core/common/constants/stripe_key.dart';
 
+import 'features/company/presentation/screens/company_details_screen.dart';
+import 'features/company/presentation/screens/company_screen.dart';
+import 'features/company/presentation/screens/job_details_screem.dart';
+
 
 void main() async {
   await AppInitializer.initializeApp();
@@ -27,9 +31,9 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'KarlFive',
-      theme: AppTheme.dark,
+      // theme: AppTheme.dark,
       // home: SplashScreen(),
-      home: SplashScreen(),
+      home: JobDetailsPage(),
       
     );
   }
