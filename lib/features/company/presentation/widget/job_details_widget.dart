@@ -34,7 +34,7 @@ class JobTextField extends StatelessWidget {
             decoration: InputDecoration(
               hintText: hint,
               filled: true,
-              fillColor: Colors.white,
+              fillColor: Color(0xFFD9D9D9),
               contentPadding:
                   const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
               border: OutlineInputBorder(

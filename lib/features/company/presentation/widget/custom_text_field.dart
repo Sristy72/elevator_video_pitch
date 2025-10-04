@@ -7,6 +7,7 @@ class CustomTextField extends StatefulWidget {
   final TextInputType keyboardType;
   final int maxLines;
   final bool isRequired;
+  
 
   // Styling
   final double fontSize;

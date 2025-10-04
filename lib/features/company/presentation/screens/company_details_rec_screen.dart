@@ -8,12 +8,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../widget/flacon_button_widget.dart';
 
-class CompanyDetailsPage extends StatelessWidget {
+class CompanyDetailsRecViewPage extends StatelessWidget {
   final CompanyDetailsController controller = Get.put(
     CompanyDetailsController(),
   );
 
-  CompanyDetailsPage({super.key});
+  CompanyDetailsRecViewPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -146,7 +146,7 @@ class CompanyDetailsPage extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                               ),
-                              child: const Text("Post A Job"),
+                              child: const Text("Follow"),
                             ),
                           ),
                         ],
