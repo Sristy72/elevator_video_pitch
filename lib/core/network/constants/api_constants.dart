@@ -1,6 +1,6 @@
 class ApiConstants {
   /// [Base Configuration]
-  static const String baseDomain = 'https://karlfive223-backend.onrender.com';
+  static const String baseDomain = 'https://api.evpitch.com';
   static const String baseUrl = '$baseDomain/api/v1';
 
   /// soykot ip
@@ -27,14 +27,8 @@ class ApiConstants {
   static AuthEndpoints get auth => AuthEndpoints();
 
   static UserEndpoints get user => UserEndpoints();
-  static NotificationEndpoints get notification => NotificationEndpoints();
 
-  static TeamEndpointcs get team => TeamEndpointcs();
-  static LeagueEndpoints get league => LeagueEndpoints();
-
-  static ContactEndpoints get contact => ContactEndpoints();
-
-  static PaymentEndpoints get payment => PaymentEndpoints();
+  static CategoryEndpoints get category => CategoryEndpoints();
 }
 
 /// [Authentication Endpoints]
@@ -58,34 +52,7 @@ class UserEndpoints {
   // final String create = '$_base/create';
 }
 
-class NotificationEndpoints {
-  static const String _base = '${ApiConstants.baseUrl}/notification';
-
-  final String getnotifications = '$_base/getnotifications';
-}
-
-class TeamEndpointcs {
-  static const String _base = '${ApiConstants.baseUrl}/team';
-
-  final String create = '$_base/create';
-}
-
-class LeagueEndpoints {
-  static const String _base = '${ApiConstants.baseUrl}/league';
-
-  final String getAllLeagues = '$_base/all-league';
-}
-
-class ContactEndpoints {
-  static const String _base = '${ApiConstants.baseUrl}/contact';
-  final String createContact = '$_base/create';
-}
-
-// New payment endpoints
-class PaymentEndpoints {
-  static const String _base = '${ApiConstants.baseUrl}/payment';
-
-  final String createPayment = '$_base/create-payment';
-
-  final String confirmPayment = '$_base/confirm-payment';
+class CategoryEndpoints {
+  static const String _base = '${ApiConstants.baseUrl}/category';
+  final String jobCategory = '$_base/job-category';
 }

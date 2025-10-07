@@ -9,13 +9,13 @@ void setupServiceLocator() {
   setupCore();
 
   // Repositories
-  // setupRepository();
+  setupRepository();
 
   // Use Cases
   setupUsecases();
 
   // Controllers
-  // setupController();
+  setupController();
 
   // Services
   setupServices();

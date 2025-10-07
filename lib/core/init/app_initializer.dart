@@ -12,7 +12,7 @@ class AppInitializer {
 
     await HiveInitialization.initHive();
 
-    // setupServiceLocator();
+    setupServiceLocator();
 
     StripeInitializer.intiStripe();
   

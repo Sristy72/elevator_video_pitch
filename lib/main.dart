@@ -10,16 +10,16 @@ import 'features/company/presentation/screens/company_details_screen.dart';
 import 'features/company/presentation/screens/company_screen.dart';
 import 'features/company/presentation/screens/job_details_screem.dart';
 import 'features/company/presentation/screens/manage_job_req_screen.dart';
-
+import 'features/create job/presentation/screens/create_job_screen.dart';
 
 void main() async {
   await AppInitializer.initializeApp();
- 
-  Stripe.publishableKey = StripeKey
-      .publishableKey; 
-  Stripe.merchantIdentifier =
-      'merchant.com.yourapp';
-  await Stripe.instance.applySettings();
+
+  // Stripe.publishableKey = StripeKey
+  //     .publishableKey;
+  // Stripe.merchantIdentifier =
+  //     'merchant.com.yourapp';
+  // await Stripe.instance.applySettings();
 
   runApp(const MyApp());
 }
@@ -32,10 +32,9 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'KarlFive',
-      // theme: AppTheme.dark,
+      theme: AppTheme.light,
       // home: SplashScreen(),
-      home: ManageJobPostScreen(),
-      
+      home: CreateJobPostingScreen(),
     );
   }
 }

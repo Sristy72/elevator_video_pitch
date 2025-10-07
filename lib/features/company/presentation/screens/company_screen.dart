@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:karlfive/core/common/widgets/app_scaffold.dart';
+import 'package:karlfive/features/create%20job/presentation/controller/create_job_controller.dart';
+import 'package:karlfive/features/create%20job/presentation/screens/widget/searchable_widget.dart';
 
 import '../../../../core/theme/app_buttoms.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -14,6 +16,10 @@ import 'company_details_screen.dart';
 class CreateCompanyAccountPage extends StatelessWidget {
   final CompanyAccountController controller = Get.put(
     CompanyAccountController(),
+  );
+
+  final CreateJobPostingController jobController = Get.put(
+    CreateJobPostingController(Get.find()),
   );
 
   CreateCompanyAccountPage({super.key});
@@ -160,25 +166,46 @@ class CreateCompanyAccountPage extends StatelessWidget {
               const SizedBox(height: 8),
               Row(
                 children: [
+                  // Country dropdown
                   Expanded(
-                    child: CustomTextField(
-                      label: "Country",
-                      controller: controller.countryController, // ✅ bind
-                      hintText: "Enter Country",
-                      isRequired: true,
+                    child: Obx(
+                      () => SearchableDropdownField(
+                        label: "Country",
+                        hintText: "Select country",
+                        items: jobController.filteredCountries,
+                        value: jobController.selectedCountry.value,
+                        onChanged: (value) {
+                          jobController.selectedCountry.value = value;
+                          jobController.fetchCities(
+                            value,
+                          ); // load cities for this country
+                        },
+                        isRequired: true,
+                        enabled: !jobController.isLoadingCountries.value,
+                      ),
                     ),
                   ),
                   const SizedBox(width: 10),
+
+                  // City dropdown
                   Expanded(
-                    child: CustomTextField(
-                      label: "City",
-                      controller: controller.cityController, // ✅ bind
-                      hintText: "Enter City",
-                      isRequired: true,
+                    child: Obx(
+                      () => SearchableDropdownField(
+                        label: "City",
+                        hintText: "Select city",
+                        items: jobController.filteredCities,
+                        value: jobController.selectedCity.value,
+                        onChanged: (value) {
+                          jobController.selectedCity.value = value;
+                        },
+                        isRequired: true,
+                        enabled: jobController.citiesList.isNotEmpty,
+                      ),
                     ),
                   ),
                 ],
               ),
+
               const SizedBox(height: 8),
               Row(
                 children: [

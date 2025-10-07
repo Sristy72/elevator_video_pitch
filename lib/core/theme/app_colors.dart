@@ -30,6 +30,7 @@ class AppColors {
   static const Color textColor = Color(0xFF151515);
   static const Color notificationColor = Color(0xFFEDF9FF);
   static const Color paypalColor = Color(0xFF2B7FD0);
+  static const Color primaryBlue = Color(0xFF2B7FD0);
 
   ///close Marjana
   //! <--- Iftikhar --->
