@@ -7,7 +7,7 @@ class CustomTextField extends StatefulWidget {
   final TextInputType keyboardType;
   final int maxLines;
   final bool isRequired;
-  
+  final Widget? prefix;
 
   // Styling
   final double fontSize;
@@ -26,6 +26,7 @@ class CustomTextField extends StatefulWidget {
     this.keyboardType = TextInputType.text,
     this.maxLines = 1,
     this.isRequired = false,
+    this.prefix,
     this.fontSize = 12,
     this.labelColor = const Color(0xFF2A2A2A),
     this.hintColor = const Color(0xFF707070),
@@ -105,6 +106,12 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 horizontal: 12,
                 vertical: 12,
               ),
+              prefixIcon: widget.prefix != null
+                  ? Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: widget.prefix,
+                    )
+                  : null, //
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(widget.borderRadius),
               ),

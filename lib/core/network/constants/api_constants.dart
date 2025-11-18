@@ -1,6 +1,7 @@
 class ApiConstants {
   /// [Base Configuration]
-  static const String baseDomain = 'https://api.evpitch.com';
+  // static const String baseDomain = 'https://api.evpitch.com';
+  static const String baseDomain = 'http://10.10.5.53:5001'; // marjana
   static const String baseUrl = '$baseDomain/api/v1';
 
   /// soykot ip
@@ -29,6 +30,8 @@ class ApiConstants {
   static UserEndpoints get user => UserEndpoints();
 
   static CategoryEndpoints get category => CategoryEndpoints();
+
+  static CurrencyEndpoints get currency => CurrencyEndpoints();
 }
 
 /// [Authentication Endpoints]
@@ -55,4 +58,10 @@ class UserEndpoints {
 class CategoryEndpoints {
   static const String _base = '${ApiConstants.baseUrl}/category';
   final String jobCategory = '$_base/job-category';
+}
+
+class CurrencyEndpoints {
+  static const String _base = '${ApiConstants.baseUrl}/courency';
+  final String courency = '$_base';
+  // final String getCurrency = '${ApiConstants.baseUrl}/currency';
 }

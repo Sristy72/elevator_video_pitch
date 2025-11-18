@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:karlfive/features/create%20job/presentation/controller/category_controller.dart';
+import 'package:karlfive/features/create%20job/presentation/controller/currency_controller.dart';
+import 'package:karlfive/features/create%20job/presentation/screens/create_job_details_screen.dart';
 import 'package:karlfive/features/create%20job/presentation/screens/widget/job_category_widget.dart';
 import 'package:karlfive/features/create%20job/presentation/screens/widget/searchable_widget.dart';
 import '../../../company/presentation/widget/custom_text_field.dart';
 import '../../../company/presentation/widget/custom_dropdown_widget.dart';
 import '../controller/create_job_controller.dart';
 import 'widget/job_create_widget.dart';
+import 'widget/progress_indicator_widget.dart';
 
 class CreateJobPostingScreen extends StatelessWidget {
   final CreateJobPostingController controller = Get.put(
@@ -16,7 +19,10 @@ class CreateJobPostingScreen extends StatelessWidget {
   final CategoryController categoryController = Get.put(
     CategoryController(Get.find()),
   );
-  
+
+  final CurrencyController currencyController = Get.put(
+    CurrencyController(Get.find()),
+  );
 
   CreateJobPostingScreen({super.key});
 
@@ -45,7 +51,7 @@ class CreateJobPostingScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _progressIndicator(),
+              JobProgressBar(),
               const SizedBox(height: 20),
               const Text(
                 "Please update the candidate at every stage of their application journey with a simple click!",
@@ -174,16 +180,90 @@ class CreateJobPostingScreen extends StatelessWidget {
                 ],
               ),
 
-              const SizedBox(height: 20),
+              Row(
+                children: [
+                  Expanded(
+                    child: Obx(() {
+                      return SearchableDropdownField(
+                        label: "Currency",
+                        hintText: 'Select currency',
+                        items: currencyController.currencyList
+                            .map((c) => "${c.currencyName} (${c.code})")
+                            .toList(), // ✅ Now it's List<String>
+                        value: currencyController.selectedCurrency.value != null
+                            ? "${currencyController.selectedCurrency.value!.currencyName} (${currencyController.selectedCurrency.value!.code})"
+                            : null,
+                        onChanged: (value) {
+                          if (value != null) {
+                            // Find the CurrencyData that matches the string
+                            final selected = currencyController.currencyList
+                                .firstWhere(
+                                  (c) =>
+                                      "${c.currencyName} (${c.code})" == value,
+                                );
+                            currencyController.selectCurrency(selected);
+                            controller.compensationController.clear();
+                          }
+                        },
+                      );
+                    }),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Obx(() {
+                      final selected =
+                          currencyController.selectedCurrency.value;
 
-              /// Compensation
-              CustomTextField(
-                label: "Compensation (Optional)",
-                hintText: "Enter compensation details",
-                controller: controller.compensationController,
+                      // Get the symbol safely
+                      final symbol = selected?.symbol;
+
+                      return CustomTextField(
+                        label: "Compensation (Optional)",
+                        hintText: selected != null
+                            ? "Enter amount in ${selected.code}"
+                            : "Enter amount",
+                        controller: controller.compensationController,
+                        keyboardType: TextInputType.numberWithOptions(
+                          decimal: true,
+                        ),
+                        prefix: symbol != null
+                            ? Text(
+                                symbol, // ✅ Already checked it's not null
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                ),
+                              )
+                            : null,
+                      );
+                    }),
+                  ),
+                ],
               ),
 
               const SizedBox(height: 20),
+
+              /// Compensation
+              const SizedBox(height: 20),
+
+              CustomDropdownJobField(
+                label: "Job Posting Expiration (Days)",
+                hintText: 'Select experience level',
+                items: ["7 days", "14 days", "30 days", "60 days", "90 days"],
+                isRequired: true,
+                rxValue: controller.jobpostingExpirationDate,
+              ),
+
+              const SizedBox(height: 20),
+
+              CustomTextField(
+                label: "Company Website (Optional)",
+                hintText: "https://example.com",
+                controller: controller.companyWebsiteController,
+              ),
+
+              const SizedBox(height: 20),
+
               _bottomButtons(),
             ],
           ),
@@ -192,18 +272,7 @@ class CreateJobPostingScreen extends StatelessWidget {
     );
   }
 
-  Widget _progressIndicator() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        _stepItem("Job Details", true),
-        _stepItem("Job Description", false),
-        _stepItem("Application\nRequirements", false),
-        _stepItem("Custom\nQuestions", false),
-        _stepItem("Finish", false),
-      ],
-    );
-  }
+
 
   Widget _stepItem(String title, bool active) {
     return Column(
@@ -233,18 +302,34 @@ class CreateJobPostingScreen extends StatelessWidget {
       children: [
         TextButton(
           onPressed: () => Get.back(),
-          child: const Text("Cancel", style: TextStyle(color: Colors.grey)),
+          child: const Text(
+            "Cancel",
+            style: TextStyle(
+              color: Color(0xFF2B7FD0),
+              fontWeight: FontWeight.w600,
+            ),
+          ),
         ),
         const SizedBox(width: 8),
         ElevatedButton(
-          onPressed: () => Get.snackbar("Next", "Proceeding to next step..."),
+          onPressed: () {
+            controller.goToStep(1);
+            Get.to(() => JobDescriptionScreen(),transition: Transition.rightToLeft);
+          },
+          // Get.snackbar("Next", "Proceeding to next step..."),
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.blue,
+            backgroundColor: Color(0xFF2B7FD0),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
             ),
           ),
-          child: const Text("Next"),
+          child: const Text(
+            "Next",
+            style: TextStyle(
+              color: Color(0xFFFFFFFF),
+              fontWeight: FontWeight.w600,
+            ),
+          ),
         ),
       ],
     );

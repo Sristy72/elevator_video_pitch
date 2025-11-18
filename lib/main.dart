@@ -10,7 +10,9 @@ import 'features/company/presentation/screens/company_details_screen.dart';
 import 'features/company/presentation/screens/company_screen.dart';
 import 'features/company/presentation/screens/job_details_screem.dart';
 import 'features/company/presentation/screens/manage_job_req_screen.dart';
+import 'features/create job/presentation/screens/create_application_req.dart';
 import 'features/create job/presentation/screens/create_job_screen.dart';
+import 'features/create job/presentation/screens/create_question_screen.dart';
 
 void main() async {
   await AppInitializer.initializeApp();
@@ -34,7 +36,7 @@ class MyApp extends StatelessWidget {
       title: 'KarlFive',
       theme: AppTheme.light,
       // home: SplashScreen(),
-      home: CreateJobPostingScreen(),
+      home: CreateCompanyAccountPage(),
     );
   }
 }

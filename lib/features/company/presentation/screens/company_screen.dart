@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:karlfive/core/common/widgets/app_scaffold.dart';
+import 'package:karlfive/features/company/presentation/screens/company_details_rec_screen.dart';
 import 'package:karlfive/features/create%20job/presentation/controller/create_job_controller.dart';
 import 'package:karlfive/features/create%20job/presentation/screens/widget/searchable_widget.dart';
 
@@ -673,13 +674,14 @@ class CreateCompanyAccountPage extends StatelessWidget {
               PrimaryButton(
                 text: "Save",
                 onPressed: () {
-                  if (controller.formKey.currentState!.validate()) {
-                    controller.saveForm();
-                    Get.to(
-                      () => CompanyDetailsPage(),
-                      transition: Transition.rightToLeft,
-                    );
-                  }
+                  Get.to(() => CompanyDetailsRecViewPage());
+                  // if (controller.formKey.currentState!.validate()) {
+                  //   controller.saveForm();
+                  //   Get.to(
+                  //     () => CompanyDetailsPage(),
+                  //     transition: Transition.rightToLeft,
+                  //   );
+                  // }
                 },
                 width: double.infinity, // optional
                 height: 45, // optional

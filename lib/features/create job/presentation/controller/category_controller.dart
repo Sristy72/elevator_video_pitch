@@ -1,36 +1,4 @@
-// import 'package:get/get.dart';
-// import 'package:karlfive/features/create%20job/data/model/category_response_model.dart';
-// import 'package:karlfive/features/create%20job/domain/repo/category_repo.dart';
-// import '../../../../core/base/base_controller.dart';
-// import '../../../../core/network/network_result.dart';
 
-// class CategoryController extends BaseController {
-//   final CategoryRepository _categoryRepository;
-
-//   CategoryController(this._categoryRepository);
-
-//   /// Reactive variables
-//   final RxBool isLoading = false.obs;
-//   final Rxn<CategoryResponse> categoryResponse = Rxn<CategoryResponse>();
-
-//   /// Fetch job categories
-//   Future<void> fetchJobCategories() async {
-//     isLoading.value = true;
-
-//     final result = await _categoryRepository.jobCategory();
-
-//     result.fold(
-//       (failure) {
-//         isLoading.value = false;
-//         // showError(failure.message); // optional, if BaseController supports this
-//       },
-//       (success) {
-//         isLoading.value = false;
-//         categoryResponse.value = success.data;
-//       },
-//     );
-//   }
-// }
 
 import 'package:get/get.dart';
 import 'package:karlfive/features/create%20job/data/model/category_model.dart';

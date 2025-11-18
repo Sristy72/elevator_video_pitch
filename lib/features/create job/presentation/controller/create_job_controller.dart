@@ -14,6 +14,12 @@ class CreateJobPostingController extends GetxController {
   final compensationController = TextEditingController();
   final expirationDateController = TextEditingController();
   final departmentController = TextEditingController();
+  final companyWebsiteController = TextEditingController();
+  final askQuestionController = TextEditingController();
+
+  var questionControllers = <TextEditingController>[TextEditingController()].obs;
+
+
 
   // Reactive dropdown values
   var selectedCountry = ''.obs;
@@ -39,9 +45,25 @@ class CreateJobPostingController extends GetxController {
   var rolesList = <String>[].obs;
   var isLoadingCategories = false.obs;
   var isLoadingRoles = false.obs;
+  var jobpostingExpirationDate = ''.obs;
+  var companyWebsite = ''.obs;
 
   final RxString selectedJobCategory = ''.obs;
   final RxString selectedJobRole = ''.obs;
+
+  final currentStep = 0.obs; // 0 = Job Details, 1 = Job Description, etc.
+
+  void goToStep(int step) {
+    currentStep.value = step;
+  }
+
+  void nextStep() {
+    if (currentStep.value < 4) currentStep.value++;
+  }
+
+  void previousStep() {
+    if (currentStep.value > 0) currentStep.value--;
+  }
 
   // final ApiClient apiClient = ApiClient();
 
@@ -130,6 +152,21 @@ class CreateJobPostingController extends GetxController {
         )
         .toList();
   }
+
+
+
+  void addQuestion() {
+    questionControllers.add(TextEditingController());
+  }
+
+  /// Remove a question field by index
+  void removeQuestion(int index) {
+    if (questionControllers.length > 1) {
+      questionControllers.removeAt(index);
+    }
+  }
+
+ 
 
   
 }

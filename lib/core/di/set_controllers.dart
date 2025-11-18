@@ -4,6 +4,8 @@ import 'package:karlfive/features/create%20job/presentation/controller/category_
 
 import 'package:karlfive/features/auth/presentation/controller/auth_controller.dart';
 import 'package:karlfive/features/create%20job/presentation/controller/create_job_controller.dart';
+import 'package:karlfive/features/create%20job/presentation/controller/currency_controller.dart';
+
 
 
 
@@ -17,6 +19,11 @@ void setupController() {
 
    Get.lazyPut<CreateJobPostingController>(
     () => CreateJobPostingController(Get.find()),
+    fenix: true,
+  );
+
+  Get.lazyPut<CurrencyController>(
+    () => CurrencyController(Get.find()),
     fenix: true,
   );
  
