@@ -1,7 +1,7 @@
-
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 
 import '../../../../core/common/widgets/app_scaffold.dart';
 import '../controller/elevator_resume_controller.dart';
@@ -10,7 +10,6 @@ import '../widgets/experience_form_section.dart';
 import '../widgets/education_form_section.dart';
 import '../widgets/awards_form_section.dart';
 import '../widgets/skills_section.dart';
-
 
 class ElevatorResumeScreen extends StatelessWidget {
   const ElevatorResumeScreen({super.key});
@@ -23,18 +22,19 @@ class ElevatorResumeScreen extends StatelessWidget {
     return AppScaffold(
       appBar: AppBar(
         elevation: 0,
-        title: const Text('Create Your Profile', style: TextStyle(color: Colors.black),),
+        title: const Text(
+          'Create Your Profile',
+          style: TextStyle(color: Colors.black),
+        ),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding:
-          const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 24.0),
+          padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 24.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // ===================== TITLE + SUBTITLE =====================
-
               Center(
                 child: Text(
                   'Fill in your details to create a professional resume',
@@ -46,276 +46,279 @@ class ElevatorResumeScreen extends StatelessWidget {
               const SizedBox(height: 24),
 
               // ===================== VIDEO + BANNER =====================
-
-                 Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    // ---------- Upload Video Pitch (dark card) ----------
-                    Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF0E1726),
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: DottedBorder(
-                        color: const Color(0xFF2C3A4F),
-                        borderType: BorderType.RRect,
-                        radius: const Radius.circular(12),
-                        dashPattern: const [6, 4],
-                        strokeWidth: 1.2,
-                        child: InkWell(
-                          onTap: controller.pickElevatorVideo,
-                          child: Container(
-                            width: double.infinity,
-                            padding: const EdgeInsets.symmetric(vertical: 24),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                // blue circular icon
-                                Container(
-                                  width: 48,
-                                  height: 48,
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Color(0xFF2563EB),
-                                  ),
-                                  child: const Icon(
-                                    Icons.file_upload_outlined,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                const SizedBox(height: 16),
-                                const Text(
-                                  'Upload Your Video Pitch',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                const SizedBox(height: 4),
-                                Text(
-                                  'Drop your video here or click to browse',
-                                  style: TextStyle(
-                                    color: Colors.white.withOpacity(0.7),
-                                    fontSize: 12,
-                                  ),
-                                ),
-                                const SizedBox(height: 16),
-                                ElevatedButton(
-                                  onPressed: controller.pickElevatorVideo,
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: const Color(0xFF2563EB),
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 24,
-                                      vertical: 12,
-                                    ),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(999),
-                                    ),
-                                  ),
-                                  child: const Text('Choose Video File',style: TextStyle(fontWeight: FontWeight.w900,color: Colors.white),),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  // ---------- Upload Video Pitch (dark card) ----------
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF0E1726),
+                      borderRadius: BorderRadius.circular(16),
                     ),
-
-                    const SizedBox(height: 16),
-
-                    // ---------- Banner upload (light dashed card) ----------
-                    DottedBorder(
-                      color: Colors.grey.shade400,
+                    child: DottedBorder(
+                      color: const Color(0xFF2C3A4F),
                       borderType: BorderType.RRect,
                       radius: const Radius.circular(12),
                       dashPattern: const [6, 4],
-                      strokeWidth: 1,
-                      child: Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 24,
-                          horizontal: 12,
-                        ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(
-                              Icons.cloud_upload_outlined,
-                              size: 32,
-                              color: Colors.grey.shade500,
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              'Drop your banner image here',
-                              style: theme.textTheme.bodyMedium?.copyWith(
-                                color: Colors.grey.shade800,
-                              ),
-                            ),
-                            const SizedBox(height: 12),
-                            OutlinedButton(
-                              onPressed: controller.pickBannerImage,
-                              style: OutlinedButton.styleFrom(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 24,
-                                  vertical: 10,
-                                ),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                              ),
-                              child: const Text('Choose Image',style: TextStyle(color: Colors.black),),
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              'Supports JPG, PNG · Max 10MB · Cropped to 1584×396 px',
-                              textAlign: TextAlign.center,
-                              style: theme.textTheme.bodySmall?.copyWith(
-                                color: Colors.grey.shade600,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-
-
-              const SizedBox(height: 16),
-
-              // ===================== PROFILE PHOTO + ABOUT ME =====================
-              _SectionCard(
-                child: const PhotoBioSection(),
-              ),
-
-              const SizedBox(height: 24),
-
-
-              // ===================== PERSONAL INFO =====================
-              Text(
-                'Personal Information',
-                style: theme.textTheme.titleLarge
-                    ?.copyWith(fontWeight: FontWeight.w900),
-              ),
-              const SizedBox(height: 12),
-
-
-              Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // First Name
-                    const _LabeledTextField(
-                      label: 'First Name*',
-                      hint: 'Enter your first name',
-                    ),
-                    const SizedBox(height: 12),
-
-                    // Surname
-                    const _LabeledTextField(
-                      label: 'Surname*',
-                      hint: 'Enter your surname',
-                    ),
-                    const SizedBox(height: 12),
-
-                    // Country
-                    const Text('Country*'),
-                    const SizedBox(height: 6),
-                    Obx(
-                          () => DropdownButtonFormField<String>(
-                        isExpanded: true,
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                        ),
-                        value: controller.selectedCountry.value,
-                        hint: const Text('Select Country'),
-                        items: controller.countries
-                            .map(
-                              (country) => DropdownMenuItem(
-                            value: country,
-                            child: Text(country),
-                          ),
-                        )
-                            .toList(),
-                        onChanged: (value) {
-                          controller.selectedCountry.value = value;
-                          controller.onCountryChanged(value);
-                        },
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-
-                    // City
-                    const Text('City*'),
-                    const SizedBox(height: 6),
-                    Obx(
-                          () => DropdownButtonFormField<String>(
-                        isExpanded: true,
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                        ),
-                        value: controller.selectedCity.value,
-                        hint: const Text('Select City'),
-                        items: controller.cities
-                            .map(
-                              (city) => DropdownMenuItem(
-                            value: city,
-                            child: Text(city),
-                          ),
-                        )
-                            .toList(),
-                        onChanged: (value) {
-                          controller.selectedCity.value = value;
-                        },
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-
-                    // Email (disabled style like screenshot)
-                    const _LabeledTextField(
-                      label: 'Email Address*',
-                      hint: 'Enter your email',
-                      keyboardType: TextInputType.emailAddress,
-                      enabled: true, // screenshot-e readonly, chai le false koro
-                    ),
-                    const SizedBox(height: 12),
-
-                    // Immediately Available checkbox
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Obx(
-                              () => Checkbox(
-                            value: controller.immediatelyAvailable.value,
-                            onChanged: (value) {
-                              controller.immediatelyAvailable.value =
-                                  value ?? false;
-                            },
-                          ),
-                        ),
-                        const SizedBox(width: 4),
-                        Expanded(
+                      strokeWidth: 1.2,
+                      child: InkWell(
+                        onTap: controller.pickElevatorVideo,
+                        child: Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.symmetric(vertical: 24),
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
                             children: [
-                              const Text('Immediately Available'),
-                              const SizedBox(height: 2),
+                              // blue circular icon
+                              Container(
+                                width: 48,
+                                height: 48,
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: Color(0xFF2563EB),
+                                ),
+                                child: const Icon(
+                                  Icons.file_upload_outlined,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              const SizedBox(height: 16),
+                              const Text(
+                                'Upload Your Video Pitch',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              const SizedBox(height: 4),
                               Text(
-                                'Check if you are available to start immediately',
-                                style: theme.textTheme.bodySmall?.copyWith(
-                                  color: Colors.grey[600],
+                                'Drop your video here or click to browse',
+                                style: TextStyle(
+                                  color: Colors.white.withOpacity(0.7),
+                                  fontSize: 12,
+                                ),
+                              ),
+                              const SizedBox(height: 16),
+                              ElevatedButton(
+                                onPressed: controller.pickElevatorVideo,
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color(0xFF2563EB),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 24,
+                                    vertical: 12,
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(999),
+                                  ),
+                                ),
+                                child: const Text(
+                                  'Choose Video File',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w900,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
                             ],
                           ),
                         ),
-                      ],
+                      ),
                     ),
-                  ],
-                ),
+                  ),
 
+                  const SizedBox(height: 16),
+
+                  // ---------- Banner upload (light dashed card) ----------
+                  DottedBorder(
+                    color: Colors.grey.shade400,
+                    borderType: BorderType.RRect,
+                    radius: const Radius.circular(12),
+                    dashPattern: const [6, 4],
+                    strokeWidth: 1,
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 24,
+                        horizontal: 12,
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.cloud_upload_outlined,
+                            size: 32,
+                            color: Colors.grey.shade500,
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            'Drop your banner image here',
+                            style: theme.textTheme.bodyMedium?.copyWith(
+                              color: Colors.grey.shade800,
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                          OutlinedButton(
+                            onPressed: controller.pickBannerImage,
+                            style: OutlinedButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 24,
+                                vertical: 10,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                            child: const Text(
+                              'Choose Image',
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            'Supports JPG, PNG · Max 10MB · Cropped to 1584×396 px',
+                            textAlign: TextAlign.center,
+                            style: theme.textTheme.bodySmall?.copyWith(
+                              color: Colors.grey.shade600,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 16),
+
+              // ===================== PROFILE PHOTO + ABOUT ME =====================
+              _SectionCard(child: const PhotoBioSection()),
+
+              const SizedBox(height: 24),
+
+              // ===================== PERSONAL INFO =====================
+              Text(
+                'Personal Information',
+                style: theme.textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+              const SizedBox(height: 12),
+
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // First Name
+                  const _LabeledTextField(
+                    label: 'First Name*',
+                    hint: 'Enter your first name',
+                  ),
+                  const SizedBox(height: 12),
+
+                  // Surname
+                  const _LabeledTextField(
+                    label: 'Surname*',
+                    hint: 'Enter your surname',
+                  ),
+                  const SizedBox(height: 12),
+
+                  // Country
+                  const Text('Country*'),
+                  const SizedBox(height: 6),
+                  Obx(
+                    () => DropdownButtonFormField<String>(
+                      isExpanded: true,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                      ),
+                      value: controller.selectedCountry.value,
+                      hint: const Text('Select Country'),
+                      items: controller.countries
+                          .map(
+                            (country) => DropdownMenuItem(
+                              value: country,
+                              child: Text(country),
+                            ),
+                          )
+                          .toList(),
+                      onChanged: (value) {
+                        controller.selectedCountry.value = value;
+                        controller.onCountryChanged(value);
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+
+                  // City
+                  const Text('City*'),
+                  const SizedBox(height: 6),
+                  Obx(
+                    () => DropdownButtonFormField<String>(
+                      isExpanded: true,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                      ),
+                      value: controller.selectedCity.value,
+                      hint: const Text('Select City'),
+                      items: controller.cities
+                          .map(
+                            (city) => DropdownMenuItem(
+                              value: city,
+                              child: Text(city),
+                            ),
+                          )
+                          .toList(),
+                      onChanged: (value) {
+                        controller.selectedCity.value = value;
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+
+                  // Email (disabled style like screenshot)
+                  const _LabeledTextField(
+                    label: 'Email Address*',
+                    hint: 'Enter your email',
+                    keyboardType: TextInputType.emailAddress,
+                    enabled: true, // screenshot-e readonly, chai le false koro
+                  ),
+                  const SizedBox(height: 12),
+
+                  // Immediately Available checkbox
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Obx(
+                        () => Checkbox(
+                          value: controller.immediatelyAvailable.value,
+                          onChanged: (value) {
+                            controller.immediatelyAvailable.value =
+                                value ?? false;
+                          },
+                        ),
+                      ),
+                      const SizedBox(width: 4),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text('Immediately Available'),
+                            const SizedBox(height: 2),
+                            Text(
+                              'Check if you are available to start immediately',
+                              style: theme.textTheme.bodySmall?.copyWith(
+                                color: Colors.grey[600],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
 
               const SizedBox(height: 20),
 
@@ -372,22 +375,22 @@ class ElevatorResumeScreen extends StatelessWidget {
               // ===================== SKILLS =====================
               Text(
                 'Skills',
-                style: theme.textTheme.titleMedium
-                    ?.copyWith(fontWeight: FontWeight.w600),
+                style: theme.textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
               ),
               const SizedBox(height: 4),
               Text(
                 'Showcase your strengths and what sets you apart.',
-                style: theme.textTheme.bodyMedium
-                    ?.copyWith(color: Colors.grey[700]),
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: Colors.grey[700],
+                ),
               ),
               const SizedBox(height: 12),
               _SectionCard(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
-                    SkillsSection(),
-                  ],
+                  children: const [SkillsSection()],
                 ),
               ),
 
@@ -396,80 +399,75 @@ class ElevatorResumeScreen extends StatelessWidget {
               // ===================== WORK EXPERIENCE =====================
               Text(
                 'Work Experience',
-                style: theme.textTheme.titleMedium
-                    ?.copyWith(fontWeight: FontWeight.w600),
+                style: theme.textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
               ),
               const SizedBox(height: 8),
 
-              Obx(
-                    () {
+              Obx(() {
+                if (controller.experienceList.isEmpty) {
+                  return Align(
+                    alignment: Alignment.centerLeft,
+                    child: TextButton(
+                      onPressed: controller.addExperience,
+                      child: const Text('Add'),
+                    ),
+                  );
+                }
 
-                  if (controller.experienceList.isEmpty) {
-                    return Align(
+                return Column(
+                  children: [
+                    ...List.generate(
+                      controller.experienceList.length,
+                      (index) => Padding(
+                        padding: const EdgeInsets.only(bottom: 12.0),
+                        child: _SectionCard(
+                          child: ExperienceFormSection(index: index),
+                        ),
+                      ),
+                    ),
+                    Align(
                       alignment: Alignment.centerLeft,
                       child: TextButton(
                         onPressed: controller.addExperience,
                         child: const Text('Add'),
                       ),
-                    );
-                  }
-
-
-                  return Column(
-                    children: [
-                      ...List.generate(
-                        controller.experienceList.length,
-                            (index) => Padding(
-                          padding: const EdgeInsets.only(bottom: 12.0),
-                          child: _SectionCard(
-                            child: ExperienceFormSection(index: index),
-                          ),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: TextButton(
-                          onPressed: controller.addExperience,
-                          child: const Text('Add'),
-                        ),
-                      ),
-                    ],
-                  );
-                },
-              ),
-
+                    ),
+                  ],
+                );
+              }),
 
               const SizedBox(height: 24),
 
               // ===================== EDUCATION =====================
               Text(
                 'Education*',
-                style: theme.textTheme.titleMedium
-                    ?.copyWith(fontWeight: FontWeight.w600),
-              ),
-              const SizedBox(height: 8),
-              _SectionCard(
-                child: Obx(
-                      () => Column(
-                    children: [
-                      ...List.generate(
-                        controller.educationList.length,
-                            (index) => Padding(
-                          padding: const EdgeInsets.only(bottom: 16.0),
-                          child: EducationFormSection(index: index),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: TextButton(
-                          onPressed: controller.addEducation,
-                          child: const Text('Add'),
-                        ),
-                      ),
-                    ],
-                  ),
+                style: theme.textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.w600,
                 ),
               ),
+              const SizedBox(height: 8),
+              Obx(() {
+                return Column(
+                  children: [
+                    ...List.generate(
+                      controller.educationList.length,
+                      (index) => Padding(
+                        padding: const EdgeInsets.only(bottom: 12.0),
+                        child: EducationFormSection(index: index),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: TextButton(
+                        onPressed: controller.addEducation,
+                        child: const Text('Add'),
+                      ),
+                    ),
+                  ],
+                );
+              }),
 
               const SizedBox(height: 24),
 
@@ -477,49 +475,73 @@ class ElevatorResumeScreen extends StatelessWidget {
               _SectionCard(
                 title: 'Certifications',
                 subtitle:
-                'List your professional certifications and credentials.',
-                child: Obx(
-                      () => Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          const Expanded(
-                            child: _LabeledTextField(
-                              label: 'Add Certification',
-                              hint: 'e.g. AWS Certified Solutions Architect',
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          ElevatedButton(
-                            onPressed: controller.addCertification,
-                            child: const Text('Add'),
-                          ),
-                        ],
+                    'List your professional certifications and credentials.',
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Add Certification',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
                       ),
-                      const SizedBox(height: 8),
-                      if (controller.certifications.isEmpty)
-                        Text(
-                          'No certifications added yet. Add your professional certifications above.',
-                          style: theme.textTheme.bodySmall?.copyWith(
-                            color: Colors.grey[600],
-                          ),
-                        )
-                      else
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: controller.certifications
-                              .map(
-                                (cert) => Padding(
-                              padding:
-                              const EdgeInsets.symmetric(vertical: 4.0),
-                              child: Text('• $cert'),
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        const Expanded(
+                          child: TextField(
+                            decoration: InputDecoration(                           
+                              hintText:
+                                  'e.g. AWS Certified Solutions Architect',
+                              border: OutlineInputBorder(),
+                              contentPadding: EdgeInsets.symmetric(
+                                horizontal: 12,
+                                vertical: 12,
+                              ),
                             ),
-                          )
-                              .toList(),
+                          ),
                         ),
-                    ],
-                  ),
+                        const SizedBox(width: 8),
+                        OutlinedButton(
+                          onPressed: controller.addCertification,
+                          style: OutlinedButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 24,
+                              vertical: 14,                          
+                            ),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                          ),
+                          child: const Text('Add',style: TextStyle(color: Colors.black87),),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    Obx(
+                      () => controller.certifications.isEmpty
+                          ? Text(
+                              'No certifications added yet. Add your professional certifications above.',
+                              style: theme.textTheme.bodySmall?.copyWith(
+                                color: Colors.grey[600],
+                              ),
+                            )
+                          : Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: controller.certifications
+                                  .map(
+                                    (cert) => Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        vertical: 4.0,
+                                      ),
+                                      child: Text('• $cert'),
+                                    ),
+                                  )
+                                  .toList(),
+                            ),
+                    ),
+                  ],
                 ),
               ),
 
@@ -532,32 +554,48 @@ class ElevatorResumeScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const _LabeledTextField(
-                      label: 'Add Language',
-                      hint: 'Search and add languages (e.g., English)',
+                    const Text(
+                      'Add Language',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                     const SizedBox(height: 8),
-                    Obx(
-                          () => controller.languages.isEmpty
-                          ? Text(
-                        'No languages selected. Start typing to search and add languages.',
-                        style: theme.textTheme.bodySmall?.copyWith(
-                          color: Colors.grey[600],
+                    const TextField(
+                      decoration: InputDecoration(
+                        hintText:
+                            'Search and add languages (e.g., English, Spanish, French...)',
+                        prefixIcon: Icon(Icons.search),
+                        border: OutlineInputBorder(),
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 12,
                         ),
-                      )
-                          : Wrap(
-                        spacing: 8,
-                        runSpacing: 4,
-                        children: controller.languages
-                            .map(
-                              (lang) => Chip(
-                            label: Text(lang),
-                            onDeleted: () =>
-                                controller.removeLanguage(lang),
-                          ),
-                        )
-                            .toList(),
                       ),
+                    ),
+                    const SizedBox(height: 12),
+                    Obx(
+                      () => controller.languages.isEmpty
+                          ? Text(
+                              'No languages selected. Start typing to search and add languages.',
+                              style: theme.textTheme.bodySmall?.copyWith(
+                                color: Colors.grey[600],
+                              ),
+                            )
+                          : Wrap(
+                              spacing: 8,
+                              runSpacing: 4,
+                              children: controller.languages
+                                  .map(
+                                    (lang) => Chip(
+                                      label: Text(lang),
+                                      onDeleted: () =>
+                                          controller.removeLanguage(lang),
+                                    ),
+                                  )
+                                  .toList(),
+                            ),
                     ),
                   ],
                 ),
@@ -570,20 +608,33 @@ class ElevatorResumeScreen extends StatelessWidget {
                 title: 'Awards & Honors',
                 subtitle: 'Highlight your achievements and recognitions.',
                 child: Obx(
-                      () => Column(
+                  () => Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ...List.generate(
-                        controller.awardsList.length,
-                            (index) => Padding(
-                          padding: const EdgeInsets.only(bottom: 16.0),
-                          child: AwardsFormSection(index: index),
+                      if (controller.awardsList.isEmpty)
+                        TextButton(
+                          onPressed: controller.addAward,
+                          style: TextButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 12,
+                            ),
+                          ),
+                          child: const Text('Add'),
+                        )
+                      else ...[
+                        ...List.generate(
+                          controller.awardsList.length,
+                          (index) => Padding(
+                            padding: const EdgeInsets.only(bottom: 16.0),
+                            child: AwardsFormSection(index: index),
+                          ),
                         ),
-                      ),
-                      TextButton(
-                        onPressed: controller.addAward,
-                        child: const Text('Add'),
-                      ),
+                        TextButton(
+                          onPressed: controller.addAward,
+                          child: const Text('Add'),
+                        ),
+                      ],
                     ],
                   ),
                 ),
@@ -598,16 +649,21 @@ class ElevatorResumeScreen extends StatelessWidget {
                   onPressed: controller.onUploadElevatorPitchFirst,
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size(double.infinity, 52),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    elevation: 0,
+                    backgroundColor:  Colors.blueAccent,
                   ),
-                  child: const Text('Upload Elevator Pitch First'),
+                  child: const Text('Upload Elevator Pitch First', 
+                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
                 ),
               ),
               const SizedBox(height: 8),
               Text(
                 'Please upload your Elevator Video Pitch© video before submitting the form.',
-                style: theme.textTheme.bodySmall?.copyWith(
-                  color: Colors.red,
-                ),
+                style: theme.textTheme.bodySmall?.copyWith(color: Colors.red),
               ),
               const SizedBox(height: 32),
             ],
@@ -624,11 +680,7 @@ class _SectionCard extends StatelessWidget {
   final String? subtitle;
   final Widget child;
 
-  const _SectionCard({
-    this.title,
-    this.subtitle,
-    required this.child,
-  });
+  const _SectionCard({this.title, this.subtitle, required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -649,15 +701,17 @@ class _SectionCard extends StatelessWidget {
           if (title != null) ...[
             Text(
               title!,
-              style: theme.textTheme.titleSmall
-                  ?.copyWith(fontWeight: FontWeight.w600),
+              style: theme.textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.w600,
+              ),
             ),
             if (subtitle != null) ...[
               const SizedBox(height: 4),
               Text(
                 subtitle!,
-                style: theme.textTheme.bodySmall
-                    ?.copyWith(color: Colors.grey[600]),
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: Colors.grey[600],
+                ),
               ),
             ],
             const SizedBox(height: 12),

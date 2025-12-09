@@ -38,10 +38,19 @@ class ElevatorResumeController extends GetxController {
   var experienceList = <Map<String, dynamic>>[].obs;
 
   var educationList = <Map<String, dynamic>>[
-    {'presentlyAttendHere': false},
+    {
+      'institutionName': '',
+      'qualification': null,
+      'fieldOfStudy': '',
+      'country': null,
+      'city': null,
+      'currentlyStudying': false,
+      'startDate': '',
+      'graduationDate': '',
+    },
   ].obs;
 
-  var awardsList = <Map<String, dynamic>>[{}].obs;
+  var awardsList = <Map<String, dynamic>>[].obs;
 
   /// Skills chips
   var skillsList = <String>[].obs;
@@ -110,7 +119,7 @@ class ElevatorResumeController extends GetxController {
 
   final List<String> years = List.generate(
     50,
-        (index) => (DateTime.now().year - index).toString(),
+    (index) => (DateTime.now().year - index).toString(),
   );
 
   final List<String> availabilities = [
@@ -142,6 +151,17 @@ class ElevatorResumeController extends GetxController {
     'Professional Certificate',
   ];
 
+  final List<String> qualifications = [
+    'High School Diploma',
+    'Associate Degree',
+    'Bachelor\'s Degree',
+    'Master\'s Degree',
+    'Doctorate (PhD)',
+    'Professional Certificate',
+    'Diploma',
+    'Other',
+  ];
+
   /// ================== LIFECYCLE ==================
   @override
   void onInit() {
@@ -156,8 +176,10 @@ class ElevatorResumeController extends GetxController {
     if (plain.isEmpty) {
       aboutMeWordCount.value = 0;
     } else {
-      aboutMeWordCount.value =
-          plain.split(RegExp(r'\s+')).where((w) => w.isNotEmpty).length;
+      aboutMeWordCount.value = plain
+          .split(RegExp(r'\s+'))
+          .where((w) => w.isNotEmpty)
+          .length;
     }
   }
 
@@ -224,14 +246,36 @@ class ElevatorResumeController extends GetxController {
     });
   }
 
-
-
   void addEducation() {
-    educationList.add({'presentlyAttendHere': false});
+    educationList.add({
+      'institutionName': '',
+      'qualification': null,
+      'fieldOfStudy': '',
+      'country': null,
+      'city': null,
+      'currentlyStudying': false,
+      'startDate': '',
+      'graduationDate': '',
+    });
+  }
+
+  void updateEducationField(int index, String field, dynamic value) {
+    educationList[index][field] = value;
+    educationList.refresh();
   }
 
   void addAward() {
-    awardsList.add({});
+    awardsList.add({
+      'awardTitle': '',
+      'programName': '',
+      'programDate': '',
+      'description': '',
+    });
+  }
+
+  void updateAwardField(int index, String field, dynamic value) {
+    awardsList[index][field] = value;
+    awardsList.refresh();
   }
 
   void removeExperience(int index) {
@@ -241,26 +285,28 @@ class ElevatorResumeController extends GetxController {
   }
 
   void removeEducation(int index) {
-    if (educationList.length > 1) {
-      educationList.removeAt(index);
-    }
+    educationList.removeAt(index);
   }
 
   void removeAward(int index) {
-    if (awardsList.length > 1) {
-      awardsList.removeAt(index);
-    }
+    awardsList.removeAt(index);
   }
 
   void togglePresentlyWorkHere(int index) {
     experienceList[index]['presentlyWorkHere'] =
-    !(experienceList[index]['presentlyWorkHere'] ?? false);
+        !(experienceList[index]['presentlyWorkHere'] ?? false);
     experienceList.refresh();
   }
 
   void togglePresentlyAttendHere(int index) {
     educationList[index]['presentlyAttendHere'] =
-    !(educationList[index]['presentlyAttendHere'] ?? false);
+        !(educationList[index]['presentlyAttendHere'] ?? false);
+    educationList.refresh();
+  }
+
+  void toggleCurrentlyStudying(int index) {
+    educationList[index]['currentlyStudying'] =
+        !(educationList[index]['currentlyStudying'] ?? false);
     educationList.refresh();
   }
 
