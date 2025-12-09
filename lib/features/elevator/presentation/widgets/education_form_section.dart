@@ -135,6 +135,7 @@ class EducationFormSection extends StatelessWidget {
             return DropdownButtonFormField<String>(
               isExpanded: true,
               value: selectedCountry,
+              menuMaxHeight: MediaQuery.of(context).size.height * 0.5,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
@@ -177,6 +178,7 @@ class EducationFormSection extends StatelessWidget {
             return DropdownButtonFormField<String>(
               isExpanded: true,
               value: selectedCity,
+              menuMaxHeight: MediaQuery.of(context).size.height * 0.5,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),

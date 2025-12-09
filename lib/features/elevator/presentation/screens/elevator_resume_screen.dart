@@ -1,7 +1,6 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 
 import '../../../../core/common/widgets/app_scaffold.dart';
 import '../controller/elevator_resume_controller.dart';
@@ -10,13 +9,20 @@ import '../widgets/experience_form_section.dart';
 import '../widgets/education_form_section.dart';
 import '../widgets/awards_form_section.dart';
 import '../widgets/skills_section.dart';
+import '../../domain/usecases/get_languages_usecase.dart';
 
 class ElevatorResumeScreen extends StatelessWidget {
   const ElevatorResumeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(ElevatorResumeController());
+    final controller = Get.put(
+      ElevatorResumeController(
+        getLanguagesUseCase: Get.isRegistered<GetLanguagesUseCase>()
+            ? Get.find<GetLanguagesUseCase>()
+            : null,
+      ),
+    );
     final theme = Theme.of(context);
 
     return AppScaffold(
@@ -228,26 +234,35 @@ class ElevatorResumeScreen extends StatelessWidget {
                   const Text('Country*'),
                   const SizedBox(height: 6),
                   Obx(
-                    () => DropdownButtonFormField<String>(
-                      isExpanded: true,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                      ),
-                      value: controller.selectedCountry.value,
-                      hint: const Text('Select Country'),
-                      items: controller.countries
-                          .map(
-                            (country) => DropdownMenuItem(
-                              value: country,
-                              child: Text(country),
+                    () => controller.isLoadingCountries.value
+                        ? const Center(
+                            child: Padding(
+                              padding: EdgeInsets.all(16.0),
+                              child: CircularProgressIndicator(),
                             ),
                           )
-                          .toList(),
-                      onChanged: (value) {
-                        controller.selectedCountry.value = value;
-                        controller.onCountryChanged(value);
-                      },
-                    ),
+                        : DropdownButtonFormField<String>(
+                            isExpanded: true,
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                            ),
+                            menuMaxHeight:
+                                MediaQuery.of(context).size.height * 0.5,
+                            value: controller.selectedCountry.value,
+                            hint: const Text('Select Country'),
+                            items: controller.countries
+                                .map(
+                                  (country) => DropdownMenuItem(
+                                    value: country,
+                                    child: Text(country),
+                                  ),
+                                )
+                                .toList(),
+                            onChanged: (value) {
+                              controller.selectedCountry.value = value;
+                              controller.onCountryChanged(value);
+                            },
+                          ),
                   ),
                   const SizedBox(height: 12),
 
@@ -260,6 +275,7 @@ class ElevatorResumeScreen extends StatelessWidget {
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                       ),
+                      menuMaxHeight: MediaQuery.of(context).size.height * 0.5,
                       value: controller.selectedCity.value,
                       hint: const Text('Select City'),
                       items: controller.cities
@@ -491,7 +507,7 @@ class ElevatorResumeScreen extends StatelessWidget {
                       children: [
                         const Expanded(
                           child: TextField(
-                            decoration: InputDecoration(                           
+                            decoration: InputDecoration(
                               hintText:
                                   'e.g. AWS Certified Solutions Architect',
                               border: OutlineInputBorder(),
@@ -508,13 +524,16 @@ class ElevatorResumeScreen extends StatelessWidget {
                           style: OutlinedButton.styleFrom(
                             padding: const EdgeInsets.symmetric(
                               horizontal: 24,
-                              vertical: 14,                          
+                              vertical: 14,
                             ),
                             shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
                           ),
-                          child: const Text('Add',style: TextStyle(color: Colors.black87),),
+                          child: const Text(
+                            'Add',
+                            style: TextStyle(color: Colors.black87),
+                          ),
                         ),
                       ],
                     ),
@@ -562,18 +581,109 @@ class ElevatorResumeScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    const TextField(
-                      decoration: InputDecoration(
-                        hintText:
-                            'Search and add languages (e.g., English, Spanish, French...)',
-                        prefixIcon: Icon(Icons.search),
-                        border: OutlineInputBorder(),
-                        contentPadding: EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 12,
-                        ),
-                      ),
-                    ),
+                    Obx(() {
+                      if (controller.isLoadingLanguages.value) {
+                        return const Center(
+                          child: Padding(
+                            padding: EdgeInsets.all(16.0),
+                            child: CircularProgressIndicator(),
+                          ),
+                        );
+                      }
+
+                      return Autocomplete<String>(
+                        optionsBuilder: (TextEditingValue textEditingValue) {
+                          print(
+                            '🔍 Autocomplete optionsBuilder called with: "${textEditingValue.text}"',
+                          );
+                          print(
+                            '🔍 Available languages: ${controller.availableLanguages.length}',
+                          );
+
+                          // Update the search query
+                          controller.languageSearchQuery.value =
+                              textEditingValue.text;
+
+                          // Return filtered results (or all if empty)
+                          final results = controller.filteredLanguages
+                              .map((lang) => lang.name)
+                              .toList();
+
+                          print('🔍 Returning ${results.length} options');
+                          return results;
+                        },
+                        onSelected: (String selection) {
+                          print('✅ Language selected: $selection');
+                          controller.addLanguage(selection);
+                        },
+                        fieldViewBuilder:
+                            (
+                              BuildContext context,
+                              TextEditingController textEditingController,
+                              FocusNode focusNode,
+                              VoidCallback onFieldSubmitted,
+                            ) {
+                              return TextField(
+                                controller: textEditingController,
+                                focusNode: focusNode,
+                                decoration: const InputDecoration(
+                                  hintText:
+                                      'Search and add languages (e.g., English, Spanish, French...)',
+                                  prefixIcon: Icon(Icons.search),
+                                  border: OutlineInputBorder(),
+                                  contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 12,
+                                    vertical: 12,
+                                  ),
+                                ),
+                                onSubmitted: (value) {
+                                  if (value.isNotEmpty) {
+                                    controller.addLanguage(value);
+                                    textEditingController.clear();
+                                  }
+                                },
+                              );
+                            },
+                        optionsViewBuilder:
+                            (
+                              BuildContext context,
+                              AutocompleteOnSelected<String> onSelected,
+                              Iterable<String> options,
+                            ) {
+                              return Align(
+                                alignment: Alignment.topLeft,
+                                child: Material(
+                                  elevation: 4.0,
+                                  child: ConstrainedBox(
+                                    constraints: const BoxConstraints(
+                                      maxHeight: 200,
+                                      maxWidth: 400,
+                                    ),
+                                    child: ListView.builder(
+                                      padding: EdgeInsets.zero,
+                                      shrinkWrap: true,
+                                      itemCount: options.length,
+                                      itemBuilder:
+                                          (BuildContext context, int index) {
+                                            final String option = options
+                                                .elementAt(index);
+                                            return InkWell(
+                                              onTap: () => onSelected(option),
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(
+                                                  16.0,
+                                                ),
+                                                child: Text(option),
+                                              ),
+                                            );
+                                          },
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                      );
+                    }),
                     const SizedBox(height: 12),
                     Obx(
                       () => controller.languages.isEmpty
@@ -653,10 +763,14 @@ class ElevatorResumeScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     elevation: 0,
-                    backgroundColor:  Colors.blueAccent,
+                    backgroundColor: Colors.blueAccent,
                   ),
-                  child: const Text('Upload Elevator Pitch First', 
-                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                  child: const Text(
+                    'Upload Elevator Pitch First',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),

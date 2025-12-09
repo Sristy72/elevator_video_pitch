@@ -17,6 +17,8 @@ import 'package:karlfive/features/plan_pricing/data/repositories/paypal_reposito
 import 'package:karlfive/features/plan_pricing/domain/repositories/paypal_repository.dart';
 import 'package:karlfive/features/recruiter_account/data/repo/repo_impl.dart';
 import 'package:karlfive/features/recruiter_account/domain/repo/repo.dart';
+import 'package:karlfive/features/elevator/data/repositories/language_repository_impl.dart';
+import 'package:karlfive/features/elevator/domain/repositories/language_repository.dart';
 
 void setupRepository() {
   Get.lazyPut<AuthRepository>(
@@ -54,5 +56,9 @@ void setupRepository() {
   
   Get.lazyPut<JobApplicationRepository>(() => JobApplicationRepositoryImpl(), fenix: true);
   Get.lazyPut<CompanyRepository>(() => CompanyRepoImplementation( apiClient: Get.find()), fenix: true);
- 
+  
+  Get.lazyPut<LanguageRepository>(
+    () => LanguageRepositoryImpl(apiClient: Get.find()),
+    fenix: true,
+  );
 }

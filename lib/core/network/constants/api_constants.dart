@@ -1,6 +1,6 @@
 class ApiConstants {
   /// [Base Configuration]
-  static const String baseDomain = 'http://10.10.5.59:8001';// soykot ip
+  static const String baseDomain = 'http://10.10.5.59:8001'; // soykot ip
   // static const String baseDomain = 'https://api.evpitch.com';
   static const String baseUrl = '$baseDomain/api/v1';
 
@@ -55,6 +55,8 @@ class ApiConstants {
   static CategoryEndpoints get category => CategoryEndpoints();
   static AlluserEndpoints get allusers => AlluserEndpoints();
   static CompanyAccountApi get company => CompanyAccountApi();
+  static LanguageEndpoints get language => LanguageEndpoints();
+  static CountryEndpoints get country => CountryEndpoints();
 }
 
 class JobEndpoints {
@@ -80,7 +82,8 @@ class RecruiterAccountApi {
       '$_base/recruiter-account/$userId';
   String updateRecruiter(String userId) => '$_base/recruiter-account/$userId';
   String getSingleJob(String jobId) => '${ApiConstants.baseUrl}/jobs/$jobId';
-  String updateSingleJob(String jobId) => '${ApiConstants.baseUrl}/jobs/update/$jobId';
+  String updateSingleJob(String jobId) =>
+      '${ApiConstants.baseUrl}/jobs/update/$jobId';
 }
 
 class ElevatorPitchVideo {
@@ -199,13 +202,21 @@ class AlluserEndpoints {
   static const String _base = '${ApiConstants.baseUrl}/all';
   final String alluser = '$_base/user';
 }
+
 class CompanyAccountApi {
   static const String _base = '${ApiConstants.baseUrl}/company';
   final String createcompany = '$_base';
-    String fetchCompanyInfo(String userId) =>
-      '$_base/user/$userId';
+  String fetchCompanyInfo(String userId) => '$_base/user/$userId';
 
-      String fetchUpdateInfo(String userId) =>
-      '$_base/$userId';
+  String fetchUpdateInfo(String userId) => '$_base/$userId';
+}
 
+class LanguageEndpoints {
+  static const String _base = '${ApiConstants.baseUrl}/language';
+  final String getLanguages = '$_base';
+}
+
+class CountryEndpoints {
+  static const String _base = '${ApiConstants.baseUrl}/countries';
+  final String getCountries = '$_base';
 }

@@ -1,10 +1,16 @@
+import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart' as quill;
+import 'package:http/http.dart' as http;
+import '../../data/models/language_model.dart';
+import '../../domain/usecases/get_languages_usecase.dart';
+import '../../../../core/network/constants/api_constants.dart';
 
 class ElevatorResumeController extends GetxController {
   final ImagePicker _picker = ImagePicker();
+  final GetLanguagesUseCase? _getLanguagesUseCase;
 
   /// ================== ABOUT ME (QUILL) ==================
   late final quill.QuillController aboutMeQuillController;
@@ -64,32 +70,22 @@ class ElevatorResumeController extends GetxController {
   /// Languages list
   var languages = <String>[].obs;
 
+  /// Languages from API
+  var availableLanguages = <LanguageModel>[].obs;
+  var isLoadingLanguages = false.obs;
+  var languageSearchQuery = ''.obs;
+
+  /// Countries and Cities from API
+  var countries = <String>[].obs;
+  var cities = <String>[].obs;
+  var isLoadingCountries = false.obs;
+  Map<String, List<String>> countryCityMap = {};
+
   /// ================== DUMMY DATA ==================
   final List<String> titles = ['Mr.', 'Mrs.', 'Ms.', 'Dr.'];
 
-  final List<String> countries = [
-    'United States',
-    'United Kingdom',
-    'Canada',
-    'Australia',
-    'Germany',
-    'France',
-    'India',
-    'China',
-    'Japan',
-  ];
-
-  final List<String> cities = [
-    'New York',
-    'London',
-    'Toronto',
-    'Sydney',
-    'Berlin',
-    'Paris',
-    'Mumbai',
-    'Beijing',
-    'Tokyo',
-  ];
+  ElevatorResumeController({GetLanguagesUseCase? getLanguagesUseCase})
+    : _getLanguagesUseCase = getLanguagesUseCase;
 
   final List<String> jobTitles = [
     'Software Engineer',
@@ -169,6 +165,12 @@ class ElevatorResumeController extends GetxController {
 
     aboutMeQuillController = quill.QuillController.basic();
     aboutMeQuillController.addListener(_updateWordCountFromQuill);
+
+    // Fetch languages from API
+    fetchLanguages();
+
+    // Fetch countries from API
+    fetchCountries();
   }
 
   void _updateWordCountFromQuill() {
@@ -229,7 +231,60 @@ class ElevatorResumeController extends GetxController {
   /// ================== DROPDOWN HELPERS ==================
   void onCountryChanged(String? value) {
     selectedCountry.value = value;
-    // future e jodi per-country city filter chai, ekhane handle korbe
+    selectedCity.value = null; // Reset city when country changes
+    if (value != null) {
+      cities.value = countryCityMap[value] ?? [];
+      print('🌍 Loaded ${cities.length} cities for $value');
+    } else {
+      cities.clear();
+    }
+  }
+
+  /// ================== API CALLS ==================
+  Future<void> fetchCountries() async {
+    try {
+      isLoadingCountries.value = true;
+      print('🌐 Fetching countries from API...');
+
+      final response = await http.get(
+        Uri.parse('${ApiConstants.baseUrl}/countries'),
+      );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        print('✅ Countries API response: ${response.statusCode}');
+
+        countryCityMap.clear();
+        for (var country in data['data']) {
+          if (country['cities'] != null &&
+              (country['cities'] as List).isNotEmpty) {
+            countryCityMap[country['country']] = List<String>.from(
+              country['cities'],
+            );
+          }
+        }
+
+        countries.value = countryCityMap.keys.toList();
+        print('✅ Loaded ${countries.length} countries from API');
+        isLoadingCountries.value = false;
+      } else {
+        print('❌ Failed to load countries: ${response.statusCode}');
+        isLoadingCountries.value = false;
+        Get.snackbar(
+          'Error',
+          'Failed to load countries',
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      }
+    } catch (e) {
+      print('❌ Exception fetching countries: $e');
+      isLoadingCountries.value = false;
+      Get.snackbar(
+        'Error',
+        'Failed to load countries: $e',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
   }
 
   /// ================== EXPERIENCE / EDUCATION / AWARDS ==================
@@ -359,6 +414,68 @@ class ElevatorResumeController extends GetxController {
   }
 
   /// ================== LANGUAGES ==================
+  Future<void> fetchLanguages() async {
+    if (_getLanguagesUseCase == null) {
+      print('❌ GetLanguagesUseCase is null - not registered in DI');
+      return;
+    }
+
+    print('🔄 Starting to fetch languages...');
+    isLoadingLanguages.value = true;
+
+    try {
+      final result = await _getLanguagesUseCase.call();
+
+      result.fold(
+        (failure) {
+          print('❌ Language API failed: ${failure.message}');
+          isLoadingLanguages.value = false;
+          Get.snackbar(
+            'Error',
+            'Failed to load languages: ${failure.message}',
+            snackPosition: SnackPosition.BOTTOM,
+          );
+        },
+        (success) {
+          print(
+            '✅ Language API success: ${success.data.data.length} languages loaded',
+          );
+          print(
+            '📋 First 5 languages: ${success.data.data.take(5).map((e) => e.name).join(", ")}',
+          );
+          isLoadingLanguages.value = false;
+          availableLanguages.value = success.data.data;
+        },
+      );
+    } catch (e) {
+      print('❌ Exception fetching languages: $e');
+      isLoadingLanguages.value = false;
+      Get.snackbar(
+        'Error',
+        'Failed to load languages: $e',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
+  }
+
+  List<LanguageModel> get filteredLanguages {
+    print(
+      '🔍 Filtering languages: query="${languageSearchQuery.value}", available=${availableLanguages.length}',
+    );
+    if (languageSearchQuery.value.isEmpty) {
+      return availableLanguages;
+    }
+    final filtered = availableLanguages.where((lang) {
+      return lang.name.toLowerCase().contains(
+        languageSearchQuery.value.toLowerCase(),
+      );
+    }).toList();
+    print(
+      '🔍 Filtered results: ${filtered.length} languages match "${languageSearchQuery.value}"',
+    );
+    return filtered;
+  }
+
   void addLanguage(String lang) {
     final l = lang.trim();
     if (l.isNotEmpty && !languages.contains(l)) {

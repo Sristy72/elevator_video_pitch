@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:karlfive/features/job_listing/domain/usecases/get_jobs_usecase.dart';
 import 'package:karlfive/features/job_listing/domain/usecases/get_user_profile_usecase.dart';
 import 'package:karlfive/features/job_listing/domain/usecases/submit_job_application_usecase.dart';
+import 'package:karlfive/features/elevator/domain/usecases/get_languages_usecase.dart';
 
 void setupUsecases() {
   Get.lazyPut<GetJobsUseCase>(() => GetJobsUseCase(Get.find()), fenix: true);
@@ -11,6 +12,10 @@ void setupUsecases() {
   );
   Get.lazyPut<SubmitJobApplicationUseCase>(
     () => SubmitJobApplicationUseCase(Get.find()),
+    fenix: true,
+  );
+  Get.lazyPut<GetLanguagesUseCase>(
+    () => GetLanguagesUseCase(Get.find()),
     fenix: true,
   );
 }

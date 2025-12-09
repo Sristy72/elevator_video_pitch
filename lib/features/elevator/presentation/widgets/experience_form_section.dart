@@ -17,9 +17,7 @@ class ExperienceFormSection extends StatelessWidget {
         InputDecoration(
           labelText: label,
           hintText: hint,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
             borderSide: BorderSide(color: Colors.grey.shade300),
@@ -28,8 +26,10 @@ class ExperienceFormSection extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(8)),
             borderSide: BorderSide(color: Color(0xFF2563EB)),
           ),
-          contentPadding:
-          const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 12,
+            vertical: 12,
+          ),
         );
 
     return Obx(() {
@@ -43,8 +43,7 @@ class ExperienceFormSection extends StatelessWidget {
         children: [
           // Job Title
           TextFormField(
-            decoration:
-            _inputDecoration('Job Title', 'e.g. Software Engineer'),
+            decoration: _inputDecoration('Job Title', 'e.g. Software Engineer'),
             onChanged: (v) => exp['jobTitle'] = v,
           ),
           const SizedBox(height: 12),
@@ -62,6 +61,7 @@ class ExperienceFormSection extends StatelessWidget {
           DropdownButtonFormField<String>(
             value: selectedCountry,
             isExpanded: true,
+            menuMaxHeight: MediaQuery.of(context).size.height * 0.5,
             decoration: InputDecoration(
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
@@ -74,17 +74,17 @@ class ExperienceFormSection extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(8)),
                 borderSide: BorderSide(color: Color(0xFF2563EB)),
               ),
-              contentPadding:
-              const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 12,
+                vertical: 12,
+              ),
             ),
             hint: const Text('Select Country'),
             items: controller.countries
                 .map(
-                  (country) => DropdownMenuItem(
-                value: country,
-                child: Text(country),
-              ),
-            )
+                  (country) =>
+                      DropdownMenuItem(value: country, child: Text(country)),
+                )
                 .toList(),
             onChanged: (value) {
               exp['country'] = value;
@@ -100,6 +100,7 @@ class ExperienceFormSection extends StatelessWidget {
           DropdownButtonFormField<String>(
             isExpanded: true,
             value: selectedCountry == null ? null : selectedCity,
+            menuMaxHeight: MediaQuery.of(context).size.height * 0.5,
             decoration: InputDecoration(
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
@@ -112,30 +113,26 @@ class ExperienceFormSection extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(8)),
                 borderSide: BorderSide(color: Color(0xFF2563EB)),
               ),
-              contentPadding:
-              const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 12,
+                vertical: 12,
+              ),
             ),
             hint: Text(
               selectedCountry == null ? 'Select country first' : 'Select City',
               style: theme.textTheme.bodyMedium?.copyWith(
-                color:
-                selectedCountry == null ? Colors.grey : Colors.grey[700],
+                color: selectedCountry == null ? Colors.grey : Colors.grey[700],
               ),
             ),
             items: controller.cities
-                .map(
-                  (city) => DropdownMenuItem(
-                value: city,
-                child: Text(city),
-              ),
-            )
+                .map((city) => DropdownMenuItem(value: city, child: Text(city)))
                 .toList(),
             onChanged: selectedCountry == null
                 ? null
                 : (value) {
-              exp['city'] = value;
-              controller.experienceList.refresh();
-            },
+                    exp['city'] = value;
+                    controller.experienceList.refresh();
+                  },
           ),
           const SizedBox(height: 8),
 
@@ -170,17 +167,13 @@ class ExperienceFormSection extends StatelessWidget {
           const SizedBox(height: 12),
 
           // Job Description
-          Text(
-            'Job Description',
-            style: theme.textTheme.bodyMedium,
-          ),
+          Text('Job Description', style: theme.textTheme.bodyMedium),
           const SizedBox(height: 6),
           TextFormField(
             maxLines: 4,
             minLines: 4,
             decoration: InputDecoration(
-              hintText:
-              'Describe your responsibilities and achievements',
+              hintText: 'Describe your responsibilities and achievements',
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
               ),
