@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,6 +12,7 @@ import '../widgets/education_form_section.dart';
 import '../widgets/awards_form_section.dart';
 import '../widgets/skills_section.dart';
 import '../../domain/usecases/get_languages_usecase.dart';
+import '../../domain/usecases/create_resume_usecase.dart';
 
 class ElevatorResumeScreen extends StatelessWidget {
   const ElevatorResumeScreen({super.key});
@@ -20,6 +23,9 @@ class ElevatorResumeScreen extends StatelessWidget {
       ElevatorResumeController(
         getLanguagesUseCase: Get.isRegistered<GetLanguagesUseCase>()
             ? Get.find<GetLanguagesUseCase>()
+            : null,
+        createResumeUseCase: Get.isRegistered<CreateResumeUseCase>()
+            ? Get.find<CreateResumeUseCase>()
             : null,
       ),
     );
@@ -138,61 +144,111 @@ class ElevatorResumeScreen extends StatelessWidget {
                   const SizedBox(height: 16),
 
                   // ---------- Banner upload (light dashed card) ----------
-                  DottedBorder(
-                    color: Colors.grey.shade400,
-                    borderType: BorderType.RRect,
-                    radius: const Radius.circular(12),
-                    dashPattern: const [6, 4],
-                    strokeWidth: 1,
-                    child: Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 24,
-                        horizontal: 12,
-                      ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            Icons.cloud_upload_outlined,
-                            size: 32,
-                            color: Colors.grey.shade500,
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            'Drop your banner image here',
-                            style: theme.textTheme.bodyMedium?.copyWith(
-                              color: Colors.grey.shade800,
-                            ),
-                          ),
-                          const SizedBox(height: 12),
-                          OutlinedButton(
-                            onPressed: controller.pickBannerImage,
-                            style: OutlinedButton.styleFrom(
+                  Obx(
+                    () => controller.bannerImagePath.value != null
+                        ? Stack(
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(12),
+                                child: Image.file(
+                                  File(controller.bannerImagePath.value!),
+                                  width: double.infinity,
+                                  height: 150,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              Positioned(
+                                top: 8,
+                                right: 8,
+                                child: Row(
+                                  children: [
+                                    CircleAvatar(
+                                      backgroundColor: Colors.white,
+                                      child: IconButton(
+                                        icon: const Icon(
+                                          Icons.edit,
+                                          color: Colors.black,
+                                          size: 20,
+                                        ),
+                                        onPressed: controller.pickBannerImage,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    CircleAvatar(
+                                      backgroundColor: Colors.white,
+                                      child: IconButton(
+                                        icon: const Icon(
+                                          Icons.delete,
+                                          color: Colors.red,
+                                          size: 20,
+                                        ),
+                                        onPressed: () {
+                                          controller.bannerImagePath.value =
+                                              null;
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          )
+                        : DottedBorder(
+                            color: Colors.grey.shade400,
+                            borderType: BorderType.RRect,
+                            radius: const Radius.circular(12),
+                            dashPattern: const [6, 4],
+                            strokeWidth: 1,
+                            child: Container(
+                              width: double.infinity,
                               padding: const EdgeInsets.symmetric(
-                                horizontal: 24,
-                                vertical: 10,
+                                vertical: 24,
+                                horizontal: 12,
                               ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    Icons.cloud_upload_outlined,
+                                    size: 32,
+                                    color: Colors.grey.shade500,
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    'Drop your banner image here',
+                                    style: theme.textTheme.bodyMedium?.copyWith(
+                                      color: Colors.grey.shade800,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 12),
+                                  OutlinedButton(
+                                    onPressed: controller.pickBannerImage,
+                                    style: OutlinedButton.styleFrom(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 24,
+                                        vertical: 10,
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                    ),
+                                    child: const Text(
+                                      'Choose Image',
+                                      style: TextStyle(color: Colors.black),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    'Supports JPG, PNG · Max 10MB · Cropped to 1584×396 px',
+                                    textAlign: TextAlign.center,
+                                    style: theme.textTheme.bodySmall?.copyWith(
+                                      color: Colors.grey.shade600,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                            child: const Text(
-                              'Choose Image',
-                              style: TextStyle(color: Colors.black),
                             ),
                           ),
-                          const SizedBox(height: 8),
-                          Text(
-                            'Supports JPG, PNG · Max 10MB · Cropped to 1584×396 px',
-                            textAlign: TextAlign.center,
-                            style: theme.textTheme.bodySmall?.copyWith(
-                              color: Colors.grey.shade600,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
                   ),
                 ],
               ),
@@ -217,16 +273,18 @@ class ElevatorResumeScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // First Name
-                  const _LabeledTextField(
+                  _LabeledTextField(
                     label: 'First Name*',
                     hint: 'Enter your first name',
+                    controller: controller.firstNameController,
                   ),
                   const SizedBox(height: 12),
 
                   // Surname
-                  const _LabeledTextField(
+                  _LabeledTextField(
                     label: 'Surname*',
                     hint: 'Enter your surname',
+                    controller: controller.lastNameController,
                   ),
                   const SizedBox(height: 12),
 
@@ -294,11 +352,21 @@ class ElevatorResumeScreen extends StatelessWidget {
                   const SizedBox(height: 12),
 
                   // Email (disabled style like screenshot)
-                  const _LabeledTextField(
+                  _LabeledTextField(
                     label: 'Email Address*',
                     hint: 'Enter your email',
                     keyboardType: TextInputType.emailAddress,
                     enabled: true, // screenshot-e readonly, chai le false koro
+                    controller: controller.emailController,
+                  ),
+                  const SizedBox(height: 12),
+
+                  // Phone Number
+                  _LabeledTextField(
+                    label: 'Phone Number*',
+                    hint: 'Enter your phone number',
+                    keyboardType: TextInputType.phone,
+                    controller: controller.phoneNumberController,
                   ),
                   const SizedBox(height: 12),
 
@@ -342,45 +410,53 @@ class ElevatorResumeScreen extends StatelessWidget {
               _SectionCard(
                 title: 'Professional Social Media and Website Links',
                 child: Column(
-                  children: const [
+                  children: [
                     _LabeledTextField(
                       label: 'LinkedIn URL',
                       hint: 'https://www.linkedin.com/your-profile',
+                      controller: controller.linkedinController,
                     ),
-                    SizedBox(height: 12),
+                    const SizedBox(height: 12),
                     _LabeledTextField(
                       label: 'Twitter URL',
                       hint: 'https://www.twitter.com/your-profile',
+                      controller: controller.twitterController,
                     ),
-                    SizedBox(height: 12),
+                    const SizedBox(height: 12),
                     _LabeledTextField(
                       label: 'Facebook URL',
                       hint: 'https://facebook.com/your-profile',
+                      controller: controller.facebookController,
                     ),
-                    SizedBox(height: 12),
+                    const SizedBox(height: 12),
                     _LabeledTextField(
                       label: 'TikTok URL',
                       hint: 'https://www.tiktok.com/@your-handle',
+                      controller: controller.tiktokController,
                     ),
-                    SizedBox(height: 12),
+                    const SizedBox(height: 12),
                     _LabeledTextField(
                       label: 'Instagram URL',
                       hint: 'https://www.instagram.com/your-profile',
+                      controller: controller.instagramController,
                     ),
-                    SizedBox(height: 12),
+                    const SizedBox(height: 12),
                     _LabeledTextField(
                       label: 'Upwork URL',
                       hint: 'https://www.upwork.com/your-profile',
+                      controller: controller.upworkController,
                     ),
-                    SizedBox(height: 12),
+                    const SizedBox(height: 12),
                     _LabeledTextField(
                       label: 'Fiverr URL',
                       hint: 'https://www.fiverr.com/your-username',
+                      controller: controller.fiverrController,
                     ),
-                    SizedBox(height: 12),
+                    const SizedBox(height: 12),
                     _LabeledTextField(
                       label: 'Portfolio Website URL',
                       hint: 'https://your-website.com',
+                      controller: controller.portfolioController,
                     ),
                   ],
                 ),
@@ -505,9 +581,10 @@ class ElevatorResumeScreen extends StatelessWidget {
                     const SizedBox(height: 8),
                     Row(
                       children: [
-                        const Expanded(
+                        Expanded(
                           child: TextField(
-                            decoration: InputDecoration(
+                            controller: controller.certificationController,
+                            decoration: const InputDecoration(
                               hintText:
                                   'e.g. AWS Certified Solutions Architect',
                               border: OutlineInputBorder(),
@@ -753,24 +830,40 @@ class ElevatorResumeScreen extends StatelessWidget {
               const SizedBox(height: 24),
 
               // ===================== SUBMIT BUTTON =====================
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: controller.onUploadElevatorPitchFirst,
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(double.infinity, 52),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
+              Obx(
+                () => SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: controller.isSubmitting.value
+                        ? null
+                        : controller.onUploadElevatorPitchFirst,
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(double.infinity, 52),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      elevation: 0,
+                      backgroundColor: Colors.blueAccent,
+                      disabledBackgroundColor: Colors.grey,
                     ),
-                    elevation: 0,
-                    backgroundColor: Colors.blueAccent,
-                  ),
-                  child: const Text(
-                    'Upload Elevator Pitch First',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    child: controller.isSubmitting.value
+                        ? const SizedBox(
+                            height: 20,
+                            width: 20,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                Colors.white,
+                              ),
+                            ),
+                          )
+                        : const Text(
+                            'Submit Resume',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                   ),
                 ),
               ),
@@ -844,6 +937,7 @@ class _LabeledTextField extends StatelessWidget {
   final TextInputType? keyboardType;
   final bool enabled;
   final String? initialValue;
+  final TextEditingController? controller;
 
   const _LabeledTextField({
     super.key,
@@ -852,12 +946,14 @@ class _LabeledTextField extends StatelessWidget {
     this.keyboardType,
     this.enabled = true,
     this.initialValue,
+    this.controller,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      initialValue: initialValue,
+      controller: controller,
+      initialValue: controller == null ? initialValue : null,
       enabled: enabled,
       keyboardType: keyboardType,
       decoration: InputDecoration(

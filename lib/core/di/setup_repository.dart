@@ -19,6 +19,8 @@ import 'package:karlfive/features/recruiter_account/data/repo/repo_impl.dart';
 import 'package:karlfive/features/recruiter_account/domain/repo/repo.dart';
 import 'package:karlfive/features/elevator/data/repositories/language_repository_impl.dart';
 import 'package:karlfive/features/elevator/domain/repositories/language_repository.dart';
+import 'package:karlfive/features/elevator/data/repositories/resume_repository_impl.dart';
+import 'package:karlfive/features/elevator/domain/repositories/resume_repository.dart';
 
 void setupRepository() {
   Get.lazyPut<AuthRepository>(
@@ -59,6 +61,11 @@ void setupRepository() {
   
   Get.lazyPut<LanguageRepository>(
     () => LanguageRepositoryImpl(apiClient: Get.find()),
+    fenix: true,
+  );
+  
+  Get.lazyPut<ResumeRepository>(
+    () => ResumeRepositoryImpl(apiClient: Get.find()),
     fenix: true,
   );
 }

@@ -6,11 +6,32 @@ import 'package:flutter_quill/flutter_quill.dart' as quill;
 import 'package:http/http.dart' as http;
 import '../../data/models/language_model.dart';
 import '../../domain/usecases/get_languages_usecase.dart';
+import '../../domain/usecases/create_resume_usecase.dart';
+import '../../data/models/create_resume_request.dart';
 import '../../../../core/network/constants/api_constants.dart';
 
 class ElevatorResumeController extends GetxController {
   final ImagePicker _picker = ImagePicker();
   final GetLanguagesUseCase? _getLanguagesUseCase;
+  final CreateResumeUseCase? _createResumeUseCase;
+
+  /// ================== TEXT CONTROLLERS ==================
+  final firstNameController = TextEditingController();
+  final lastNameController = TextEditingController();
+  final emailController = TextEditingController();
+  final phoneNumberController = TextEditingController();
+  final linkedinController = TextEditingController();
+  final twitterController = TextEditingController();
+  final facebookController = TextEditingController();
+  final tiktokController = TextEditingController();
+  final instagramController = TextEditingController();
+  final upworkController = TextEditingController();
+  final fiverrController = TextEditingController();
+  final portfolioController = TextEditingController();
+  final certificationController = TextEditingController();
+
+  /// ================== SUBMISSION STATE ==================
+  var isSubmitting = false.obs;
 
   /// ================== ABOUT ME (QUILL) ==================
   late final quill.QuillController aboutMeQuillController;
@@ -84,8 +105,11 @@ class ElevatorResumeController extends GetxController {
   /// ================== DUMMY DATA ==================
   final List<String> titles = ['Mr.', 'Mrs.', 'Ms.', 'Dr.'];
 
-  ElevatorResumeController({GetLanguagesUseCase? getLanguagesUseCase})
-    : _getLanguagesUseCase = getLanguagesUseCase;
+  ElevatorResumeController({
+    GetLanguagesUseCase? getLanguagesUseCase,
+    CreateResumeUseCase? createResumeUseCase,
+  }) : _getLanguagesUseCase = getLanguagesUseCase,
+       _createResumeUseCase = createResumeUseCase;
 
   final List<String> jobTitles = [
     'Software Engineer',
@@ -188,6 +212,19 @@ class ElevatorResumeController extends GetxController {
   @override
   void onClose() {
     aboutMeQuillController.dispose();
+    firstNameController.dispose();
+    lastNameController.dispose();
+    emailController.dispose();
+    phoneNumberController.dispose();
+    linkedinController.dispose();
+    twitterController.dispose();
+    facebookController.dispose();
+    tiktokController.dispose();
+    instagramController.dispose();
+    upworkController.dispose();
+    fiverrController.dispose();
+    portfolioController.dispose();
+    certificationController.dispose();
     super.onClose();
   }
 
@@ -488,9 +525,204 @@ class ElevatorResumeController extends GetxController {
   }
 
   /// ================== SUBMIT / SAVE ==================
-  void saveResume() {
-    // TODO: API call + validation
-    Get.snackbar('Success', 'Resume saved successfully!');
+  Future<void> saveResume() async {
+    if (_createResumeUseCase == null) {
+      print('❌ CreateResumeUseCase is null - not registered in DI');
+      Get.snackbar('Error', 'Resume service not available');
+      return;
+    }
+
+    // Validation
+    if (firstNameController.text.trim().isEmpty) {
+      Get.snackbar('Validation Error', 'Please enter your first name');
+      return;
+    }
+    if (lastNameController.text.trim().isEmpty) {
+      Get.snackbar('Validation Error', 'Please enter your last name');
+      return;
+    }
+    if (emailController.text.trim().isEmpty) {
+      Get.snackbar('Validation Error', 'Please enter your email');
+      return;
+    }
+    if (phoneNumberController.text.trim().isEmpty) {
+      Get.snackbar('Validation Error', 'Please enter your phone number');
+      return;
+    }
+
+    try {
+      isSubmitting.value = true;
+
+      // Prepare social links
+      final socialLinks = <SocialLink>[];
+      if (linkedinController.text.trim().isNotEmpty) {
+        socialLinks.add(
+          SocialLink(platform: 'LinkedIn', url: linkedinController.text.trim()),
+        );
+      }
+      if (twitterController.text.trim().isNotEmpty) {
+        socialLinks.add(
+          SocialLink(platform: 'Twitter', url: twitterController.text.trim()),
+        );
+      }
+      if (facebookController.text.trim().isNotEmpty) {
+        socialLinks.add(
+          SocialLink(platform: 'Facebook', url: facebookController.text.trim()),
+        );
+      }
+      if (tiktokController.text.trim().isNotEmpty) {
+        socialLinks.add(
+          SocialLink(platform: 'TikTok', url: tiktokController.text.trim()),
+        );
+      }
+      if (instagramController.text.trim().isNotEmpty) {
+        socialLinks.add(
+          SocialLink(
+            platform: 'Instagram',
+            url: instagramController.text.trim(),
+          ),
+        );
+      }
+      if (upworkController.text.trim().isNotEmpty) {
+        socialLinks.add(
+          SocialLink(platform: 'Upwork', url: upworkController.text.trim()),
+        );
+      }
+      if (fiverrController.text.trim().isNotEmpty) {
+        socialLinks.add(
+          SocialLink(platform: 'Fiverr', url: fiverrController.text.trim()),
+        );
+      }
+      if (portfolioController.text.trim().isNotEmpty) {
+        socialLinks.add(
+          SocialLink(
+            platform: 'Portfolio',
+            url: portfolioController.text.trim(),
+          ),
+        );
+      }
+
+      // Prepare experiences
+      final experiences = experienceList
+          .where(
+            (exp) =>
+                exp['companyName'] != null &&
+                exp['companyName'].toString().trim().isNotEmpty,
+          )
+          .map(
+            (exp) => ExperienceRequest(
+              company: exp['companyName'] ?? '',
+              position: exp['jobTitle'] ?? '',
+              country: exp['country'],
+              city: exp['city'],
+              startDate: exp['startDate'],
+              endDate: exp['endDate'],
+              currentlyWorking: exp['currentlyWorking'],
+              description: exp['description'],
+            ),
+          )
+          .toList();
+
+      // Prepare education
+      final education = educationList
+          .where(
+            (edu) =>
+                edu['institutionName'] != null &&
+                edu['institutionName'].toString().trim().isNotEmpty,
+          )
+          .map(
+            (edu) => EducationRequest(
+              institutionName: edu['institutionName'] ?? '',
+              qualification: edu['qualification'],
+              fieldOfStudy: edu['fieldOfStudy'],
+              country: edu['country'],
+              city: edu['city'],
+              currentlyStudying: edu['currentlyStudying'],
+              startDate: edu['startDate'],
+              graduationDate: edu['graduationDate'],
+            ),
+          )
+          .toList();
+
+      // Prepare awards
+      final awards = awardsList
+          .where(
+            (award) =>
+                award['title'] != null &&
+                award['title'].toString().trim().isNotEmpty,
+          )
+          .map(
+            (award) => AwardRequest(
+              title: award['title'] ?? '',
+              description: award['description'],
+              date: award['date'],
+            ),
+          )
+          .toList();
+
+      // Get about me text
+      final aboutMe = aboutMeQuillController.document.toPlainText().trim();
+
+      // Create request
+      final request = CreateResumeRequest(
+        photo: photoPath.value,
+        banner: bannerImagePath.value,
+        firstName: firstNameController.text.trim(),
+        lastName: lastNameController.text.trim(),
+        email: emailController.text.trim(),
+        phoneNumber: phoneNumberController.text.trim(),
+        country: selectedCountry.value,
+        city: selectedCity.value,
+        immediatelyAvailable: immediatelyAvailable.value,
+        certifications: certifications.toList(),
+        languages: languages.toList(),
+        skills: skillsList.toList(),
+        sLink: socialLinks,
+        experiences: experiences,
+        education: education,
+        awardsAndHonors: awards,
+        aboutMe: aboutMe.isNotEmpty ? aboutMe : null,
+      );
+
+      print('📤 Submitting resume...');
+      final result = await _createResumeUseCase!(request);
+
+      result.fold(
+        (failure) {
+          print('❌ Resume creation failed: ${failure.message}');
+          isSubmitting.value = false;
+          Get.snackbar(
+            'Error',
+            failure.message,
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        },
+        (success) {
+          print('✅ Resume created successfully!');
+          isSubmitting.value = false;
+          Get.snackbar(
+            'Success',
+            success.data.message,
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.green,
+            colorText: Colors.white,
+          );
+          // You can navigate to another screen or perform other actions here
+        },
+      );
+    } catch (e) {
+      print('❌ Exception creating resume: $e');
+      isSubmitting.value = false;
+      Get.snackbar(
+        'Error',
+        'Failed to create resume: $e',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
   }
 
   void onUploadElevatorPitchFirst() {
@@ -498,6 +730,7 @@ class ElevatorResumeController extends GetxController {
       Get.snackbar(
         'Upload required',
         'Please upload your Elevator Video Pitch before submitting the form.',
+        snackPosition: SnackPosition.BOTTOM,
       );
       return;
     }
