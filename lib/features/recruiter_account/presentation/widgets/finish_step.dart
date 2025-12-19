@@ -67,7 +67,6 @@ class FinishStep extends StatelessWidget {
         locationTypeController.getBackendValue(
           locationTypeController.selectedLocationType.value,
         ),
-        controller.companyWebsite.value,
       );
     }
 

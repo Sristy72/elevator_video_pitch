@@ -18,7 +18,7 @@ class JobListingRepositoryImpl implements JobListingRepository {
     String? search,
   }) {
     return _apiClient.get<JobListingResponseModel>(
-      ApiConstants.jobs.getJobs(page, limit, search: search),
+      ApiConstants.jobs.getJobs(limit),
       fromJsonT: (json) {
         print("DEBUG: JobListingRepositoryImpl raw json: $json");
         return JobListingResponseModel.fromJson(json);
