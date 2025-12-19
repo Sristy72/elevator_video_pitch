@@ -300,14 +300,13 @@ class _PhotoPlaceholder extends StatelessWidget {
 
 class _ToolbarIcon extends StatelessWidget {
   final IconData icon;
-  final bool isActive;
   final VoidCallback? onTap;
 
   const _ToolbarIcon({required this.icon, this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    final color = isActive ? const Color(0xFF2563EB) : Colors.grey.shade700;
+    final color = Colors.grey.shade700;
 
     return IconButton(
       onPressed: onTap,

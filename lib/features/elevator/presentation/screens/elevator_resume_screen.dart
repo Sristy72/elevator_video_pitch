@@ -943,7 +943,6 @@ class _LabeledTextField extends StatelessWidget {
   final String? hint;
   final TextInputType? keyboardType;
   final bool enabled;
-  final String? initialValue;
   final TextEditingController? controller;
 
   const _LabeledTextField({
@@ -958,7 +957,6 @@ class _LabeledTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
-      initialValue: controller == null ? initialValue : null,
       enabled: enabled,
       keyboardType: keyboardType,
       decoration: InputDecoration(
