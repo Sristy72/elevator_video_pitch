@@ -225,6 +225,7 @@ class ElevatorResumeController extends GetxController {
     fiverrController.dispose();
     portfolioController.dispose();
     certificationController.dispose();
+    languageController.dispose();
     super.onClose();
   }
 
@@ -427,27 +428,15 @@ class ElevatorResumeController extends GetxController {
 
   /// ================== CERTIFICATIONS ==================
   void addCertification() {
-    final textController = TextEditingController();
+    final text = certificationController.text.trim();
+    if (text.isNotEmpty && !certifications.contains(text)) {
+      certifications.add(text);
+      certificationController.clear();
+    }
+  }
 
-    Get.defaultDialog(
-      title: 'Add Certification',
-      content: TextField(
-        controller: textController,
-        decoration: const InputDecoration(
-          hintText: 'e.g. AWS Certified Solutions Architect',
-        ),
-      ),
-      textConfirm: 'Add',
-      textCancel: 'Cancel',
-      onConfirm: () {
-        final text = textController.text.trim();
-        if (text.isNotEmpty) {
-          certifications.add(text);
-        }
-        Get.back();
-      },
-      onCancel: () {},
-    );
+  void removeCertification(String cert) {
+    certifications.remove(cert);
   }
 
   /// ================== LANGUAGES ==================
@@ -515,6 +504,16 @@ class ElevatorResumeController extends GetxController {
 
   void addLanguage(String lang) {
     final l = lang.trim();
+    // Support direct add via controller if argument is empty
+    if (l.isEmpty && languageController.text.isNotEmpty) {
+      final fromController = languageController.text.trim();
+      if (fromController.isNotEmpty && !languages.contains(fromController)) {
+        languages.add(fromController);
+        languageController.clear();
+      }
+      return;
+    }
+
     if (l.isNotEmpty && !languages.contains(l)) {
       languages.add(l);
     }

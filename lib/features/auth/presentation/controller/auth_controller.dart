@@ -23,6 +23,8 @@ import 'package:karlfive/features/auth/presentation/screens/set_new_password_scr
 import 'package:karlfive/features/company/presentation/screen/company_screen.dart';
 import 'package:karlfive/features/create_job/presentation/screen/create_job_screen.dart';
 import 'package:karlfive/features/recruiter_account/presentation/screens/create_recruiter_account.dart';
+import 'package:karlfive/features/recruiter_account/presentation/screens/recruiter_page.dart';
+import 'package:karlfive/features/company/presentation/screen/company_details_screen.dart';
 
 import '../../../../core/network/services/auth_storage_service.dart';
 import '../../../../core/network/services/secure_store_services.dart';
@@ -84,34 +86,35 @@ class AuthController extends BaseController {
             secureStore.storeData('password', password);
           }
           setLoading(false);
-          
+
           // Reset nav controller to show home screen
           if (Get.isRegistered<BottomNavController>()) {
             Get.find<BottomNavController>().resetToHome();
             print('✅ BottomNavController reset to Home');
           }
-          
+
           Get.offAll(() => DashboardScreen());
-        } else if (user.role == 'recruiter' ) {
+        } else if (user.role == 'recruiter') {
           await _authStorageService.storeAuthData(
             accessToken: success.data.accessToken,
             refreshToken: success.data.refreshToken,
             userId: success.data.user.id,
             userRole: user.role,
           );
-          // Populate the shared GetUserProfileService with the user from login response
-          try {
-            Get.find<GetUserProfileService>().setUserInfo(user);
-          } catch (_) {
-            // If service not found, ignore silently (DI should normally register it)
-          }
+
           if (rememberMeController!.rememberMe.value) {
             final secureStore = SecureStoreServices();
             secureStore.storeData('email', email);
             secureStore.storeData('password', password);
           }
           setLoading(false);
-          Get.offAll(() => CreateRecruiterAccount());
+          
+          if (user.email.isNotEmpty) {
+             Get.offAll(() => const RecruiterPageScreen());
+          } else {
+             Get.offAll(() => CreateRecruiterAccount());
+          }
+
         } else if (user.role == 'company') {
           await _authStorageService.storeAuthData(
             accessToken: success.data.accessToken,
@@ -119,20 +122,21 @@ class AuthController extends BaseController {
             userId: success.data.user.id,
             userRole: user.role,
           );
-          // Populate the shared GetUserProfileService with the user from login response
-          try {
-            Get.find<GetUserProfileService>().setUserInfo(user);
-          } catch (_) {
-            // If service not found, ignore silently (DI should normally register it)
-          }
+          
           if (rememberMeController!.rememberMe.value) {
             final secureStore = SecureStoreServices();
             secureStore.storeData('email', email);
             secureStore.storeData('password', password);
           }
           setLoading(false);
-          Get.offAll(() => CreateCompanyAccountPage());
-        }else {
+
+          if (user.email.isNotEmpty) {
+             Get.offAll(() => CompanyDetailsPage());
+          } else {
+             Get.offAll(() => CreateCompanyAccountPage());
+          }
+          
+        } else {
           setError("You are not authorized to login as candidate");
           setLoading(false);
         }
@@ -634,24 +638,24 @@ class AuthController extends BaseController {
   Future<void> logout() async {
     try {
       setLoading(true);
-      
+
       // Clear all auth storage data (tokens, user ID, role, user profile)
       await _authStorageService.clearAuthData();
-      
+
       // Clear user data from GetUserProfileService
       try {
         Get.find<GetUserProfileService>().clearUserData();
       } catch (_) {
         // If service not found, ignore silently
       }
-      
+
       // Clear all secure storage data (includes remember me credentials and other cached data)
       final secureStore = SecureStoreServices();
       await secureStore.deleteAllData();
-      
+
       setLoading(false);
       setError('');
-      
+
       // Navigate to login screen
       Get.offAll(() => LoginScreen());
     } catch (e) {

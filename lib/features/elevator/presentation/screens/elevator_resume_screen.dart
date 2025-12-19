@@ -617,24 +617,31 @@ class ElevatorResumeScreen extends StatelessWidget {
                     const SizedBox(height: 12),
                     Obx(
                       () => controller.certifications.isEmpty
-                          ? Text(
-                              'No certifications added yet. Add your professional certifications above.',
-                              style: theme.textTheme.bodySmall?.copyWith(
-                                color: Colors.grey[600],
+                          ? Padding(
+                              padding: const EdgeInsets.only(top: 8.0),
+                              child: Text(
+                                'No certifications added yet. Add your professional certifications above.',
+                                style: theme.textTheme.bodySmall?.copyWith(
+                                  color: Colors.grey[600],
+                                ),
                               ),
                             )
-                          : Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: controller.certifications
-                                  .map(
-                                    (cert) => Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                        vertical: 4.0,
+                          : Padding(
+                              padding: const EdgeInsets.only(top: 12.0),
+                              child: Wrap(
+                                spacing: 8,
+                                runSpacing: 8,
+                                children: controller.certifications
+                                    .map(
+                                      (cert) => Chip(
+                                        label: Text(cert),
+                                        onDeleted: () =>
+                                            controller.removeCertification(cert),
+                                        backgroundColor: Colors.grey[100],
                                       ),
-                                      child: Text('• $cert'),
-                                    ),
-                                  )
-                                  .toList(),
+                                    )
+                                    .toList(),
+                              ),
                             ),
                     ),
                   ],
