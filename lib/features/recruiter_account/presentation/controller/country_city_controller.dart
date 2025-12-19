@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import '../../../../core/network/constants/api_constants.dart';
 
 class LocationController extends GetxController {
   var countries = <String>[].obs;
@@ -21,7 +22,7 @@ class LocationController extends GetxController {
   Future<void> fetchCountriesWithCities() async {
     try {
       final response = await http.get(
-        Uri.parse('http://10.10.5.53:5001/api/v1/countries'),
+        Uri.parse(ApiConstants.country.getCountries),
       );
 
       if (response.statusCode == 200) {

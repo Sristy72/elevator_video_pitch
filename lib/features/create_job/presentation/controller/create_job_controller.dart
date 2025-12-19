@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import '../../../../core/network/constants/api_constants.dart';
 
 import '../../domain/category_repo.dart';
 
@@ -49,10 +50,6 @@ class CreateJobPostingController extends GetxController {
   //   CategoryController(CategoryRepoImpl(apiClient: ApiClient())),
   // );
 
-  final String apiUrl = "http:localhost:5009/api/v1/countries";
-  // final String categoryApiUrl =
-  //     "https://api.evpitch.com/api/v1/category/job-category";
-
   @override
   void onInit() {
     super.onInit();
@@ -64,7 +61,9 @@ class CreateJobPostingController extends GetxController {
   Future<void> fetchCountriesAndCities() async {
     try {
       isLoadingCountries.value = true;
-      final response = await http.get(Uri.parse(apiUrl));
+      final response = await http.get(
+        Uri.parse(ApiConstants.country.getCountries),
+      );
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);

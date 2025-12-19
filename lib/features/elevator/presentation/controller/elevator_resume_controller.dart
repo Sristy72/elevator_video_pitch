@@ -4,11 +4,11 @@ import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart' as quill;
 import 'package:http/http.dart' as http;
+import '../../../../core/network/constants/api_constants.dart';
 import '../../data/models/language_model.dart';
 import '../../domain/usecases/get_languages_usecase.dart';
 import '../../domain/usecases/create_resume_usecase.dart';
 import '../../data/models/create_resume_request.dart';
-import '../../../../core/network/constants/api_constants.dart';
 
 class ElevatorResumeController extends GetxController {
   final ImagePicker _picker = ImagePicker();
@@ -286,7 +286,7 @@ class ElevatorResumeController extends GetxController {
       print('🌐 Fetching countries from API...');
 
       final response = await http.get(
-        Uri.parse('${ApiConstants.baseUrl}/countries'),
+        Uri.parse(ApiConstants.country.getCountries),
       );
 
       if (response.statusCode == 200) {
