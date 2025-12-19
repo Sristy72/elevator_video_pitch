@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../widgets/applied_jobs_card.dart';
 
 class AppliedJobsScreen extends StatelessWidget {
+  const AppliedJobsScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

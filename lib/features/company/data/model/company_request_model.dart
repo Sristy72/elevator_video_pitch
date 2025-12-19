@@ -71,7 +71,6 @@
 //         "url": url,
 //       };
 // }
-import 'dart:convert';
 import 'dart:io';
 
 class CompanyRequestModel {

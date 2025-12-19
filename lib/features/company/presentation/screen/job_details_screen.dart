@@ -433,7 +433,7 @@ class _JobDetailsPageState extends State<JobDetailsPage> {
                   ],
                 ),
               );
-            }).toList(),
+            }),
 
             const SizedBox(height: 30),
 

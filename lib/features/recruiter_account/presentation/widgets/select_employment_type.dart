@@ -12,7 +12,7 @@ class SelectEmploymentType extends StatelessWidget {
   Widget build(BuildContext context) {
     return DropdownButtonFormField<String>(
       isExpanded: true,
-      value: employeeController.selectedEmploymentType.value.isEmpty
+      initialValue: employeeController.selectedEmploymentType.value.isEmpty
           ? null
           : employeeController.selectedEmploymentType.value,
       decoration: context.primaryInputDecoration.copyWith(

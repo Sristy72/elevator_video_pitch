@@ -3,13 +3,9 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:karlfive/features/company/presentation/controller/company_account_controller.dart';
 import 'package:karlfive/features/company/presentation/controller/company_details_controller.dart';
-import 'package:karlfive/features/job_listing/presentation/screens/job_details_screen.dart';
-import 'package:karlfive/features/recruiter_account/presentation/screens/job_update_screen.dart';
 import 'package:karlfive/features/recruiter_account/presentation/screens/single_job_details_screen.dart';
 import '../../../../core/common/widgets/app_scaffold.dart';
-import '../../../../core/utils/debug_print.dart';
 import '../../../recruiter_account/presentation/controller/recruiter_controller.dart';
-import '../../../recruiter_account/presentation/screens/applicants_list_screen.dart';
 import 'applicant_lists_screen.dart';
 
 class ManageJobPostScreen extends StatefulWidget {

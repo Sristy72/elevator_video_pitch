@@ -57,10 +57,12 @@ class ApiConstants {
   static CompanyAccountApi get company => CompanyAccountApi();
   static LanguageEndpoints get language => LanguageEndpoints();
   static CountryEndpoints get country => CountryEndpoints();
+  static ResumeEndpoints get resume => ResumeEndpoints();
 }
 
 class JobEndpoints {
   String getJobs(int limit) => '${ApiConstants.baseUrl}/jobs?limit=$limit';
+  final String applyJob = '${ApiConstants.baseUrl}/application';
 }
 
 class RecruiterAccountApi {
@@ -83,6 +85,8 @@ class RecruiterAccountApi {
   String updateRecruiter(String userId) => '$_base/recruiter-account/$userId';
   String getSingleJob(String jobId) => '${ApiConstants.baseUrl}/jobs/$jobId';
   String updateSingleJob(String jobId) =>
+      '${ApiConstants.baseUrl}/jobs/update/$jobId';
+  String updateArchieveJob(String jobId) =>
       '${ApiConstants.baseUrl}/jobs/update/$jobId';
 }
 
@@ -205,18 +209,37 @@ class AlluserEndpoints {
 
 class CompanyAccountApi {
   static const String _base = '${ApiConstants.baseUrl}/company';
-  final String createcompany = '$_base';
+  final String createcompany = _base;
   String fetchCompanyInfo(String userId) => '$_base/user/$userId';
-
   String fetchUpdateInfo(String userId) => '$_base/$userId';
+  String fetchEmployee(String userId) => '${ApiConstants.baseUrl}/all/users';
+  String manageJobs(String companyId) =>
+      '${ApiConstants.baseUrl}/jobs/company/$companyId';
+  final String connectRecruiter =
+      '${ApiConstants.baseUrl}/company/apply-for-company-employee';
+  final String removeRecruiter =
+      '${ApiConstants.baseUrl}/company/remove-recruiter';
+  String archiveJobs(String jobId) =>
+      '${ApiConstants.baseUrl}/jobs/update/$jobId';
+  String applicantJob(String jobId) => '${ApiConstants.baseUrl}/all/users';
+  final String candidateResume = '${ApiConstants.baseUrl}/resume';
+  String status(String jobId) =>
+      '${ApiConstants.baseUrl}/application/status/$jobId';
+  String fetchResume(String candidateUserId) =>
+      '${ApiConstants.baseUrl}/resume/user/$candidateUserId';
 }
 
 class LanguageEndpoints {
   static const String _base = '${ApiConstants.baseUrl}/language';
-  final String getLanguages = '$_base';
+  final String getLanguages = _base;
 }
 
 class CountryEndpoints {
   static const String _base = '${ApiConstants.baseUrl}/countries';
-  final String getCountries = '$_base';
+  final String getCountries = _base;
+}
+
+class ResumeEndpoints {
+  static const String _base = '${ApiConstants.baseUrl}/resume';
+  final String getResume = _base;
 }

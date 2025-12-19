@@ -306,7 +306,7 @@ class ElevatorResumeScreen extends StatelessWidget {
                             ),
                             menuMaxHeight:
                                 MediaQuery.of(context).size.height * 0.5,
-                            value: controller.selectedCountry.value,
+                            initialValue: controller.selectedCountry.value,
                             hint: const Text('Select Country'),
                             items: controller.countries
                                 .map(
@@ -334,7 +334,7 @@ class ElevatorResumeScreen extends StatelessWidget {
                         border: OutlineInputBorder(),
                       ),
                       menuMaxHeight: MediaQuery.of(context).size.height * 0.5,
-                      value: controller.selectedCity.value,
+                      initialValue: controller.selectedCity.value,
                       hint: const Text('Select City'),
                       items: controller.cities
                           .map(
@@ -947,12 +947,10 @@ class _LabeledTextField extends StatelessWidget {
   final TextEditingController? controller;
 
   const _LabeledTextField({
-    super.key,
     required this.label,
     this.hint,
     this.keyboardType,
     this.enabled = true,
-    this.initialValue,
     this.controller,
   });
 

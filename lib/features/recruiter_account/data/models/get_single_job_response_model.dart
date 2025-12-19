@@ -1,5 +1,3 @@
-import 'job_update_request_model.dart';
-
 class GetSingleJobResponseModel {
   String? id;
   User? user;

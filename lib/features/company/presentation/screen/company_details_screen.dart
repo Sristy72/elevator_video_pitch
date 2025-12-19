@@ -17,7 +17,7 @@ import 'employee_screen.dart';
 import 'manage_job_req_screen.dart';
 
 class CompanyDetailsPage extends StatefulWidget {
-  CompanyDetailsPage({super.key});
+  const CompanyDetailsPage({super.key});
 
   @override
   State<CompanyDetailsPage> createState() => _CompanyDetailsPageState();
@@ -606,7 +606,7 @@ class _CompanyDetailsPageState extends State<CompanyDetailsPage> {
                         ),
                         child: DataTable(
                           headingRowHeight: 56,
-                          headingRowColor: MaterialStateProperty.all(
+                          headingRowColor: WidgetStateProperty.all(
                             const Color(0xFFF8F9FB),
                           ),
                           dataRowHeight: 68,

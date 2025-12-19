@@ -156,7 +156,7 @@ class BookmarkController extends GetxController {
               bookmarks = inner['bookmarks'] as List<dynamic>? ?? [];
             }
           } else if (responseData is List) {
-            bookmarks = responseData as List<dynamic>;
+            bookmarks = responseData;
           }
         } catch (e) {
           DPrint.log('Error parsing bookmarks response: $e');

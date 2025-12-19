@@ -61,7 +61,7 @@ class JobFormController extends GetxController {
     // Location
     if (job.location != null && job.location!.isNotEmpty) {
       final parts = job.location!.split(',');
-      selectedCity.value = parts.length > 0 ? parts[0].trim() : '';
+      selectedCity.value = parts.isNotEmpty ? parts[0].trim() : '';
       selectedCountry.value = parts.length > 1 ? parts[1].trim() : '';
     }
 

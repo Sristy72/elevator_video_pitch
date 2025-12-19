@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutx_core/core/debug_print.dart';
 import 'package:get/get.dart';
 import 'package:karlfive/core/base/base_controller.dart';
-import 'package:karlfive/features/company/data/model/archieve_request_model.dart';
 import 'package:karlfive/features/company/data/model/archieve_response_model.dart';
 import 'package:karlfive/features/company/data/model/candidate_resume_response_model.dart';
 import 'package:karlfive/features/company/data/model/company_applicant_list_response_model.dart';
@@ -13,10 +12,8 @@ import 'package:karlfive/features/company/data/model/resume_updated_response_mod
 import 'package:karlfive/features/company/data/model/status_update_response_model.dart';
 import '../../../../core/network/services/auth_storage_service.dart';
 import '../../data/model/all_user_response_model.dart';
-import '../../data/model/company_details_model.dart';
 import '../../data/model/single_Company_response_model.dart';
 import '../../domain/repo/company_repo.dart';
-import '../screen/company_details_screen.dart';
 import 'company_account_controller.dart';
 
 class CompanyDetailsController extends BaseController {

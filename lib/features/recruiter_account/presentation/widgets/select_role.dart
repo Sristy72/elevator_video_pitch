@@ -43,7 +43,7 @@ class SearchableRoleDropdown extends StatelessWidget {
         child: Obx(
           () => DropdownButtonFormField<String>(
             isExpanded: true,
-            value: selectedValue.value.isEmpty ? null : selectedValue.value,
+            initialValue: selectedValue.value.isEmpty ? null : selectedValue.value,
             hint: Text(
               'Select $title',
               style: const TextStyle(color: Colors.grey),

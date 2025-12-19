@@ -6,7 +6,7 @@ import '../controllers/bookmark_controller.dart';
 import 'job_details_screen.dart';
 
 class BookmarkJobsScreen extends StatefulWidget {
-  BookmarkJobsScreen({super.key});
+  const BookmarkJobsScreen({super.key});
 
   @override
   State<BookmarkJobsScreen> createState() => _BookmarkJobsScreenState();

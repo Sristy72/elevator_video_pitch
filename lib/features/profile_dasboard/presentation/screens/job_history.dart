@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../core/bottomNavbar/screens/dashboard_screen.dart';
 import '../../../../core/network/services/auth_storage_service.dart';
-import '../../../auth/presentation/controller/auth_controller.dart';
 import '../controller/applied_jobs_controller.dart';
 
 class JobHistoryScreen extends StatelessWidget {

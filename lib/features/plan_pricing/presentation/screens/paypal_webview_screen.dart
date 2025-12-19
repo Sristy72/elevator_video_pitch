@@ -10,12 +10,12 @@ class PaypalWebViewScreen extends StatefulWidget {
   final Function(String)? onFinish;
 
   const PaypalWebViewScreen({
-    Key? key,
+    super.key,
     required this.planTitle,
     required this.amount,
     this.orderId,
     this.onFinish,
-  }) : super(key: key);
+  });
 
   @override
   State<PaypalWebViewScreen> createState() => _PaypalWebViewScreenState();
@@ -245,7 +245,7 @@ class _PaypalWebViewScreenState extends State<PaypalWebViewScreen> {
     if (checkoutUrl != null && _webViewController != null) {
       return Scaffold(
         appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.background,
+          backgroundColor: Theme.of(context).colorScheme.surface,
           leading: GestureDetector(
             child: const Icon(Icons.arrow_back_ios),
             onTap: () => Navigator.pop(context),

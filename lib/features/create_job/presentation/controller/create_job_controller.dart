@@ -43,9 +43,7 @@ class CreateJobPostingController extends GetxController {
 
   // final ApiClient apiClient = ApiClient();
 
-  final CategoryRepository _categoryRepository;
-
-  CreateJobPostingController(this._categoryRepository);
+  CreateJobPostingController(CategoryRepository categoryRepository);
 
   // final CategoryController categoryController = Get.put(
   //   CategoryController(CategoryRepoImpl(apiClient: ApiClient())),

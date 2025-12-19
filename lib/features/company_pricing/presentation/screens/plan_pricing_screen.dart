@@ -212,10 +212,12 @@ class _PlanPricingScreenState extends State<PlanPricingScreen> {
 
     // Sort plans: Pay as You Go first, then others
     planList.sort((a, b) {
-      if (a['title'].toString().toLowerCase().contains('pay as you go'))
+      if (a['title'].toString().toLowerCase().contains('pay as you go')) {
         return -1;
-      if (b['title'].toString().toLowerCase().contains('pay as you go'))
+      }
+      if (b['title'].toString().toLowerCase().contains('pay as you go')) {
         return 1;
+      }
       return 0;
     });
 

@@ -134,13 +134,14 @@ class _CustomDropdownFieldState extends State<CustomDropdownJobField> {
           const SizedBox(height: 6),
           DropdownButtonFormField<String>(
             isExpanded: true,
-            value: (widget.items?.contains(currentValue) ?? false)
+            initialValue: (widget.items?.contains(currentValue) ?? false)
                 ? currentValue
                 : null,
             onChanged: widget.enabled
                 ? (val) {
-                    if (widget.rxValue != null)
+                    if (widget.rxValue != null) {
                       widget.rxValue!.value = val ?? '';
+                    }
                     widget.controller?.text = val ?? '';
                     widget.onChanged?.call(val);
                   }

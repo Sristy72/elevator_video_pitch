@@ -3,12 +3,9 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:karlfive/features/recruiter_account/presentation/screens/single_job_details_screen.dart';
 import '../../../../core/common/widgets/app_scaffold.dart';
-import '../../../../core/utils/debug_print.dart';
 import '../../../company/presentation/screen/applicant_lists_screen.dart';
 import '../../data/models/archieve_job_request_model.dart';
 import '../controller/recruiter_controller.dart';
-import 'applicants_list_screen.dart';
-import 'job_preview_screen.dart';
 
 class AllJobsScreen extends StatefulWidget {
   const AllJobsScreen({super.key});
@@ -147,10 +144,7 @@ class _AllJobsScreenState extends State<AllJobsScreen> {
                             child: Row(
                               children: [
                                 SizedBox(width: 200, child: Text(job.title)),
-                                SizedBox(
-                                  width: 100,
-                                  child: Text(job.status ?? ""),
-                                ),
+                                SizedBox(width: 100, child: Text(job.status)),
                                 SizedBox(
                                   width: 140,
                                   child: Text(formatDate(job.createdAt)),
@@ -201,8 +195,7 @@ class _AllJobsScreenState extends State<AllJobsScreen> {
                                             recruiterController
                                                 .archiveLoadingMap[job.id] ??
                                             false;
-                                        final currentStatus =
-                                            job.arcrivedJob ?? false;
+                                        final currentStatus = job.arcrivedJob;
 
                                         return Expanded(
                                           child: TextButton(

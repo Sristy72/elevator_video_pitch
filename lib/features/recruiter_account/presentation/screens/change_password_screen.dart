@@ -4,9 +4,7 @@ import 'package:get/get.dart';
 import 'package:karlfive/features/recruiter_account/presentation/controller/recruiter_controller.dart';
 import '../../../../core/common/widgets/app_scaffold.dart';
 import '../../../../core/theme/app_buttoms.dart';
-import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/input_decoration_extensions.dart';
-import '../../../auth/presentation/controller/auth_controller.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
   const ChangePasswordScreen({super.key});

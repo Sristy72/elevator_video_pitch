@@ -9,7 +9,6 @@ import '../controller/job_controller/job_posting_expiration_controller.dart';
 import '../controller/job_controller/location_type_controller.dart';
 import '../controller/job_posting_controller.dart';
 import '../controller/recruiter_controller.dart';
-import '../screens/job_update_screen.dart';
 
 class FinishStep extends StatelessWidget {
   const FinishStep({super.key});

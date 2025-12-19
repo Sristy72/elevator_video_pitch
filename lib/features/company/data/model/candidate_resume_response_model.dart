@@ -1,5 +1,4 @@
 // profile_response_model.dart
-import 'dart:convert';
 
 class CandidateResumeResponseModel {
   final bool deactivate;

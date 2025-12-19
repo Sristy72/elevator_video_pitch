@@ -1,6 +1,5 @@
 // job_response_model.dart
 
-import 'dart:convert';
 
 class ArchieveResponseModel {
   final String id;

@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import '../../../../core/base/base_controller.dart';
-import '../../../../core/network/network_result.dart';
 import '../../data/model/category_model.dart';
 import '../../domain/category_repo.dart';
 
@@ -9,6 +8,7 @@ class CategoryController extends BaseController {
 
   CategoryController(this._categoryRepository);
 
+  @override
   final RxBool isLoading = false.obs;
   final RxList<Category> categories = <Category>[].obs;
   final RxList<String> roles = <String>[].obs; // ✅ dynamic role list

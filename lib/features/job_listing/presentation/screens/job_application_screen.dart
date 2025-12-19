@@ -104,7 +104,7 @@ class JobApplicationScreen extends StatelessWidget {
                         controller: textCtrl,
                       ),
                     );
-                  }).toList(),
+                  }),
                   const Divider(),
                   const SizedBox(height: 16),
                 ],

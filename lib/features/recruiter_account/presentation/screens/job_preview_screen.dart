@@ -28,8 +28,6 @@ class JobPreviewScreen extends StatelessWidget {
   final RecruiterController recruiterController =
       Get.find<RecruiterController>();
 
-  late int vacanciesInt = int.tryParse(controller.vacancies.value) ?? 0;
-
   // Find category by name
   late final selectedCategoryModel = recruiterController.category
       .firstWhereOrNull((c) => c.name == controller.selectedCategory.value);
@@ -298,7 +296,7 @@ class JobPreviewScreen extends StatelessWidget {
           Switch(
             value: publishNow,
             onChanged: (_) {},
-            activeColor: const Color(0xFF2B7FD0),
+            activeThumbColor: const Color(0xFF2B7FD0),
           ),
         ],
       ),

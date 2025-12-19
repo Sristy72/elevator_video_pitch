@@ -15,7 +15,7 @@ class ChangePasswordRepoImpl implements ChangePasswordRepo {
     return _apiClient.post<void>(
       ApiConstants.auth.changePassword,
       data: request.toJson(),
-      fromJsonT: (json) => null,
+      fromJsonT: (json) {},
     );
   }
 }

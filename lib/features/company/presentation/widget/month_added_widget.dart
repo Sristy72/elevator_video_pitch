@@ -43,7 +43,7 @@ class _MonthYearPickerDialogState extends State<MonthYearPickerDialog> {
                 // Month Dropdown
                 Expanded(
                   child: DropdownButtonFormField<int>(
-                    value: selectedMonth,
+                    initialValue: selectedMonth,
                     decoration: InputDecoration(
                       labelText: "Month",
                       border: OutlineInputBorder(
@@ -66,7 +66,7 @@ class _MonthYearPickerDialogState extends State<MonthYearPickerDialog> {
                 // Year Dropdown (last 50 years + next 5)
                 Expanded(
                   child: DropdownButtonFormField<int>(
-                    value: selectedYear,
+                    initialValue: selectedYear,
                     decoration: InputDecoration(
                       labelText: "Year",
                       border: OutlineInputBorder(

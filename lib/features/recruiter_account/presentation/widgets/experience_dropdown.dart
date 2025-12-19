@@ -41,7 +41,7 @@ class ExperienceDropdown extends StatelessWidget {
             fontWeight: FontWeight.w400,
           ),
         ),
-        value: controller.selectedExperience.value.isEmpty
+        initialValue: controller.selectedExperience.value.isEmpty
             ? null
             : controller.selectedExperience.value,
         onChanged: (newValue) {

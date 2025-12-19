@@ -19,9 +19,6 @@ import '../../../recruiter_account/presentation/widgets/video_player_widget.dart
 import '../controller/company_account_controller.dart';
 import '../widget/custom_text_field.dart';
 import '../widget/month_added_widget.dart';
-import '../widget/upload_card_widget.dart';
-import '../widget/upload_video_widget.dart';
-import 'company_details_screen.dart';
 
 class CreateCompanyAccountPage extends StatefulWidget {
   const CreateCompanyAccountPage({super.key});
@@ -582,8 +579,9 @@ class _CreateCompanyAccountPageState extends State<CreateCompanyAccountPage> {
                   children: List.generate(
                     controller.serviceControllers.length,
                     (index) {
-                      if (index == 0)
+                      if (index == 0) {
                         return const SizedBox.shrink(); // skip first field
+                      }
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 12),
                         child: Row(
@@ -690,8 +688,9 @@ class _CreateCompanyAccountPageState extends State<CreateCompanyAccountPage> {
                   children: List.generate(
                     controller.employeeControllers.length,
                     (index) {
-                      if (index == 0)
+                      if (index == 0) {
                         return const SizedBox.shrink(); // skip first field
+                      }
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 12),
                         child: Row(
@@ -895,15 +894,18 @@ class _CreateCompanyAccountPageState extends State<CreateCompanyAccountPage> {
                                         ),
                                       ),
                                       validator: (val) {
-                                        if (val == null || val.isEmpty)
+                                        if (val == null || val.isEmpty) {
                                           return "Required";
-                                        if (!RegExp(r'^\d{6}$').hasMatch(val))
+                                        }
+                                        if (!RegExp(r'^\d{6}$').hasMatch(val)) {
                                           return "Format: MMYYYY";
+                                        }
                                         final m = int.tryParse(
                                           val.substring(0, 2),
                                         );
-                                        if (m == null || m < 1 || m > 12)
+                                        if (m == null || m < 1 || m > 12) {
                                           return "Invalid month";
+                                        }
                                         return null;
                                       },
                                     ),
@@ -989,8 +991,9 @@ class _CreateCompanyAccountPageState extends State<CreateCompanyAccountPage> {
                       final recruiterEmails = employees
                           .map((e) {
                             final match = RegExp(r'\(([^)]+)\)').firstMatch(e);
-                            if (match != null)
+                            if (match != null) {
                               return match.group(1)!; // extract email inside ()
+                            }
                             return e.contains('@') ? e.trim() : null;
                           })
                           .where((email) => email != null && email.isNotEmpty)

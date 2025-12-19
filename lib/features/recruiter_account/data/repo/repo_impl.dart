@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:flutx_core/core/debug_print.dart';
 import 'package:karlfive/core/network/network_result.dart';
@@ -27,7 +25,6 @@ import '../models/job_create_response_model.dart';
 import '../models/job_update_request_model.dart';
 import '../models/job_update_response_model.dart';
 import '../models/update_recruiter_response_model.dart';
-import '../models/your_job_response_model.dart';
 
 class RepoImplementation extends Repo {
   final ApiClient _apiClient;

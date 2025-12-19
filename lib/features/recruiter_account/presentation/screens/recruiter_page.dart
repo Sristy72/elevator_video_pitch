@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutx_core/core/debug_print.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart' show DateFormat;
 import 'package:karlfive/core/common/widgets/app_scaffold.dart';
 import 'package:karlfive/features/recruiter_account/presentation/controller/recruiter_controller.dart';
 import 'package:karlfive/features/recruiter_account/presentation/widgets/drawer.dart';
 import 'package:karlfive/features/recruiter_account/presentation/widgets/elevator_pitch.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../../create_job/presentation/screen/create_job_screen.dart';
 import '../widgets/social_media.dart';
 
 class RecruiterPageScreen extends StatefulWidget {
@@ -192,7 +189,7 @@ class _RecruiterPageScreenState extends State<RecruiterPageScreen> {
                       .map(
                         (link) => GestureDetector(
                           onTap: () async {
-                            final Uri url = Uri.parse(link.url ?? '');
+                            final Uri url = Uri.parse(link.url);
                             if (await canLaunchUrl(url)) {
                               await launchUrl(
                                 url,

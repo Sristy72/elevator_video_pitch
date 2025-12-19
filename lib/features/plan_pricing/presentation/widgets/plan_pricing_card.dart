@@ -145,7 +145,7 @@ class PlanPricingCard extends StatelessWidget {
                 if (!isLast) const SizedBox(height: 12),
               ],
             );
-          }).toList(),
+          }),
 
           const SizedBox(height: 18),
 

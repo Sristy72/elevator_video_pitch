@@ -61,7 +61,7 @@ class EducationFormSection extends StatelessWidget {
                 controller.educationList[index]['qualification'];
             return DropdownButtonFormField<String>(
               isExpanded: true,
-              value: selectedQualification,
+              initialValue: selectedQualification,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
@@ -134,7 +134,7 @@ class EducationFormSection extends StatelessWidget {
             final selectedCountry = controller.educationList[index]['country'];
             return DropdownButtonFormField<String>(
               isExpanded: true,
-              value: selectedCountry,
+              initialValue: selectedCountry,
               menuMaxHeight: MediaQuery.of(context).size.height * 0.5,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
@@ -177,7 +177,7 @@ class EducationFormSection extends StatelessWidget {
             final selectedCity = controller.educationList[index]['city'];
             return DropdownButtonFormField<String>(
               isExpanded: true,
-              value: selectedCity,
+              initialValue: selectedCity,
               menuMaxHeight: MediaQuery.of(context).size.height * 0.5,
               decoration: InputDecoration(
                 border: OutlineInputBorder(

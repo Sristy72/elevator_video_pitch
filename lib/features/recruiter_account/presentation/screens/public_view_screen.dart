@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:karlfive/core/common/widgets/app_scaffold.dart';
 import 'package:karlfive/features/recruiter_account/presentation/controller/recruiter_controller.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../../create_job/presentation/screen/create_job_screen.dart';
 import '../widgets/social_media.dart';
 
 class PublicViewScreen extends StatefulWidget {
@@ -149,7 +148,7 @@ class _PublicViewScreenState extends State<PublicViewScreen> {
                       .map(
                         (link) => GestureDetector(
                           onTap: () async {
-                            final Uri url = Uri.parse(link.url ?? '');
+                            final Uri url = Uri.parse(link.url);
                             if (await canLaunchUrl(url)) {
                               await launchUrl(
                                 url,

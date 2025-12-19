@@ -303,7 +303,7 @@ class _ToolbarIcon extends StatelessWidget {
   final bool isActive;
   final VoidCallback? onTap;
 
-  const _ToolbarIcon({required this.icon, this.isActive = false, this.onTap});
+  const _ToolbarIcon({required this.icon, this.onTap});
 
   @override
   Widget build(BuildContext context) {

@@ -13,12 +13,10 @@ import '../../../recruiter_account/presentation/controller/company_image_control
 import '../../../recruiter_account/presentation/controller/description_controller.dart';
 import '../../../recruiter_account/presentation/controller/image_controller.dart';
 import '../../../recruiter_account/presentation/controller/recruiter_controller.dart';
-import '../../../recruiter_account/presentation/controller/upload_elevator_pitch.dart';
 
 import '../../../recruiter_account/presentation/widgets/bio.dart';
 
 import '../../data/model/single_Company_response_model.dart';
-import '../../data/model/update_company_response_model.dart';
 import '../controller/company_account_controller.dart';
 import '../widget/custom_text_field.dart';
 
@@ -28,7 +26,7 @@ import 'company_details_screen.dart';
 class CompanyEditAccountPage extends StatefulWidget {
   final SingleCompanyResponseModel companyData;
 
-  CompanyEditAccountPage({super.key, required this.companyData});
+  const CompanyEditAccountPage({super.key, required this.companyData});
 
   @override
   State<CompanyEditAccountPage> createState() => _CompanyEditAccountPageState();
@@ -151,7 +149,7 @@ class _CompanyEditAccountPageState extends State<CompanyEditAccountPage> {
     };
 
     for (var link in company.sLink) {
-      final label = link.label?.toLowerCase() ?? '';
+      final label = link.label.toLowerCase() ?? '';
       if (socialMap.containsKey(label)) {
         socialMap[label]!.text = link.url ?? '';
       }
@@ -167,7 +165,7 @@ class _CompanyEditAccountPageState extends State<CompanyEditAccountPage> {
 
     // === SERVICES ===
     controller.serviceControllers.clear();
-    if (company.service != null && company.service.isNotEmpty) {
+    if (company.service.isNotEmpty) {
       for (var service in company.service) {
         controller.serviceControllers.add(TextEditingController(text: service));
       }
@@ -178,7 +176,7 @@ class _CompanyEditAccountPageState extends State<CompanyEditAccountPage> {
     // === RECRUITERS ===
     controller.employeeControllers.clear();
     controller.employeeIdMap.clear();
-    if (company.employeesId != null && company.employeesId.isNotEmpty) {
+    if (company.employeesId.isNotEmpty) {
       for (var email in company.employeesId) {
         controller.employeeControllers.add(TextEditingController(text: email));
       }
@@ -871,8 +869,9 @@ class _CompanyEditAccountPageState extends State<CompanyEditAccountPage> {
                   children: List.generate(
                     controller.serviceControllers.length,
                     (index) {
-                      if (index == 0)
+                      if (index == 0) {
                         return const SizedBox.shrink(); // skip first field
+                      }
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 12),
                         child: Row(
@@ -977,8 +976,9 @@ class _CompanyEditAccountPageState extends State<CompanyEditAccountPage> {
                   children: List.generate(
                     controller.employeeControllers.length,
                     (index) {
-                      if (index == 0)
+                      if (index == 0) {
                         return const SizedBox.shrink(); // skip first field
+                      }
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 12),
                         child: Row(
@@ -1183,15 +1183,18 @@ class _CompanyEditAccountPageState extends State<CompanyEditAccountPage> {
                                         ),
                                       ),
                                       validator: (val) {
-                                        if (val == null || val.isEmpty)
+                                        if (val == null || val.isEmpty) {
                                           return "Required";
-                                        if (!RegExp(r'^\d{6}$').hasMatch(val))
+                                        }
+                                        if (!RegExp(r'^\d{6}$').hasMatch(val)) {
                                           return "Format: MMYYYY";
+                                        }
                                         final m = int.tryParse(
                                           val.substring(0, 2),
                                         );
-                                        if (m == null || m < 1 || m > 12)
+                                        if (m == null || m < 1 || m > 12) {
                                           return "Invalid month";
+                                        }
                                         return null;
                                       },
                                     ),
@@ -1262,12 +1265,13 @@ class _CompanyEditAccountPageState extends State<CompanyEditAccountPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(
+                  SizedBox(
                     width: 150,
                     child: ElevatedButton(
                       onPressed: () async {
-                        if (!controller.formKey.currentState!.validate())
+                        if (!controller.formKey.currentState!.validate()) {
                           return;
+                        }
                         if (controller.isLoading.value) return;
 
                         try {
@@ -1374,7 +1378,7 @@ class _CompanyEditAccountPageState extends State<CompanyEditAccountPage> {
 
                   SizedBox(width: 10),
 
-                  Container(
+                  SizedBox(
                     width: 150,
                     child: ElevatedButton(
                       onPressed: () {

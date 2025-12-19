@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutx_core/core/validation/validators.dart';
 import 'package:get/get.dart';
@@ -27,9 +25,9 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
-  late TextEditingController _biocontroller = TextEditingController();
-  late TextEditingController _firstNameTEController = TextEditingController();
-  late TextEditingController _surNameTEController = TextEditingController();
+  late final TextEditingController _biocontroller = TextEditingController();
+  late final TextEditingController _firstNameTEController = TextEditingController();
+  late final TextEditingController _surNameTEController = TextEditingController();
   final TextEditingController _linkedINTEController = TextEditingController();
   final TextEditingController _twitterTEController = TextEditingController();
   final TextEditingController _upworkTEController = TextEditingController();
@@ -70,55 +68,43 @@ class _EditProfilePageState extends State<EditProfilePage> {
     // Text fields
     _biocontroller.text = recruiter.bio;
     _firstNameTEController.text = recruiter.firstName;
-    _surNameTEController.text = recruiter.sureName ?? '';
-    _linkedINTEController.text =
-        recruiter.sLink
-            .firstWhere(
-              (e) => e.label.toLowerCase() == "linkedin",
-              orElse: () => SocialLink(label: '', url: ''),
-            )
-            .url ??
-        '';
-    _twitterTEController.text =
-        recruiter.sLink
-            .firstWhere(
-              (e) => e.label.toLowerCase() == "twitter",
-              orElse: () => SocialLink(label: '', url: ''),
-            )
-            .url ??
-        '';
-    _upworkTEController.text =
-        recruiter.sLink
-            .firstWhere(
-              (e) => e.label.toLowerCase() == "upwork",
-              orElse: () => SocialLink(label: '', url: ''),
-            )
-            .url ??
-        '';
-    _facebookTEController.text =
-        recruiter.sLink
-            .firstWhere(
-              (e) => e.label.toLowerCase() == "facebook",
-              orElse: () => SocialLink(label: '', url: ''),
-            )
-            .url ??
-        '';
-    _tiktokTEController.text =
-        recruiter.sLink
-            .firstWhere(
-              (e) => e.label.toLowerCase() == "tiktok",
-              orElse: () => SocialLink(label: '', url: ''),
-            )
-            .url ??
-        '';
-    _instaTEController.text =
-        recruiter.sLink
-            .firstWhere(
-              (e) => e.label.toLowerCase() == "instagram",
-              orElse: () => SocialLink(label: '', url: ''),
-            )
-            .url ??
-        '';
+    _surNameTEController.text = recruiter.sureName;
+    _linkedINTEController.text = recruiter.sLink
+        .firstWhere(
+          (e) => e.label.toLowerCase() == "linkedin",
+          orElse: () => SocialLink(label: '', url: ''),
+        )
+        .url;
+    _twitterTEController.text = recruiter.sLink
+        .firstWhere(
+          (e) => e.label.toLowerCase() == "twitter",
+          orElse: () => SocialLink(label: '', url: ''),
+        )
+        .url;
+    _upworkTEController.text = recruiter.sLink
+        .firstWhere(
+          (e) => e.label.toLowerCase() == "upwork",
+          orElse: () => SocialLink(label: '', url: ''),
+        )
+        .url;
+    _facebookTEController.text = recruiter.sLink
+        .firstWhere(
+          (e) => e.label.toLowerCase() == "facebook",
+          orElse: () => SocialLink(label: '', url: ''),
+        )
+        .url;
+    _tiktokTEController.text = recruiter.sLink
+        .firstWhere(
+          (e) => e.label.toLowerCase() == "tiktok",
+          orElse: () => SocialLink(label: '', url: ''),
+        )
+        .url;
+    _instaTEController.text = recruiter.sLink
+        .firstWhere(
+          (e) => e.label.toLowerCase() == "instagram",
+          orElse: () => SocialLink(label: '', url: ''),
+        )
+        .url;
 
     // Preload banner & logo URLs
     if (recruiter.banner.isNotEmpty) {
@@ -796,7 +782,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
+                    SizedBox(
                       width: 150,
                       child: ElevatedButton(
                         onPressed: () async {
@@ -844,7 +830,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
                     SizedBox(width: 10),
 
-                    Container(
+                    SizedBox(
                       width: 150,
                       child: ElevatedButton(
                         onPressed: () => Get.to(() => RecruiterPageScreen()),

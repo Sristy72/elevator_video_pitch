@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:karlfive/features/Home/presentation/screens/my_plan_screen.dart';
 import 'package:karlfive/features/recruiter_account/presentation/screens/all_jobs_screen.dart';
 import 'package:karlfive/features/recruiter_account/presentation/screens/create_job_screen.dart';

@@ -12,7 +12,7 @@ class ConnectCompanyDialog extends StatelessWidget {
     // Initialize search query if not already
     controller.companySearchQuery ??= ''.obs;
 
-    _submit() {
+    submit() {
       controller.connectCompany(controller.selectedCompany.value.toString());
     }
 
@@ -164,7 +164,7 @@ class ConnectCompanyDialog extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () {
                         if (controller.selectedCompany.value != null) {
-                          _submit();
+                          submit();
                         } else {
                           Get.snackbar(
                             'Error',

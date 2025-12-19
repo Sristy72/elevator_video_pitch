@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:karlfive/core/common/widgets/app_scaffold.dart';
-import 'package:karlfive/features/company/data/model/company_details_model.dart';
 
 import '../controller/company_details_controller.dart';
-import '../controller/employee_screen_controller.dart';
 
 class CompanyEmployeesScreen extends StatefulWidget {
   const CompanyEmployeesScreen({super.key});

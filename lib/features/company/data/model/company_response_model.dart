@@ -103,6 +103,8 @@
 // }
 
 /////////////////////////updated no 2
+library;
+
 
 // import 'dart:convert';
 
@@ -252,7 +254,6 @@
 //       );
 // }
 
-import 'dart:convert';
 
 class CompanyResponseModel {
   final Company company;

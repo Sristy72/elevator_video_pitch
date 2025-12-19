@@ -24,37 +24,37 @@ class JobDetailsStep extends StatelessWidget {
       controller.loadCurrenciesIfEmpty();
     }
 
-    TextEditingController _jobTitleTEController = TextEditingController(
+    TextEditingController jobTitleTEController = TextEditingController(
       text: controller.selectedRole.value,
     );
-    final FocusNode _jobTitleFocusNode = FocusNode();
+    final FocusNode jobTitleFocusNode = FocusNode();
 
-    TextEditingController _departmentTEController = TextEditingController(
+    TextEditingController departmentTEController = TextEditingController(
       text: controller.department.value,
     );
-    final FocusNode _departmentFocusNode = FocusNode();
+    final FocusNode departmentFocusNode = FocusNode();
 
-    TextEditingController _vacanciesTEController = TextEditingController(
+    TextEditingController vacanciesTEController = TextEditingController(
       text: controller.vacancies.value.isNotEmpty
           ? controller.vacancies.value
           : '1', // default
     );
 
-    final FocusNode _vacanciesFocusNode = FocusNode();
+    final FocusNode vacanciesFocusNode = FocusNode();
 
-    TextEditingController _compensationTEController = TextEditingController(
+    TextEditingController compensationTEController = TextEditingController(
       text: controller.compensation.value.isNotEmpty
           ? controller.compensation.value
           : '',
     );
-    final FocusNode _compensationFocusNode = FocusNode();
+    final FocusNode compensationFocusNode = FocusNode();
 
-    TextEditingController _companyWebTEController = TextEditingController(
+    TextEditingController companyWebTEController = TextEditingController(
       text: controller.companyWebsite.value.isNotEmpty
           ? controller.companyWebsite.value
           : '',
     );
-    final FocusNode _companyWebFocusNode = FocusNode();
+    final FocusNode companyWebFocusNode = FocusNode();
 
     final LocationController countryCityController = Get.put(
       LocationController(),
@@ -63,7 +63,7 @@ class JobDetailsStep extends StatelessWidget {
     // Listen to selectedRole changes and auto-fill + update controller.jobTitle
     ever(controller.selectedRole, (String role) {
       if (role.isNotEmpty) {
-        _jobTitleTEController.text = role;
+        jobTitleTEController.text = role;
         controller.jobTitle.value = role; //save it to controller
       }
     });
@@ -122,7 +122,7 @@ class JobDetailsStep extends StatelessWidget {
                 child: AbsorbPointer(
                   child: DropdownButtonFormField<String>(
                     isExpanded: true,
-                    value: controller.selectedCategory.value.isEmpty
+                    initialValue: controller.selectedCategory.value.isEmpty
                         ? null
                         : controller.selectedCategory.value,
                     hint: const Text(
@@ -179,7 +179,7 @@ class JobDetailsStep extends StatelessWidget {
                 child: AbsorbPointer(
                   child: DropdownButtonFormField<String>(
                     isExpanded: true,
-                    value: controller.selectedRole.value.isEmpty
+                    initialValue: controller.selectedRole.value.isEmpty
                         ? null
                         : controller.selectedRole.value,
                     hint: const Text(
@@ -210,8 +210,8 @@ class JobDetailsStep extends StatelessWidget {
             ),
             const SizedBox(height: 6),
             TextFormField(
-              controller: _jobTitleTEController,
-              focusNode: _jobTitleFocusNode,
+              controller: jobTitleTEController,
+              focusNode: jobTitleFocusNode,
               onChanged: (value) => controller.jobTitle.value = value,
               textInputAction: TextInputAction.next,
               decoration: context.primaryInputDecoration.copyWith(
@@ -231,8 +231,8 @@ class JobDetailsStep extends StatelessWidget {
             ),
             const SizedBox(height: 6),
             TextFormField(
-              controller: _departmentTEController,
-              focusNode: _departmentFocusNode,
+              controller: departmentTEController,
+              focusNode: departmentFocusNode,
               onChanged: (value) => controller.department.value = value,
               textInputAction: TextInputAction.next,
               decoration: context.primaryInputDecoration.copyWith(
@@ -260,12 +260,12 @@ class JobDetailsStep extends StatelessWidget {
             SizedBox(
               height: 50,
               child: TextFormField(
-                controller: _vacanciesTEController,
-                focusNode: _vacanciesFocusNode,
+                controller: vacanciesTEController,
+                focusNode: vacanciesFocusNode,
                 onChanged: (value) => controller.vacancies.value = value,
                 keyboardType: TextInputType.number,
                 decoration: context.primaryInputDecoration.copyWith(
-                  hintText: _vacanciesTEController.text,
+                  hintText: vacanciesTEController.text,
                   suffixIcon: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     mainAxisSize: MainAxisSize.min,
@@ -274,10 +274,10 @@ class JobDetailsStep extends StatelessWidget {
                       GestureDetector(
                         onTap: () {
                           int value =
-                              int.tryParse(_vacanciesTEController.text) ?? 0;
+                              int.tryParse(vacanciesTEController.text) ?? 0;
                           if (value < 50) {
                             value++;
-                            _vacanciesTEController.text = value.toString();
+                            vacanciesTEController.text = value.toString();
                             controller.vacancies.value = value
                                 .toString(); // update the observable
                           }
@@ -311,10 +311,10 @@ class JobDetailsStep extends StatelessWidget {
                       GestureDetector(
                         onTap: () {
                           int value =
-                              int.tryParse(_vacanciesTEController.text) ?? 0;
+                              int.tryParse(vacanciesTEController.text) ?? 0;
                           if (value > 1) {
                             value--;
-                            _vacanciesTEController.text = value.toString();
+                            vacanciesTEController.text = value.toString();
                             controller.vacancies.value = value
                                 .toString(); // update the observable
                           }
@@ -370,7 +370,7 @@ class JobDetailsStep extends StatelessWidget {
             Obx(
               () => DropdownButtonFormField<String>(
                 isExpanded: true,
-                value: employeeController.selectedEmploymentType.value.isEmpty
+                initialValue: employeeController.selectedEmploymentType.value.isEmpty
                     ? null
                     : employeeController.selectedEmploymentType.value,
                 decoration: context.primaryInputDecoration.copyWith(
@@ -412,7 +412,7 @@ class JobDetailsStep extends StatelessWidget {
             Obx(
               () => DropdownButtonFormField<String>(
                 isExpanded: true,
-                value:
+                initialValue:
                     experienceLevelController
                         .selectedExperienceLevel
                         .value
@@ -462,7 +462,7 @@ class JobDetailsStep extends StatelessWidget {
             Obx(
               () => DropdownButtonFormField<String>(
                 isExpanded: true,
-                value: locationTypeController.selectedLocationType.value.isEmpty
+                initialValue: locationTypeController.selectedLocationType.value.isEmpty
                     ? null
                     : locationTypeController.selectedLocationType.value,
                 decoration: InputDecoration(
@@ -508,7 +508,7 @@ class JobDetailsStep extends StatelessWidget {
             Obx(
               () => DropdownButtonFormField<String>(
                 isExpanded: true,
-                value: careerStageController.selectedCareerStage.value.isEmpty
+                initialValue: careerStageController.selectedCareerStage.value.isEmpty
                     ? null
                     : careerStageController.selectedCareerStage.value,
                 decoration: InputDecoration(
@@ -631,13 +631,13 @@ class JobDetailsStep extends StatelessWidget {
                     controller.selectedCurrency.value = selected;
 
                     // Automatically focus the compensation field
-                    _compensationFocusNode.requestFocus();
+                    compensationFocusNode.requestFocus();
                   }
                 },
                 child: AbsorbPointer(
                   child: DropdownButtonFormField<GetCurrencyResponseModel>(
                     isExpanded: true,
-                    value: controller.selectedCurrency.value,
+                    initialValue: controller.selectedCurrency.value,
                     hint: const Text('Select currency'),
                     decoration: _dropdownDecoration(),
                     items: controller.currencies.map((currency) {
@@ -665,8 +665,8 @@ class JobDetailsStep extends StatelessWidget {
               final selectedCurrency = controller.selectedCurrency.value;
 
               return TextFormField(
-                controller: _compensationTEController,
-                focusNode: _compensationFocusNode,
+                controller: compensationTEController,
+                focusNode: compensationFocusNode,
                 onChanged: (value) => controller.compensation.value = value,
                 keyboardType: TextInputType.number,
                 decoration: context.primaryInputDecoration.copyWith(
@@ -698,7 +698,7 @@ class JobDetailsStep extends StatelessWidget {
             Obx(
               () => DropdownButtonFormField<String>(
                 isExpanded: true,
-                value:
+                initialValue:
                     jobPostingExpirationController
                         .selectedJobPostingExpiration
                         .value
@@ -748,8 +748,8 @@ class JobDetailsStep extends StatelessWidget {
             ),
             const SizedBox(height: 6),
             TextFormField(
-              controller: _companyWebTEController,
-              focusNode: _companyWebFocusNode,
+              controller: companyWebTEController,
+              focusNode: companyWebFocusNode,
               onChanged: (value) => controller.companyWebsite.value = value,
               textInputAction: TextInputAction.next,
               decoration: context.primaryInputDecoration.copyWith(

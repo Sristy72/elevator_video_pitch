@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
 import '../controller/job_posting_controller.dart';
 import '../widgets/application_requirement_step.dart';
 import '../widgets/custom_questions_step.dart';

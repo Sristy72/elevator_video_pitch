@@ -101,7 +101,7 @@ class _CompanyApplicantsListScreenState
                   scrollDirection: Axis.horizontal,
                   child: SingleChildScrollView(
                     child: DataTable(
-                      headingRowColor: MaterialStateProperty.all(
+                      headingRowColor: WidgetStateProperty.all(
                         Colors.blue.shade50,
                       ),
                       columnSpacing: 40,

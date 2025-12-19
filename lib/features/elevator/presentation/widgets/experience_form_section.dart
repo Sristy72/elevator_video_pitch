@@ -13,7 +13,7 @@ class ExperienceFormSection extends StatelessWidget {
     final theme = Theme.of(context);
     final controller = Get.find<ElevatorResumeController>();
 
-    InputDecoration _inputDecoration(String label, String hint) =>
+    InputDecoration inputDecoration(String label, String hint) =>
         InputDecoration(
           labelText: label,
           hintText: hint,
@@ -43,14 +43,14 @@ class ExperienceFormSection extends StatelessWidget {
         children: [
           // Job Title
           TextFormField(
-            decoration: _inputDecoration('Job Title', 'e.g. Software Engineer'),
+            decoration: inputDecoration('Job Title', 'e.g. Software Engineer'),
             onChanged: (v) => exp['jobTitle'] = v,
           ),
           const SizedBox(height: 12),
 
           // Company Name
           TextFormField(
-            decoration: _inputDecoration('Company Name', 'e.g. IBM'),
+            decoration: inputDecoration('Company Name', 'e.g. IBM'),
             onChanged: (v) => exp['companyName'] = v,
           ),
           const SizedBox(height: 12),
@@ -59,7 +59,7 @@ class ExperienceFormSection extends StatelessWidget {
           const Text('Country'),
           const SizedBox(height: 6),
           DropdownButtonFormField<String>(
-            value: selectedCountry,
+            initialValue: selectedCountry,
             isExpanded: true,
             menuMaxHeight: MediaQuery.of(context).size.height * 0.5,
             decoration: InputDecoration(
@@ -99,7 +99,7 @@ class ExperienceFormSection extends StatelessWidget {
           const SizedBox(height: 6),
           DropdownButtonFormField<String>(
             isExpanded: true,
-            value: selectedCountry == null ? null : selectedCity,
+            initialValue: selectedCountry == null ? null : selectedCity,
             menuMaxHeight: MediaQuery.of(context).size.height * 0.5,
             decoration: InputDecoration(
               border: OutlineInputBorder(
@@ -151,7 +151,7 @@ class ExperienceFormSection extends StatelessWidget {
 
           // Start Date
           TextFormField(
-            decoration: _inputDecoration('Start Date', 'MM/YYYY'),
+            decoration: inputDecoration('Start Date', 'MM/YYYY'),
             keyboardType: TextInputType.datetime,
             onChanged: (v) => exp['startDate'] = v,
           ),
@@ -159,7 +159,7 @@ class ExperienceFormSection extends StatelessWidget {
 
           // End Date (disabled if currently working)
           TextFormField(
-            decoration: _inputDecoration('End Date', 'MM/YYYY'),
+            decoration: inputDecoration('End Date', 'MM/YYYY'),
             keyboardType: TextInputType.datetime,
             enabled: !currentlyWorking,
             onChanged: (v) => exp['endDate'] = v,

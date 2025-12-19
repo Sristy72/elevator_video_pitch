@@ -21,7 +21,6 @@ import 'package:karlfive/features/auth/presentation/screens/otp_verification_to_
 import 'package:karlfive/features/auth/presentation/screens/security_questions_screen.dart';
 import 'package:karlfive/features/auth/presentation/screens/set_new_password_screen.dart';
 import 'package:karlfive/features/company/presentation/screen/company_screen.dart';
-import 'package:karlfive/features/create_job/presentation/screen/create_job_screen.dart';
 import 'package:karlfive/features/recruiter_account/presentation/screens/create_recruiter_account.dart';
 import 'package:karlfive/features/recruiter_account/presentation/screens/recruiter_page.dart';
 import 'package:karlfive/features/company/presentation/screen/company_details_screen.dart';
@@ -35,7 +34,6 @@ import 'remember_me_controller.dart';
 class AuthController extends BaseController {
   final AuthRepository _authRepository;
   final AuthStorageService _authStorageService;
-  bool _isSuccess = false;
 
   AuthController(this._authRepository, this._authStorageService);
 
@@ -474,7 +472,7 @@ class AuthController extends BaseController {
       (fail) {
         DPrint.log("Refresh token failed: ${fail.message}");
         setLoading(false);
-        return _isSuccess = false;
+        return false;
       },
       (success) async {
         DPrint.log("Refresh token success: ${success.message}");
@@ -486,7 +484,7 @@ class AuthController extends BaseController {
           () => HomeScreen(),
           transition: Transition.rightToLeft,
         ); //! <<< If the user is already logged in, go to home screen >>>
-        return _isSuccess = true;
+        return true;
       },
     );
     return navi;

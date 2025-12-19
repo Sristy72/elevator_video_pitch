@@ -24,7 +24,7 @@ class PaymentScreen extends StatefulWidget {
 }
 
 class _PaymentScreenState extends State<PaymentScreen> {
-  bool _isProcessing = false;
+  final bool _isProcessing = false;
 
   Future<void> _handlePayment() async {
     // Navigate to PayPal WebView for payment

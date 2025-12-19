@@ -21,7 +21,7 @@ class VideoUploadSection extends StatelessWidget {
         const SizedBox(height: 8),
         Row(
           children: [
-            Container(
+            SizedBox(
               width: screenWidth * 0.5,
 
               child: const Text(

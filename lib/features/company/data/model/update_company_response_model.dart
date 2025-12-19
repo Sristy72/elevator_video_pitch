@@ -178,7 +178,6 @@
 //   String toString() => 'SocialLink(label: $label, url: $url)';
 // }
 
-import 'dart:convert';
 
 class CompanyUpdateResponse {
   final UpdateCompanyResponseModel? updated;

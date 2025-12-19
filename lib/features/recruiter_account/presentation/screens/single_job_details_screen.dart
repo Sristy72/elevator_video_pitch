@@ -222,7 +222,7 @@ class _JobDetailEditScreenState extends State<JobDetailEditScreen> {
                 const Text("Category *"),
                 SizedBox(height: 5),
                 DropdownButtonFormField<String>(
-                  value: controller.selectedCategory.value.isEmpty
+                  initialValue: controller.selectedCategory.value.isEmpty
                       ? null
                       : controller.selectedCategory.value,
                   hint: const Text("Select category"),
@@ -266,7 +266,7 @@ class _JobDetailEditScreenState extends State<JobDetailEditScreen> {
 
                 const Text("Role *"),
                 DropdownButtonFormField<String>(
-                  value: controller.selectedRole.value.isEmpty
+                  initialValue: controller.selectedRole.value.isEmpty
                       ? null
                       : controller.selectedRole.value,
                   hint: const Text("Select role"),
@@ -398,7 +398,7 @@ class _JobDetailEditScreenState extends State<JobDetailEditScreen> {
                       ),
                       Switch(
                         value: controller.publishNow.value,
-                        activeColor: Theme.of(context).primaryColor,
+                        activeThumbColor: Theme.of(context).primaryColor,
                         onChanged: (bool value) {
                           controller.togglePublishNow(value);
                         },
@@ -618,7 +618,7 @@ class _JobDetailEditScreenState extends State<JobDetailEditScreen> {
         const SizedBox(height: 6),
         Obx(
           () => DropdownButtonFormField<String>(
-            value: obs.value.isEmpty ? null : obs.value,
+            initialValue: obs.value.isEmpty ? null : obs.value,
             hint: Text("Select $label".toLowerCase()),
             decoration: _dropdownDecoration(),
             items: items

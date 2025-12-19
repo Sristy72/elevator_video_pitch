@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:karlfive/features/recruiter_account/presentation/widgets/searchable_bottom_sheet.dart';
 
 class SearchableDropdown extends StatelessWidget {
@@ -34,7 +33,7 @@ class SearchableDropdown extends StatelessWidget {
       child: AbsorbPointer(
         child: DropdownButtonFormField<String>(
           isExpanded: true,
-          value: selectedValue.isEmpty ? null : selectedValue,
+          initialValue: selectedValue.isEmpty ? null : selectedValue,
           hint: Text(
             'Select $title',
             style: const TextStyle(color: Colors.grey),

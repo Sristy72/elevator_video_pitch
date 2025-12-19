@@ -4,7 +4,6 @@ import 'package:dio/dio.dart';
 import 'package:karlfive/core/network/constants/api_constants.dart';
 import 'package:karlfive/core/network/models/network_success.dart';
 import '../../../../core/network/api_client.dart';
-import '../../../../core/network/models/network_failure.dart';
 import '../../../../core/network/network_result.dart';
 import '../models/about_content_model.dart';
 import 'about_repo.dart';

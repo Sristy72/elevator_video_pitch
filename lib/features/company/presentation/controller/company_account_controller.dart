@@ -253,7 +253,7 @@ class CompanyAccountController extends BaseController {
       (success) {
         setLoading(false);
 
-        if (success.data == null || success.data.isEmpty) {
+        if (success.data.isEmpty) {
           setError("No users found");
           recruiters.clear();
           return;
@@ -726,7 +726,7 @@ class CompanyAccountController extends BaseController {
     companyResult.fold(
       (fail) => setError("Failed to load company"),
       (success) =>
-          companyId = success.data?.companies.first.id, // assuming id field
+          companyId = success.data.companies.first.id, // assuming id field
     );
 
     if (companyId == null) {
@@ -746,10 +746,8 @@ class CompanyAccountController extends BaseController {
         setLoading(false);
       },
       (success) {
-        if (success.data != null) {
-          manageJobList.value = success.data!;
-        }
-        setLoading(false);
+        manageJobList.value = success.data;
+              setLoading(false);
       },
     );
   }

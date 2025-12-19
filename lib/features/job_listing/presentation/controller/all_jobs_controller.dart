@@ -1,7 +1,5 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import '../../../../core/network/network_result.dart';
-import '../../data/models/job_listing_response_model.dart';
 import '../../data/models/job_model.dart';
 import '../../domain/usecases/get_jobs_usecase.dart';
 

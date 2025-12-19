@@ -25,15 +25,19 @@ class ContactUsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Prefill fields from passed member when available but only if empty
-    if (firstNameController.text.isEmpty)
+    if (firstNameController.text.isEmpty) {
       firstNameController.text = member.firstName;
-    if (lastNameController.text.isEmpty)
+    }
+    if (lastNameController.text.isEmpty) {
       lastNameController.text = member.lastName;
-    if (addressController.text.isEmpty)
+    }
+    if (addressController.text.isEmpty) {
       addressController.text =
           member.email; // if address not available, show email
-    if (phoneNumberController.text.isEmpty)
+    }
+    if (phoneNumberController.text.isEmpty) {
       phoneNumberController.text = member.phone;
+    }
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(

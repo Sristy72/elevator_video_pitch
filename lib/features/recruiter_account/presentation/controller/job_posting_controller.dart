@@ -225,8 +225,4 @@ class JobPostingController extends GetxController {
   // -----------------------------
   // Clean-up
   // -----------------------------
-  @override
-  void onClose() {
-    super.onClose();
-  }
 }

@@ -33,7 +33,7 @@ class CompanyDropdown extends StatelessWidget {
             fontWeight: FontWeight.w400,
           ),
         ),
-        value: controller.companies.firstWhereOrNull(
+        initialValue: controller.companies.firstWhereOrNull(
           (company) => company.id == controller.selectedCompany.value,
         ),
         onChanged: (value) {

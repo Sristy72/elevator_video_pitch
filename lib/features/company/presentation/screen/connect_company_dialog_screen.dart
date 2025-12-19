@@ -5,7 +5,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../widget/custom_text_field.dart';
 
 class RecruiterDialogContent extends StatefulWidget {
-  RecruiterDialogContent({super.key});
+  const RecruiterDialogContent({super.key});
 
   @override
   State<RecruiterDialogContent> createState() => _RecruiterDialogContentState();

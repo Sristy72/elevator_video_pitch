@@ -21,7 +21,6 @@
 // }
 
 import 'package:dio/dio.dart';
-import 'package:karlfive/features/company/data/model/archieve_request_model.dart';
 import 'package:karlfive/features/company/data/model/archieve_response_model.dart';
 import 'package:karlfive/features/company/data/model/candidate_resume_response_model.dart';
 import 'package:karlfive/features/company/data/model/company_applicant_list_response_model.dart';

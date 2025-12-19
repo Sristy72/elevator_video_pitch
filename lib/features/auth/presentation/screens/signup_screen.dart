@@ -1,6 +1,5 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutx_core/core/validation/validators.dart';
 import 'package:flutx_core/flutx_core.dart';
 import 'package:get/get.dart';
 import 'package:karlfive/core/common/widgets/app_scaffold.dart';

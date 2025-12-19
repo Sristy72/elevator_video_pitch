@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
 import 'package:intl/intl.dart';
 import 'package:karlfive/core/common/widgets/app_scaffold.dart';
-import 'package:karlfive/features/recruiter_account/presentation/widgets/application_requirements.dart';
 
 import '../../../../core/theme/input_decoration_extensions.dart';
 import '../../data/models/get_currency_response_model.dart';
@@ -173,7 +172,7 @@ class _JobUpdateScreenState extends State<JobUpdateScreen> {
                 child: AbsorbPointer(
                   child: DropdownButtonFormField<String>(
                     isExpanded: true,
-                    value: controller.selectedCategory.value.isEmpty
+                    initialValue: controller.selectedCategory.value.isEmpty
                         ? null
                         : controller.selectedCategory.value,
                     hint: const Text(
@@ -230,7 +229,7 @@ class _JobUpdateScreenState extends State<JobUpdateScreen> {
                 child: AbsorbPointer(
                   child: DropdownButtonFormField<String>(
                     isExpanded: true,
-                    value: controller.selectedRole.value.isEmpty
+                    initialValue: controller.selectedRole.value.isEmpty
                         ? null
                         : controller.selectedRole.value,
                     hint: const Text(
@@ -421,7 +420,7 @@ class _JobUpdateScreenState extends State<JobUpdateScreen> {
             Obx(
               () => DropdownButtonFormField<String>(
                 isExpanded: true,
-                value: employeeController.selectedEmploymentType.value.isEmpty
+                initialValue: employeeController.selectedEmploymentType.value.isEmpty
                     ? null
                     : employeeController.selectedEmploymentType.value,
                 decoration: context.primaryInputDecoration.copyWith(
@@ -463,7 +462,7 @@ class _JobUpdateScreenState extends State<JobUpdateScreen> {
             Obx(
               () => DropdownButtonFormField<String>(
                 isExpanded: true,
-                value:
+                initialValue:
                     experienceLevelController
                         .selectedExperienceLevel
                         .value
@@ -513,7 +512,7 @@ class _JobUpdateScreenState extends State<JobUpdateScreen> {
             Obx(
               () => DropdownButtonFormField<String>(
                 isExpanded: true,
-                value: locationTypeController.selectedLocationType.value.isEmpty
+                initialValue: locationTypeController.selectedLocationType.value.isEmpty
                     ? null
                     : locationTypeController.selectedLocationType.value,
                 decoration: InputDecoration(
@@ -559,7 +558,7 @@ class _JobUpdateScreenState extends State<JobUpdateScreen> {
             Obx(
               () => DropdownButtonFormField<String>(
                 isExpanded: true,
-                value: careerStageController.selectedCareerStage.value.isEmpty
+                initialValue: careerStageController.selectedCareerStage.value.isEmpty
                     ? null
                     : careerStageController.selectedCareerStage.value,
                 decoration: InputDecoration(
@@ -688,7 +687,7 @@ class _JobUpdateScreenState extends State<JobUpdateScreen> {
                 child: AbsorbPointer(
                   child: DropdownButtonFormField<GetCurrencyResponseModel>(
                     isExpanded: true,
-                    value: controller.selectedCurrency.value,
+                    initialValue: controller.selectedCurrency.value,
                     hint: const Text('Select currency'),
                     decoration: _dropdownDecoration(),
                     items: controller.currencies.map((currency) {
@@ -749,7 +748,7 @@ class _JobUpdateScreenState extends State<JobUpdateScreen> {
             Obx(
               () => DropdownButtonFormField<String>(
                 isExpanded: true,
-                value:
+                initialValue:
                     jobPostingExpirationController
                         .selectedJobPostingExpiration
                         .value
@@ -955,8 +954,9 @@ class _JobUpdateScreenState extends State<JobUpdateScreen> {
 
                     //Calendar when PublishNow == false
                     Obx(() {
-                      if (controller.publishNow.value)
+                      if (controller.publishNow.value) {
                         return const SizedBox.shrink();
+                      }
 
                       return Card(
                         shape: RoundedRectangleBorder(
@@ -1070,8 +1070,9 @@ class _JobUpdateScreenState extends State<JobUpdateScreen> {
 
                 // Resume option (show only if visible)
                 Obx(() {
-                  if (!controller.resumeVisible.value)
+                  if (!controller.resumeVisible.value) {
                     return const SizedBox.shrink();
+                  }
                   return RequirementItem(
                     label: "Resume",
                     //onChanged: (value) => controller.resumeRequired.value = value,
@@ -1084,8 +1085,9 @@ class _JobUpdateScreenState extends State<JobUpdateScreen> {
 
                 // Valid visa option
                 Obx(() {
-                  if (!controller.visaVisible.value)
+                  if (!controller.visaVisible.value) {
                     return const SizedBox.shrink();
+                  }
                   return RequirementItem(
                     label: "Valid visa for this job location?",
 

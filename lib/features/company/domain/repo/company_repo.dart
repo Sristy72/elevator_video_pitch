@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 
 import '../../../../core/network/network_result.dart';
 import '../../data/model/all_user_response_model.dart';
-import '../../data/model/archieve_request_model.dart';
 import '../../data/model/archieve_response_model.dart';
 import '../../data/model/candidate_resume_response_model.dart';
 import '../../data/model/company_applicant_list_response_model.dart';
