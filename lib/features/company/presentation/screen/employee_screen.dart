@@ -21,7 +21,6 @@ class _CompanyEmployeesScreenState extends State<CompanyEmployeesScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      
       await controller.fetchEmployee();
     }); // Hit API once here
   }
@@ -30,7 +29,7 @@ class _CompanyEmployeesScreenState extends State<CompanyEmployeesScreen> {
   Widget build(BuildContext context) {
     return AppScaffold(
       appBar: AppBar(
-         elevation: 0,
+        elevation: 0,
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back_ios_new,
@@ -39,7 +38,8 @@ class _CompanyEmployeesScreenState extends State<CompanyEmployeesScreen> {
           ),
           onPressed: () => Get.back(),
         ),
-        title: const Text("Internal Recruiters")),
+        title: const Text("Internal Recruiters"),
+      ),
       body: Obx(() {
         if (controller.isLoading.value) {
           return const Center(child: CircularProgressIndicator());
@@ -51,8 +51,7 @@ class _CompanyEmployeesScreenState extends State<CompanyEmployeesScreen> {
           return const Center(child: Text("No recruiters found"));
         }
 
-        return 
-        SingleChildScrollView(
+        return SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: IntrinsicWidth(
             // This forces the table to expand
@@ -68,8 +67,10 @@ class _CompanyEmployeesScreenState extends State<CompanyEmployeesScreen> {
                       cells: [
                         DataCell(Text(e.name)),
                         DataCell(Text(e.role)),
-                        DataCell(Icon(Icons.delete_outline, color: Colors.red) ,
-                          onTap: () => controller.removeRecruiter( e.id),),
+                        DataCell(
+                          Icon(Icons.delete_outline, color: Colors.red),
+                          onTap: () => controller.removeRecruiter(e.id),
+                        ),
                       ],
                     ),
                   )

@@ -72,13 +72,12 @@ class BookmarkController extends GetxController {
         dio.options.headers['Authorization'] = 'Bearer $token';
       }
 
-      final jobId = job['id']?.toString() ?? (raw['_id']?.toString() ?? raw['id']?.toString());
+      final jobId =
+          job['id']?.toString() ??
+          (raw['_id']?.toString() ?? raw['id']?.toString());
       final url = '${ApiConstants.baseUrl}/bookmarks';
 
-      final payload = {
-        'userId': userId,
-        'jobId': jobId,
-      };
+      final payload = {'userId': userId, 'jobId': jobId};
 
       DPrint.log('📤 Bookmark POST -> $url');
       DPrint.log('Headers: ${dio.options.headers}');
@@ -86,7 +85,9 @@ class BookmarkController extends GetxController {
 
       final response = await dio.post(url, data: payload);
 
-      DPrint.log('👈 Bookmark POST Response (${response.statusCode}): ${response.data}');
+      DPrint.log(
+        '👈 Bookmark POST Response (${response.statusCode}): ${response.data}',
+      );
 
       // Consider 200/201 as success. The API may return the created bookmark object directly.
       if (response.statusCode == 200 || response.statusCode == 201) {
@@ -95,7 +96,10 @@ class BookmarkController extends GetxController {
         return true;
       }
 
-      Get.snackbar('Error', response.data?['message'] ?? 'Failed to bookmark job');
+      Get.snackbar(
+        'Error',
+        response.data?['message'] ?? 'Failed to bookmark job',
+      );
       return false;
     } catch (e) {
       Get.snackbar('Error', 'Failed to bookmark job');
@@ -133,7 +137,9 @@ class BookmarkController extends GetxController {
 
       final response = await dio.get(url);
 
-      DPrint.log('👈 Bookmark GET Response (${response.statusCode}): ${response.data}');
+      DPrint.log(
+        '👈 Bookmark GET Response (${response.statusCode}): ${response.data}',
+      );
 
       if (response.statusCode == 200) {
         dynamic responseData = response.data;
@@ -144,7 +150,8 @@ class BookmarkController extends GetxController {
           if (responseData is Map<String, dynamic>) {
             if (responseData.containsKey('bookmarks')) {
               bookmarks = responseData['bookmarks'] as List<dynamic>;
-            } else if (responseData.containsKey('data') && responseData['data'] is Map<String, dynamic>) {
+            } else if (responseData.containsKey('data') &&
+                responseData['data'] is Map<String, dynamic>) {
               final inner = responseData['data'] as Map<String, dynamic>;
               bookmarks = inner['bookmarks'] as List<dynamic>? ?? [];
             }
@@ -159,7 +166,9 @@ class BookmarkController extends GetxController {
 
         for (final b in bookmarks) {
           // b may be a bookmark object with 'jobId' or may be the job object itself
-          final jobObj = (b is Map && b.containsKey('jobId')) ? b['jobId'] as Map<String, dynamic>? : (b as Map<String, dynamic>?);
+          final jobObj = (b is Map && b.containsKey('jobId'))
+              ? b['jobId'] as Map<String, dynamic>?
+              : (b as Map<String, dynamic>?);
           if (jobObj == null) continue; // skip bookmarks without job
 
           final raw = jobObj;
@@ -167,12 +176,15 @@ class BookmarkController extends GetxController {
           final company = raw['companyId'] != null
               ? raw['companyId']['cname'] ?? ''
               : (raw['recruiterId'] != null
-                  ? '${raw['recruiterId']['firstName'] ?? ''} ${raw['recruiterId']['sureName'] ?? ''}'.trim()
-                  : '');
+                    ? '${raw['recruiterId']['firstName'] ?? ''} ${raw['recruiterId']['sureName'] ?? ''}'
+                          .trim()
+                    : '');
           final location = raw['location'] ?? '';
           final logoUrl = raw['companyId'] != null
               ? raw['companyId']['clogo'] ?? ''
-              : (raw['recruiterId'] != null ? raw['recruiterId']['photo'] ?? '' : '');
+              : (raw['recruiterId'] != null
+                    ? raw['recruiterId']['photo'] ?? ''
+                    : '');
 
           final snapshot = {
             'id': raw['_id']?.toString() ?? raw['id']?.toString() ?? '',
@@ -219,7 +231,10 @@ class BookmarkController extends GetxController {
 
       // Extract jobId from the job snapshot or its original data
       final raw = job['raw'] ?? job['original']?['raw'] ?? {};
-      final jobId = job['id']?.toString() ?? raw['_id']?.toString() ?? raw['id']?.toString();
+      final jobId =
+          job['id']?.toString() ??
+          raw['_id']?.toString() ??
+          raw['id']?.toString();
 
       DPrint.log('🔍 Job data for unsave:');
       DPrint.log('  job[id]: ${job['id']}');
@@ -230,11 +245,7 @@ class BookmarkController extends GetxController {
 
       final url = '${ApiConstants.baseUrl}/bookmarks/update';
 
-      final payload = {
-        'userId': userId,
-        'jobId': jobId,
-        'bookmarked': false,
-      };
+      final payload = {'userId': userId, 'jobId': jobId, 'bookmarked': false};
 
       DPrint.log('📤 Bookmark UPDATE (unsave) -> $url');
       DPrint.log('Headers: ${dio.options.headers}');
@@ -243,7 +254,9 @@ class BookmarkController extends GetxController {
       // Try PATCH method instead of POST (more RESTful for updates)
       final response = await dio.patch(url, data: payload);
 
-      DPrint.log('👈 Bookmark UPDATE Response (${response.statusCode}): ${response.data}');
+      DPrint.log(
+        '👈 Bookmark UPDATE Response (${response.statusCode}): ${response.data}',
+      );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         // Remove from local list after successful server update
@@ -261,7 +274,7 @@ class BookmarkController extends GetxController {
       DPrint.log('Response Data: ${dioError.response?.data}');
       DPrint.log('Error Message: ${dioError.message}');
       DPrint.log('Error Type: ${dioError.type}');
-      
+
       // Don't show snackbar here - let the caller handle UI feedback
       return false;
     } catch (e, stackTrace) {

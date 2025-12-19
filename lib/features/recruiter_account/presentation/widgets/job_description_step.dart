@@ -12,8 +12,12 @@ class JobDescriptionStep extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<JobPostingController>();
     final htmlController = HtmlEditorController();
-    final jobPostingExpirationController = Get.put(JobPostingExpirationController());
-    jobPostingExpirationController.calculateDeadline(controller.selectedDate.value);
+    final jobPostingExpirationController = Get.put(
+      JobPostingExpirationController(),
+    );
+    jobPostingExpirationController.calculateDeadline(
+      controller.selectedDate.value,
+    );
 
     return Padding(
       padding: const EdgeInsets.all(16.0),
@@ -99,7 +103,8 @@ class JobDescriptionStep extends StatelessWidget {
               //TIP FIRST
               Card(
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8)),
+                  borderRadius: BorderRadius.circular(8),
+                ),
                 elevation: 0,
                 color: Colors.grey.shade50,
                 child: const Padding(
@@ -112,8 +117,9 @@ class JobDescriptionStep extends StatelessWidget {
                         Text(
                           'TIP',
                           style: TextStyle(
-                              color: Colors.blueAccent,
-                              fontWeight: FontWeight.bold),
+                            color: Colors.blueAccent,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         SizedBox(height: 8),
                         Text(
@@ -153,7 +159,8 @@ class JobDescriptionStep extends StatelessWidget {
 
                 return Card(
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12)),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                   elevation: 2,
                   child: Padding(
                     padding: const EdgeInsets.all(12),
@@ -165,20 +172,24 @@ class JobDescriptionStep extends StatelessWidget {
                           const Text(
                             'Schedule Publish',
                             style: TextStyle(
-                                fontSize: 16, fontWeight: FontWeight.bold),
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                           const SizedBox(height: 8),
                           CalendarDatePicker(
                             initialDate: controller.selectedDate.value,
                             firstDate: DateTime.now(),
-                            lastDate: DateTime.now()
-                                .add(const Duration(days: 365)),
+                            lastDate: DateTime.now().add(
+                              const Duration(days: 365),
+                            ),
                             onDateChanged: (date) {
                               controller.updateSelectedDate(date);
 
                               //Update expiration date too
-                              jobPostingExpirationController
-                                  .calculateDeadline(date);
+                              jobPostingExpirationController.calculateDeadline(
+                                date,
+                              );
                             },
                           ),
                           const SizedBox(height: 8),
@@ -187,10 +198,12 @@ class JobDescriptionStep extends StatelessWidget {
                           Obx(() {
                             final publishDate = controller.selectedDate.value;
                             final expireDate = jobPostingExpirationController
-                                .finalDeadlineDate.value;
+                                .finalDeadlineDate
+                                .value;
 
-                            final publishStr =
-                            DateFormat('dd/MM/yyyy').format(publishDate);
+                            final publishStr = DateFormat(
+                              'dd/MM/yyyy',
+                            ).format(publishDate);
 
                             final expireStr = expireDate != null
                                 ? DateFormat('dd/MM/yyyy').format(expireDate)
@@ -216,21 +229,17 @@ class JobDescriptionStep extends StatelessWidget {
           /// LAYOUT
           Widget mainContent = isWide
               ? Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(child: left),
-              const SizedBox(width: 24),
-              SizedBox(width: 320, child: right),
-            ],
-          )
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(child: left),
+                    const SizedBox(width: 24),
+                    SizedBox(width: 320, child: right),
+                  ],
+                )
               : Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              left,
-              const SizedBox(height: 16),
-              right,
-            ],
-          );
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [left, const SizedBox(height: 16), right],
+                );
 
           /// FINAL LAYOUT
           return Column(

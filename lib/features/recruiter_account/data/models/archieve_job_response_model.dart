@@ -47,7 +47,9 @@ class ArchieveJobResponseModel {
       vacancy: json["vacancy"] ?? 0,
       counter: json["counter"] ?? 0,
       embedding: json["embedding"] != null
-          ? List<double>.from(json["embedding"].map((e) => (e as num).toDouble()))
+          ? List<double>.from(
+              json["embedding"].map((e) => (e as num).toDouble()),
+            )
           : [],
     );
   }

@@ -29,8 +29,8 @@ class CareerStageController extends GetxController {
     return careerStageMap.entries
         .firstWhere(
           (e) => e.value == backendValue,
-      orElse: () => const MapEntry('', ''),
-    )
+          orElse: () => const MapEntry('', ''),
+        )
         .key;
   }
 

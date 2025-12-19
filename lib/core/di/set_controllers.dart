@@ -42,10 +42,7 @@ void setupController() {
   );
 
   // Home Controller
-  Get.lazyPut<HomeController>(
-    () => HomeController(Get.find()),
-    fenix: true,
-  );
+  Get.lazyPut<HomeController>(() => HomeController(Get.find()), fenix: true);
 
   // Category Controller
   Get.lazyPut<CategoryController>(
@@ -57,13 +54,9 @@ void setupController() {
     fenix: true,
   );
 
-   Get.lazyPut<CompanyDetailsController>(
+  Get.lazyPut<CompanyDetailsController>(
     () => CompanyDetailsController(Get.find(), Get.find()),
     fenix: true,
   );
-  Get.lazyPut<LocationController>(
-    () => LocationController(),
-    fenix: true,
-  );
- 
+  Get.lazyPut<LocationController>(() => LocationController(), fenix: true);
 }

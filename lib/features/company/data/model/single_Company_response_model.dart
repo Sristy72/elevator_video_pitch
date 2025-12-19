@@ -12,34 +12,35 @@ class SingleCompanyResponseModel {
   });
 
   // FIXED: Now correctly extracts from 'data' field
-// In single_company_response_model.dart
-factory SingleCompanyResponseModel.fromJson(Map<String, dynamic> json) {
-  print("RAW JSON RECEIVED: $json");
+  // In single_company_response_model.dart
+  factory SingleCompanyResponseModel.fromJson(Map<String, dynamic> json) {
+    print("RAW JSON RECEIVED: $json");
 
-  // 'json' is already dataMap, so no need to extract 'data'
-  final meta = json['meta'] is Map<String, dynamic>
-      ? Meta.fromJson(json['meta'])
-      : Meta(currentPage: 1, totalPages: 1, totalItems: 0, itemsPerPage: 10);
+    // 'json' is already dataMap, so no need to extract 'data'
+    final meta = json['meta'] is Map<String, dynamic>
+        ? Meta.fromJson(json['meta'])
+        : Meta(currentPage: 1, totalPages: 1, totalItems: 0, itemsPerPage: 10);
 
-  final companies = (json['companies'] as List?)
-      ?.whereType<Map<String, dynamic>>()
-      .map((e) => Company.fromJson(e))
-      .toList() ?? [];
+    final companies =
+        (json['companies'] as List?)
+            ?.whereType<Map<String, dynamic>>()
+            .map((e) => Company.fromJson(e))
+            .toList() ??
+        [];
 
-  final honors = (json['honors'] as List?)
-      ?.whereType<Map<String, dynamic>>()
-      .map((e) => Honor.fromJson(e))
-      .toList() ?? [];
+    final honors =
+        (json['honors'] as List?)
+            ?.whereType<Map<String, dynamic>>()
+            .map((e) => Honor.fromJson(e))
+            .toList() ??
+        [];
 
-  return SingleCompanyResponseModel(
-    meta: meta,
-    companies: companies,
-    honors: honors,
-  );
-}
-
-
-
+    return SingleCompanyResponseModel(
+      meta: meta,
+      companies: companies,
+      honors: honors,
+    );
+  }
 
   // Map<String, dynamic> toJson() => {
   //       "meta": meta.toJson(),
@@ -84,15 +85,15 @@ class Honor {
   }
 
   Map<String, dynamic> toJson() => {
-        "_id": id,
-        "userId": userId,
-        "title": title,
-        "programeName": programeName,
-        "programeDate": programeDate,
-        "description": description,
-        "createdAt": createdAt.toIso8601String(),
-        "updatedAt": updatedAt.toIso8601String(),
-      };
+    "_id": id,
+    "userId": userId,
+    "title": title,
+    "programeName": programeName,
+    "programeDate": programeDate,
+    "description": description,
+    "createdAt": createdAt.toIso8601String(),
+    "updatedAt": updatedAt.toIso8601String(),
+  };
 }
 
 // Your existing Company class — made slightly safer
@@ -140,52 +141,52 @@ class Company {
   });
 
   factory Company.fromJson(Map<String, dynamic> json) => Company(
-        id: json['_id'] as String,
-        userId: json['userId'] as String,
-        clogo: json['clogo'] as String? ?? '',
-        banner: json['banner'] as String? ?? '',
-        aboutUs: json['aboutUs'] as String? ?? '',
-        slug: json['slug'] as String? ?? '',
-        cname: json['cname'] as String? ?? '',
-        country: json['country'] as String? ?? '',
-        city: json['city'] as String? ?? '',
-        zipcode: json['zipcode']?.toString() ?? '',
-        cemail: json['cemail'] as String? ?? '',
-        sLink: (json['sLink'] as List? ?? [])
-            .map((e) => SocialLink.fromJson(e as Map<String, dynamic>))
-            .toList(),
-        industry: json['industry'] as String? ?? '',
-        service: List<String>.from(json['service'] ?? []),
-        employeesId: List<String>.from(json['employeesId'] ?? []),
-        createdAt: json['createdAt'] as String,
-        updatedAt: json['updatedAt'] as String,
-        v: json['__v'] as int? ?? 0,
-        elevatorPitch: json['elevatorPitch'] != null
-            ? ElevatorPitch.fromJson(json['elevatorPitch'])
-            : null,
-      );
+    id: json['_id'] as String,
+    userId: json['userId'] as String,
+    clogo: json['clogo'] as String? ?? '',
+    banner: json['banner'] as String? ?? '',
+    aboutUs: json['aboutUs'] as String? ?? '',
+    slug: json['slug'] as String? ?? '',
+    cname: json['cname'] as String? ?? '',
+    country: json['country'] as String? ?? '',
+    city: json['city'] as String? ?? '',
+    zipcode: json['zipcode']?.toString() ?? '',
+    cemail: json['cemail'] as String? ?? '',
+    sLink: (json['sLink'] as List? ?? [])
+        .map((e) => SocialLink.fromJson(e as Map<String, dynamic>))
+        .toList(),
+    industry: json['industry'] as String? ?? '',
+    service: List<String>.from(json['service'] ?? []),
+    employeesId: List<String>.from(json['employeesId'] ?? []),
+    createdAt: json['createdAt'] as String,
+    updatedAt: json['updatedAt'] as String,
+    v: json['__v'] as int? ?? 0,
+    elevatorPitch: json['elevatorPitch'] != null
+        ? ElevatorPitch.fromJson(json['elevatorPitch'])
+        : null,
+  );
 
   Map<String, dynamic> toJson() => {
-        "_id": id,
-        "userId": userId,
-        "clogo": clogo,
-        "banner": banner,
-        "aboutUs": aboutUs,
-        "slug": slug,
-        "cname": cname,
-        "country": country,
-        "city": city,
-        "zipcode": zipcode,
-        "cemail": cemail,
-        "sLink": sLink.map((e) => e.toJson()).toList(),
-        "industry": industry,
-        "service": service,
-        "employeesId": employeesId,
-        "createdAt": createdAt,
-        "updatedAt": updatedAt,
-        "__v": v,
-        if (elevatorPitch != null) "elevatorPitch": elevatorPitch!.toJson(),
-      };
+    "_id": id,
+    "userId": userId,
+    "clogo": clogo,
+    "banner": banner,
+    "aboutUs": aboutUs,
+    "slug": slug,
+    "cname": cname,
+    "country": country,
+    "city": city,
+    "zipcode": zipcode,
+    "cemail": cemail,
+    "sLink": sLink.map((e) => e.toJson()).toList(),
+    "industry": industry,
+    "service": service,
+    "employeesId": employeesId,
+    "createdAt": createdAt,
+    "updatedAt": updatedAt,
+    "__v": v,
+    if (elevatorPitch != null) "elevatorPitch": elevatorPitch!.toJson(),
+  };
 }
 
 class SocialLink {
@@ -196,16 +197,12 @@ class SocialLink {
   SocialLink({required this.label, required this.url, required this.id});
 
   factory SocialLink.fromJson(Map<String, dynamic> json) => SocialLink(
-        label: json['label'] as String? ?? '',
-        url: json['url'] as String? ?? '',
-        id: json['_id'] as String,
-      );
+    label: json['label'] as String? ?? '',
+    url: json['url'] as String? ?? '',
+    id: json['_id'] as String,
+  );
 
-  Map<String, dynamic> toJson() => {
-        "label": label,
-        "url": url,
-        "_id": id,
-      };
+  Map<String, dynamic> toJson() => {"label": label, "url": url, "_id": id};
 }
 
 // All your ElevatorPitch classes remain exactly the same — no changes needed
@@ -235,28 +232,28 @@ class ElevatorPitch {
   });
 
   factory ElevatorPitch.fromJson(Map<String, dynamic> json) => ElevatorPitch(
-        video: PitchVideo.fromJson(json['video']),
-        metadata: PitchMetadata.fromJson(json['metadata']),
-        processing: PitchProcessing.fromJson(json['processing']),
-        id: json['_id'] as String,
-        userId: json['userId'] as String,
-        status: json['status'] as String,
-        createdAt: json['createdAt'] as String,
-        updatedAt: json['updatedAt'] as String,
-        v: json['__v'] as int? ?? 0,
-      );
+    video: PitchVideo.fromJson(json['video']),
+    metadata: PitchMetadata.fromJson(json['metadata']),
+    processing: PitchProcessing.fromJson(json['processing']),
+    id: json['_id'] as String,
+    userId: json['userId'] as String,
+    status: json['status'] as String,
+    createdAt: json['createdAt'] as String,
+    updatedAt: json['updatedAt'] as String,
+    v: json['__v'] as int? ?? 0,
+  );
 
   Map<String, dynamic> toJson() => {
-        "video": video.toJson(),
-        "metadata": metadata.toJson(),
-        "processing": processing.toJson(),
-        "_id": id,
-        "userId": userId,
-        "status": status,
-        "createdAt": createdAt,
-        "updatedAt": updatedAt,
-        "__v": v,
-      };
+    "video": video.toJson(),
+    "metadata": metadata.toJson(),
+    "processing": processing.toJson(),
+    "_id": id,
+    "userId": userId,
+    "status": status,
+    "createdAt": createdAt,
+    "updatedAt": updatedAt,
+    "__v": v,
+  };
 }
 
 class PitchVideo {
@@ -277,22 +274,22 @@ class PitchVideo {
   });
 
   factory PitchVideo.fromJson(Map<String, dynamic> json) => PitchVideo(
-        localPaths: LocalPaths.fromJson(json['localPaths']),
-        url: json['url'],
-        hlsUrl: json['hlsUrl'],
-        encryptionKeyUrl: json['encryptionKeyUrl'],
-        rawKey: json['rawKey'],
-        rawBucket: json['rawBucket'],
-      );
+    localPaths: LocalPaths.fromJson(json['localPaths']),
+    url: json['url'],
+    hlsUrl: json['hlsUrl'],
+    encryptionKeyUrl: json['encryptionKeyUrl'],
+    rawKey: json['rawKey'],
+    rawBucket: json['rawBucket'],
+  );
 
   Map<String, dynamic> toJson() => {
-        "localPaths": localPaths.toJson(),
-        "url": url,
-        "hlsUrl": hlsUrl,
-        "encryptionKeyUrl": encryptionKeyUrl,
-        "rawKey": rawKey,
-        "rawBucket": rawBucket,
-      };
+    "localPaths": localPaths.toJson(),
+    "url": url,
+    "hlsUrl": hlsUrl,
+    "encryptionKeyUrl": encryptionKeyUrl,
+    "rawKey": rawKey,
+    "rawBucket": rawBucket,
+  };
 }
 
 class LocalPaths {
@@ -303,16 +300,16 @@ class LocalPaths {
   LocalPaths({this.original, this.hls, this.key});
 
   factory LocalPaths.fromJson(Map<String, dynamic> json) => LocalPaths(
-        original: json['original'],
-        hls: json['hls'],
-        key: json['key'],
-      );
+    original: json['original'],
+    hls: json['hls'],
+    key: json['key'],
+  );
 
   Map<String, dynamic> toJson() => {
-        "original": original,
-        "hls": hls,
-        "key": key,
-      };
+    "original": original,
+    "hls": hls,
+    "key": key,
+  };
 }
 
 class PitchMetadata {
@@ -333,22 +330,22 @@ class PitchMetadata {
   });
 
   factory PitchMetadata.fromJson(Map<String, dynamic> json) => PitchMetadata(
-        duration: json['duration'] as int,
-        format: json['format'] as String,
-        vcodec: json['vcodec'] as String,
-        rotation: json['rotation'] as int,
-        width: json['width'] as int,
-        height: json['height'] as int,
-      );
+    duration: json['duration'] as int,
+    format: json['format'] as String,
+    vcodec: json['vcodec'] as String,
+    rotation: json['rotation'] as int,
+    width: json['width'] as int,
+    height: json['height'] as int,
+  );
 
   Map<String, dynamic> toJson() => {
-        "duration": duration,
-        "format": format,
-        "vcodec": vcodec,
-        "rotation": rotation,
-        "width": width,
-        "height": height,
-      };
+    "duration": duration,
+    "format": format,
+    "vcodec": vcodec,
+    "rotation": rotation,
+    "width": width,
+    "height": height,
+  };
 }
 
 class PitchProcessing {
@@ -372,7 +369,8 @@ class PitchProcessing {
     required this.fileName,
   });
 
-  factory PitchProcessing.fromJson(Map<String, dynamic> json) => PitchProcessing(
+  factory PitchProcessing.fromJson(Map<String, dynamic> json) =>
+      PitchProcessing(
         state: json['state'] as String,
         startedAt: json['startedAt'] as String,
         updatedAt: json['updatedAt'] as String,
@@ -384,13 +382,13 @@ class PitchProcessing {
       );
 
   Map<String, dynamic> toJson() => {
-        "state": state,
-        "startedAt": startedAt,
-        "updatedAt": updatedAt,
-        "completedAt": completedAt,
-        "retries": retries,
-        "error": error,
-        "fileSize": fileSize,
-        "fileName": fileName,
-      };
+    "state": state,
+    "startedAt": startedAt,
+    "updatedAt": updatedAt,
+    "completedAt": completedAt,
+    "retries": retries,
+    "error": error,
+    "fileSize": fileSize,
+    "fileName": fileName,
+  };
 }

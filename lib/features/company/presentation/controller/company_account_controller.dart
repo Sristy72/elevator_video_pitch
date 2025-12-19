@@ -117,27 +117,33 @@ class CompanyAccountController extends BaseController {
   }
 
   List<Map<String, String>> getAwards() {
-  return awardFields.map((fields) {
-    final rawDate = fields['date']?.text.trim() ?? "";
+    return awardFields
+        .map((fields) {
+          final rawDate = fields['date']?.text.trim() ?? "";
 
-    String isoDate = "";
-    if (rawDate.length == 6) {
-      final month = rawDate.substring(0, 2);
-      final year = rawDate.substring(2);
-      isoDate = "$year-$month-01T00:00:00.000Z"; // e.g., 202512 → 2025-12-01T00:00:00.000Z
-    }
+          String isoDate = "";
+          if (rawDate.length == 6) {
+            final month = rawDate.substring(0, 2);
+            final year = rawDate.substring(2);
+            isoDate =
+                "$year-$month-01T00:00:00.000Z"; // e.g., 202512 → 2025-12-01T00:00:00.000Z
+          }
 
-    return {
-      "title": fields['title']?.text.trim() ?? "",
-      "programeName": fields['issuer']?.text.trim() ?? "",     // ← programeName (not programName)
-      "programeDate": isoDate,
-      "description": fields['description']?.text.trim() ?? "",
-    };
-  }).where((award) =>
-      award["title"]!.isNotEmpty || 
-      award["description"]!.isNotEmpty
-  ).toList();
-}
+          return {
+            "title": fields['title']?.text.trim() ?? "",
+            "programeName":
+                fields['issuer']?.text.trim() ??
+                "", // ← programeName (not programName)
+            "programeDate": isoDate,
+            "description": fields['description']?.text.trim() ?? "",
+          };
+        })
+        .where(
+          (award) =>
+              award["title"]!.isNotEmpty || award["description"]!.isNotEmpty,
+        )
+        .toList();
+  }
 
   // --- Employees ---
   void addEmployee() {
@@ -459,7 +465,6 @@ class CompanyAccountController extends BaseController {
     String companyWebsite,
     String services, // comma-separated
     String recruiters, // emails only, comma-separated
-  
   ) async {
     setLoading(true);
     setError('');
@@ -809,8 +814,6 @@ class CompanyAccountController extends BaseController {
         employeeControllers.clear();
         employeeIdMap.clear();
         employeeControllers.add(TextEditingController()); // keep one empty
-
-
 
         // Get.back(); // close dialog
         setLoading(false);

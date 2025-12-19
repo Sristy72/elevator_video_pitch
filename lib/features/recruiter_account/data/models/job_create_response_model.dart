@@ -61,10 +61,12 @@ class JobPostResponseModel {
       salaryRange: json["salaryRange"] ?? '',
       location: json["location"] ?? '',
       shift: json["shift"] ?? '',
-      responsibilities:
-      List<String>.from(json["responsibilities"] ?? <String>[]),
-      educationExperience:
-      List<String>.from(json["educationExperience"] ?? <String>[]),
+      responsibilities: List<String>.from(
+        json["responsibilities"] ?? <String>[],
+      ),
+      educationExperience: List<String>.from(
+        json["educationExperience"] ?? <String>[],
+      ),
       benefits: List<String>.from(json["benefits"] ?? <String>[]),
       vacancy: json["vacancy"] ?? 0,
       experience: json["experience"] ?? '',
@@ -75,15 +77,22 @@ class JobPostResponseModel {
       role: json["role"] ?? '',
       compensation: json["compensation"] ?? '',
       archivedJob: json["archivedJob"] ?? false,
-      applicationRequirement: (json["applicationRequirement"] as List<dynamic>?)
-          ?.map((e) =>
-          ApplicationRequirementResponse.fromJson(e as Map<String, dynamic>))
-          .toList() ??
+      applicationRequirement:
+          (json["applicationRequirement"] as List<dynamic>?)
+              ?.map(
+                (e) => ApplicationRequirementResponse.fromJson(
+                  e as Map<String, dynamic>,
+                ),
+              )
+              .toList() ??
           [],
-      customQuestion: (json["customQuestion"] as List<dynamic>?)
-          ?.map(
-              (e) => CustomQuestionResponse.fromJson(e as Map<String, dynamic>))
-          .toList() ??
+      customQuestion:
+          (json["customQuestion"] as List<dynamic>?)
+              ?.map(
+                (e) =>
+                    CustomQuestionResponse.fromJson(e as Map<String, dynamic>),
+              )
+              .toList() ??
           [],
       employementType: json["employement_Type"] ?? '',
       websiteUrl: json["website_Url"] ?? '',
@@ -113,8 +122,9 @@ class JobPostResponseModel {
       "role": role,
       "compensation": compensation,
       "archivedJob": archivedJob,
-      "applicationRequirement":
-      applicationRequirement.map((e) => e.toJson()).toList(),
+      "applicationRequirement": applicationRequirement
+          .map((e) => e.toJson())
+          .toList(),
       "customQuestion": customQuestion.map((e) => e.toJson()).toList(),
       "employement_Type": employementType,
       "website_Url": websiteUrl,
@@ -142,10 +152,7 @@ class ApplicationRequirementResponse {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      "requirement": requirement,
-      "status": status,
-    };
+    return {"requirement": requirement, "status": status};
   }
 }
 
@@ -155,14 +162,10 @@ class CustomQuestionResponse {
   CustomQuestionResponse({required this.question});
 
   factory CustomQuestionResponse.fromJson(Map<String, dynamic> json) {
-    return CustomQuestionResponse(
-      question: json["question"] ?? '',
-    );
+    return CustomQuestionResponse(question: json["question"] ?? '');
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      "question": question,
-    };
+    return {"question": question};
   }
 }

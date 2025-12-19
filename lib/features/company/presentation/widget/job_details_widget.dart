@@ -22,7 +22,7 @@ class JobTextField extends StatelessWidget {
       children: [
         Text(
           label,
-          style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 15,),
+          style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 15),
         ),
         const SizedBox(height: 6),
         Obx(
@@ -35,8 +35,10 @@ class JobTextField extends StatelessWidget {
               hintText: hint,
               filled: true,
               fillColor: Color(0xFFD9D9D9),
-              contentPadding:
-                  const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+              contentPadding: const EdgeInsets.symmetric(
+                vertical: 12,
+                horizontal: 12,
+              ),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(6),
                 borderSide: BorderSide(color: Color(0xFF484848)),

@@ -38,7 +38,10 @@ class ProfileController extends GetxController {
     }
   }
 
-  Future<void> updateUser(Map<String, dynamic> payload, {File? imageFile}) async {
+  Future<void> updateUser(
+    Map<String, dynamic> payload, {
+    File? imageFile,
+  }) async {
     try {
       _isLoading.value = true;
       _error.value = null;
@@ -64,7 +67,10 @@ class ProfileController extends GetxController {
       }
 
       // Then call the API in background
-      final updated = await repository.updateUser(payload, imageFile: imageFile);
+      final updated = await repository.updateUser(
+        payload,
+        imageFile: imageFile,
+      );
       _user.value = updated;
     } catch (e) {
       _error.value = e.toString();
@@ -72,6 +78,4 @@ class ProfileController extends GetxController {
       _isLoading.value = false;
     }
   }
-
-
 }

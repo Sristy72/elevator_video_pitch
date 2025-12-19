@@ -17,10 +17,7 @@ class ApplicationRequirementStep extends StatelessWidget {
         children: [
           const Text(
             "Application Requirements",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 8),
           const Text(
@@ -40,7 +37,7 @@ class ApplicationRequirementStep extends StatelessWidget {
             );
           }),
 
-          SizedBox(height: 25,),
+          SizedBox(height: 25),
 
           // Valid visa option
           Obx(() {
@@ -68,7 +65,9 @@ class ApplicationRequirementStep extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: ElevatedButton(
-                  onPressed: () {controller.previousStep();},
+                  onPressed: () {
+                    controller.previousStep();
+                  },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
@@ -93,9 +92,14 @@ class ApplicationRequirementStep extends StatelessWidget {
               Container(
                 height: 50,
                 width: 120,
-                decoration: BoxDecoration(color: Color(0xFF2B7FD0), borderRadius: BorderRadius.circular(8)),
+                decoration: BoxDecoration(
+                  color: Color(0xFF2B7FD0),
+                  borderRadius: BorderRadius.circular(8),
+                ),
                 child: ElevatedButton(
-                  onPressed: () {controller.nextStep();},
+                  onPressed: () {
+                    controller.nextStep();
+                  },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
@@ -105,10 +109,14 @@ class ApplicationRequirementStep extends StatelessWidget {
                     shadowColor: Colors.transparent,
                     disabledBackgroundColor: Colors.transparent,
                   ),
-                  child: Text('Next', style: TextStyle(
-                    color: Colors.white,fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                  ),),
+                  child: Text(
+                    'Next',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
                 ),
               ),
             ],
@@ -135,89 +143,98 @@ class _RequirementItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Expanded(
-          child: Row(
-            children: [
-              // Rounded box instead of Checkbox
-              GestureDetector(
-                onTap: () => (){},
-                child: Container(
-                  width: 22,
-                  height: 22,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
+    return Obx(
+      () => Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Row(
+              children: [
+                // Rounded box instead of Checkbox
+                GestureDetector(
+                  onTap: () => () {},
+                  child: Container(
+                    width: 22,
+                    height: 22,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Color(0xFF2B7FD0), width: 2),
                       color: Color(0xFF2B7FD0),
-                      width: 2,
                     ),
-                    color: Color(0xFF2B7FD0),
+                    child: const Icon(
+                      Icons.check,
+                      size: 14,
+                      color: Colors.white,
+                    ),
                   ),
-                  child: const Icon(Icons.check, size: 14, color: Colors.white),
                 ),
-              ),
-              const SizedBox(width: 10),
-              Flexible(
-                child: Text(
-                  label,
-                  style: const TextStyle(fontSize: 16),
-                  overflow: TextOverflow.ellipsis,
+                const SizedBox(width: 10),
+                Flexible(
+                  child: Text(
+                    label,
+                    style: const TextStyle(fontSize: 16),
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(width: 8),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey.shade400),
-            borderRadius: BorderRadius.circular(6),
-          ),
-          child: DropdownButtonHideUnderline(
-            child: DropdownButton<String>(
-              value: selectedStatus.value.isEmpty ? null : selectedStatus.value,
-              hint: const Text("Set status", style: TextStyle(color: Colors.black),),
-              items: const [
-                DropdownMenuItem(value: "Required", child: Text("Required")),
-                DropdownMenuItem(value: "Optional", child: Text("Optional")),
               ],
-              onChanged: (val) {
-                if (val != null) selectedStatus.value = val;
-              },
             ),
           ),
-        ),
-        IconButton(
-          icon: const Icon(Icons.delete_forever_rounded, color: Colors.grey,),
-          color: Colors.grey,
-          onPressed: () {
-            showDialog(
-              context: context,
-              builder: (_) => AlertDialog(
-                title: const Text('Remove requirement'),
-                content: Text('Remove "$label" from application requirements?'),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: const Text('Cancel'),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                      onDelete();
-                    },
-                    child: const Text('Remove'),
-                  ),
+          const SizedBox(width: 8),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey.shade400),
+              borderRadius: BorderRadius.circular(6),
+            ),
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton<String>(
+                value: selectedStatus.value.isEmpty
+                    ? null
+                    : selectedStatus.value,
+                hint: const Text(
+                  "Set status",
+                  style: TextStyle(color: Colors.black),
+                ),
+                items: const [
+                  DropdownMenuItem(value: "Required", child: Text("Required")),
+                  DropdownMenuItem(value: "Optional", child: Text("Optional")),
                 ],
+                onChanged: (val) {
+                  if (val != null) selectedStatus.value = val;
+                },
               ),
-            );
-          },
-        ),
-      ],
-    ));
-
+            ),
+          ),
+          IconButton(
+            icon: const Icon(Icons.delete_forever_rounded, color: Colors.grey),
+            color: Colors.grey,
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (_) => AlertDialog(
+                  title: const Text('Remove requirement'),
+                  content: Text(
+                    'Remove "$label" from application requirements?',
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: const Text('Cancel'),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        onDelete();
+                      },
+                      child: const Text('Remove'),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    );
   }
 }

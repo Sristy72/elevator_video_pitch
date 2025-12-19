@@ -96,9 +96,9 @@ class _SkillsSectionState extends State<SkillsSection> {
       _filteredSkills = _allSkills
           .where(
             (s) =>
-        s.toLowerCase().contains(query) &&
-            !selected.contains(s), // already selected hole dekhabo na
-      )
+                s.toLowerCase().contains(query) &&
+                !selected.contains(s), // already selected hole dekhabo na
+          )
           .take(8)
           .toList();
       _showSuggestions = _filteredSkills.isNotEmpty;
@@ -142,11 +142,9 @@ class _SkillsSectionState extends State<SkillsSection> {
           onChanged: (value) => _onTextChanged(value, controller),
           onSubmitted: (value) => _addSkillFromInput(controller, value),
           decoration: InputDecoration(
-            prefixIcon: Icon(
-              Icons.search,
-              color: Colors.grey[500],
-            ),
-            hintText: 'Search and add skills (e.g., Java, Python, React, JavaScript)',
+            prefixIcon: Icon(Icons.search, color: Colors.grey[500]),
+            hintText:
+                'Search and add skills (e.g., Java, Python, React, JavaScript)',
             hintStyle: TextStyle(color: Colors.grey[500], fontSize: 14),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8),
@@ -172,9 +170,7 @@ class _SkillsSectionState extends State<SkillsSection> {
         // suggestion list (textfield er niche)
         if (_showSuggestions && _filteredSkills.isNotEmpty)
           ConstrainedBox(
-            constraints: const BoxConstraints(
-              maxHeight: 200,
-            ),
+            constraints: const BoxConstraints(maxHeight: 200),
             child: Material(
               elevation: 2,
               borderRadius: BorderRadius.circular(8),
@@ -203,43 +199,35 @@ class _SkillsSectionState extends State<SkillsSection> {
         const SizedBox(height: 8),
 
         // chips / empty message
-        Obx(
-              () {
-            if (controller.skillsList.isEmpty) {
-              return Text(
-                'No skills selected. Start typing to search and add skills.',
-                style: theme.textTheme.bodySmall?.copyWith(
-                  color: Colors.grey[600],
-                ),
-              );
-            }
-
-            return Wrap(
-              spacing: 8,
-              runSpacing: 4,
-              children: List.generate(
-                controller.skillsList.length,
-                    (index) {
-                  final skill = controller.skillsList[index];
-                  return Chip(
-                    label: Text(skill),
-                    shape: const StadiumBorder(),
-                    backgroundColor: const Color(0xFFE5F0FF),
-                    labelStyle: const TextStyle(
-                      color: Color(0xFF2563EB),
-                      fontWeight: FontWeight.w500,
-                    ),
-                    deleteIcon: const Icon(
-                      Icons.close,
-                      size: 16,
-                    ),
-                    onDeleted: () => controller.removeSkill(index),
-                  );
-                },
+        Obx(() {
+          if (controller.skillsList.isEmpty) {
+            return Text(
+              'No skills selected. Start typing to search and add skills.',
+              style: theme.textTheme.bodySmall?.copyWith(
+                color: Colors.grey[600],
               ),
             );
-          },
-        ),
+          }
+
+          return Wrap(
+            spacing: 8,
+            runSpacing: 4,
+            children: List.generate(controller.skillsList.length, (index) {
+              final skill = controller.skillsList[index];
+              return Chip(
+                label: Text(skill),
+                shape: const StadiumBorder(),
+                backgroundColor: const Color(0xFFE5F0FF),
+                labelStyle: const TextStyle(
+                  color: Color(0xFF2563EB),
+                  fontWeight: FontWeight.w500,
+                ),
+                deleteIcon: const Icon(Icons.close, size: 16),
+                onDeleted: () => controller.removeSkill(index),
+              );
+            }),
+          );
+        }),
       ],
     );
   }

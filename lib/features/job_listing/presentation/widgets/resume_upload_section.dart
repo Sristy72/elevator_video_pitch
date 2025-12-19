@@ -22,10 +22,7 @@ class ResumeUploadSection extends StatelessWidget {
       children: [
         const Text(
           'Upload Resume',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
         ),
         const SizedBox(height: 8),
         if (selectedResume == null)
@@ -78,10 +75,7 @@ class ResumeUploadSection extends StatelessWidget {
                       ),
                       Text(
                         '${(selectedResume!.size / 1024).toStringAsFixed(2)} KB',
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.grey[600],
-                        ),
+                        style: TextStyle(fontSize: 12, color: Colors.grey[600]),
                       ),
                     ],
                   ),

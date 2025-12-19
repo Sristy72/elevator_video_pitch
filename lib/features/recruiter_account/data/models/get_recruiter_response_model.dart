@@ -31,7 +31,7 @@ class FetchRecruiterResponseModel {
     required this.emailAddress,
     required this.phoneNumber,
     required this.sLink,
-     this.companyId,
+    this.companyId,
     this.elevatorPitch,
   });
 
@@ -53,14 +53,15 @@ class FetchRecruiterResponseModel {
       sLink: List<SocialLink>.from(
         json["sLink"].map((x) => SocialLink.fromJson(x)),
       ),
-      companyId: json["companyId"] != null ? Company.fromJson(json["companyId"]) : null,
+      companyId: json["companyId"] != null
+          ? Company.fromJson(json["companyId"])
+          : null,
       elevatorPitch: json["elevatorPitch"] != null
           ? ElevatorPitch.fromJson(json["elevatorPitch"])
           : null,
     );
   }
 }
-
 
 class SocialLink {
   final String label;
@@ -69,10 +70,7 @@ class SocialLink {
   SocialLink({required this.label, required this.url});
 
   factory SocialLink.fromJson(Map<String, dynamic> json) {
-    return SocialLink(
-      label: json["label"],
-      url: json["url"],
-    );
+    return SocialLink(label: json["label"], url: json["url"]);
   }
 }
 
@@ -107,16 +105,13 @@ class Company {
   }
 }
 
-
 class ElevatorPitch {
   final ElevatorVideo video;
 
   ElevatorPitch({required this.video});
 
   factory ElevatorPitch.fromJson(Map<String, dynamic> json) {
-    return ElevatorPitch(
-      video: ElevatorVideo.fromJson(json["video"]),
-    );
+    return ElevatorPitch(video: ElevatorVideo.fromJson(json["video"]));
   }
 }
 
@@ -124,10 +119,7 @@ class ElevatorVideo {
   final String? hlsUrl;
   final String? encryptionKeyUrl;
 
-  ElevatorVideo({
-    this.hlsUrl,
-    this.encryptionKeyUrl,
-  });
+  ElevatorVideo({this.hlsUrl, this.encryptionKeyUrl});
 
   factory ElevatorVideo.fromJson(Map<String, dynamic> json) {
     return ElevatorVideo(

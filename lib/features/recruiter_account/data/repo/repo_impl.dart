@@ -59,11 +59,10 @@ class RepoImplementation extends Repo {
         final List<dynamic> jsonList = json as List<dynamic>;
         return jsonList
             .map(
-              (item) =>
-              GetCurrencyResponseModel.fromJson(
+              (item) => GetCurrencyResponseModel.fromJson(
                 item as Map<String, dynamic>,
               ),
-        )
+            )
             .toList();
       },
     );
@@ -71,7 +70,8 @@ class RepoImplementation extends Repo {
 
   @override
   NetworkResult<List<JobPostResponseModel>> createNewJobPost(
-      JobPostRequestModel request,) {
+    JobPostRequestModel request,
+  ) {
     return _apiClient.post(
       ApiConstants.recruiter.createJob,
       data: request.toJson(),
@@ -81,7 +81,7 @@ class RepoImplementation extends Repo {
           return json
               .map(
                 (e) => JobPostResponseModel.fromJson(e as Map<String, dynamic>),
-          )
+              )
               .toList();
         } else if (json is Map<String, dynamic>) {
           // Sometimes API returns a single object
@@ -98,13 +98,11 @@ class RepoImplementation extends Repo {
     return _apiClient.get<List<YourJobResponseModel>>(
       ApiConstants.recruiter.getJob,
       // fromJsonT: (json) => [YourJobResponseModel.fromJson(json)]);
-      fromJsonT: (json) =>
-          (json as List)
-              .map((item) => YourJobResponseModel.fromJson(item))
-              .toList(),
+      fromJsonT: (json) => (json as List)
+          .map((item) => YourJobResponseModel.fromJson(item))
+          .toList(),
     );
   }
-
 
   @override
   NetworkResult<GetSingleJobResponseModel> singleJob(String jobId) {
@@ -115,23 +113,29 @@ class RepoImplementation extends Repo {
     );
   }
 
-
   @override
   NetworkResult<JobUpdateResponseModel> singleJobUpdate(
-      UpdateJobRequest request, String jobId) {
+    UpdateJobRequest request,
+    String jobId,
+  ) {
     return _apiClient.patch(
-      ApiConstants.recruiter.updateSingleJob(jobId), data: request.toJson(),
-      fromJsonT: (json) => JobUpdateResponseModel.fromJson(json),);
+      ApiConstants.recruiter.updateSingleJob(jobId),
+      data: request.toJson(),
+      fromJsonT: (json) => JobUpdateResponseModel.fromJson(json),
+    );
   }
-
 
   @override
-  NetworkResult<ArchieveJobResponseModel>archieveJobUpdate(ArchieveJobRequestModel request, String jobId) {
+  NetworkResult<ArchieveJobResponseModel> archieveJobUpdate(
+    ArchieveJobRequestModel request,
+    String jobId,
+  ) {
     return _apiClient.patch(
-      ApiConstants.recruiter.updateArchieveJob(jobId), data: request.toJson(),
-      fromJsonT: (json) => ArchieveJobResponseModel.fromJson(json),);
+      ApiConstants.recruiter.updateArchieveJob(jobId),
+      data: request.toJson(),
+      fromJsonT: (json) => ArchieveJobResponseModel.fromJson(json),
+    );
   }
-
 
   @override
   NetworkResult<void> uploadVideo(String userId, FormData formData) {
@@ -152,7 +156,8 @@ class RepoImplementation extends Repo {
 
   @override
   NetworkResult<ConnectCompanyResponse> connectCompany(
-      ConnectCompanyRequest request,) {
+    ConnectCompanyRequest request,
+  ) {
     return _apiClient.post(
       ApiConstants.recruiter.connectCompany,
       data: request.toJson(),
@@ -171,7 +176,8 @@ class RepoImplementation extends Repo {
 
   @override
   NetworkResult<CreateRecruiterResponseModel> createRecruiter(
-      FormData formData,) {
+    FormData formData,
+  ) {
     return _apiClient.post(
       ApiConstants.recruiter.createRecruiterAccount,
       formData: formData,
@@ -189,10 +195,11 @@ class RepoImplementation extends Repo {
     );
   }
 
-
   @override
-  NetworkResult<UpdateRecruiterResponseModel> updateRecruiter(String userId,
-      FormData formData,) {
+  NetworkResult<UpdateRecruiterResponseModel> updateRecruiter(
+    String userId,
+    FormData formData,
+  ) {
     DPrint.log("Repo Impl : ${formData.toString()}");
     return _apiClient.patch(
       ApiConstants.recruiter.updateRecruiter(userId),

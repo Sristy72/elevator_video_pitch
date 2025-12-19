@@ -4,11 +4,7 @@ class ContentApiResponse {
   final String message;
   final Map<String, dynamic>? data;
 
-  ContentApiResponse({
-    required this.status,
-    required this.message,
-    this.data,
-  });
+  ContentApiResponse({required this.status, required this.message, this.data});
 
   factory ContentApiResponse.fromJson(Map<String, dynamic> json) {
     return ContentApiResponse(
@@ -20,10 +16,6 @@ class ContentApiResponse {
 
   // Convert to the expected BaseResponse format
   Map<String, dynamic> toBaseResponseFormat() {
-    return {
-      'success': status == 'success',
-      'message': message,
-      'data': data,
-    };
+    return {'success': status == 'success', 'message': message, 'data': data};
   }
 }

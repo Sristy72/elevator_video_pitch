@@ -54,18 +54,15 @@ class ProfileDashboardScreen extends StatelessWidget {
                     Get.to(() => const PaymentHistoryScreen());
                   },
                 ),
-                _menuTile(
-                    "assets/icons/logout.png", "Log out", () {
+                _menuTile("assets/icons/logout.png", "Log out", () {
                   Get.find<AuthController>().logout();
-                }
-                ),
+                }),
 
                 // _menuTile(
                 //     "assets/icons/profile_contactus.png", "Contact Us", () {
                 //   Get.to(() =>  ContactUsScreen(member: EditProfileModel()));
                 // }
                 // ),
-
               ],
             ),
           ),
@@ -77,7 +74,12 @@ class ProfileDashboardScreen extends StatelessWidget {
   Widget _menuTile(String iconPath, String title, VoidCallback onTap) {
     return ListTile(
       onTap: onTap,
-      leading: Image.asset(iconPath, width: 22, height: 24, color: Colors.black,),
+      leading: Image.asset(
+        iconPath,
+        width: 22,
+        height: 24,
+        color: Colors.black,
+      ),
       title: Text(
         title,
         style: const TextStyle(

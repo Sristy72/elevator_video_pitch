@@ -21,7 +21,6 @@ class AppColors {
   static const Color navBarIconActive = Color(0xFF2B7FD0);
   static const Color navBarIconInactive = Color(0xFF171717);
 
-
   // * <--- Home  --->
-  static const Color homeHeadBackground = Color(0xFFFF5F6FF);                      
+  static const Color homeHeadBackground = Color(0xFFFF5F6FF);
 }

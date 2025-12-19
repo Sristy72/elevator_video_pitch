@@ -4,8 +4,6 @@ class StatusUpdateRequestModel {
   StatusUpdateRequestModel({required this.status});
 
   Map<String, dynamic> toJson() {
-    return {
-      "status": status,
-    };
+    return {"status": status};
   }
 }

@@ -71,7 +71,6 @@ class _CandidateDetailsScreenState extends State<CandidateDetailsScreen> {
               const SizedBox(height: 10),
 
               // ==================== HEADER ====================
-           
               Card(
                 elevation: 4,
                 shape: RoundedRectangleBorder(

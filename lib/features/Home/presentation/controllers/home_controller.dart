@@ -46,7 +46,9 @@ class HomeController extends BaseController {
         },
         (success) {
           candidateContent.value = success.data;
-          print('✅ Candidate content fetched successfully: ${success.data.title}');
+          print(
+            '✅ Candidate content fetched successfully: ${success.data.title}',
+          );
         },
       );
     } catch (e, stackTrace) {

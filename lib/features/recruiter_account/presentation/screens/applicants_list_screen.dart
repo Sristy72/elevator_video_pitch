@@ -11,8 +11,6 @@ class ApplicantsListScreen extends StatefulWidget {
 class _ApplicantsListScreenState extends State<ApplicantsListScreen> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-
-    );
+    return Column();
   }
 }

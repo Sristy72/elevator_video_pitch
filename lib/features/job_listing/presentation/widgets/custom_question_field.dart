@@ -33,9 +33,7 @@ class CustomQuestionField extends StatelessWidget {
               if (isRequired)
                 const TextSpan(
                   text: ' *',
-                  style: TextStyle(
-                    color: Colors.red,
-                  ),
+                  style: TextStyle(color: Colors.red),
                 ),
             ],
           ),
@@ -46,9 +44,7 @@ class CustomQuestionField extends StatelessWidget {
           maxLines: maxLines,
           decoration: InputDecoration(
             hintText: hintText,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 12,
               vertical: 12,

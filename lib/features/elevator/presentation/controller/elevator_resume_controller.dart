@@ -29,6 +29,7 @@ class ElevatorResumeController extends GetxController {
   final fiverrController = TextEditingController();
   final portfolioController = TextEditingController();
   final certificationController = TextEditingController();
+  final languageController = TextEditingController();
 
   /// ================== SUBMISSION STATE ==================
   var isSubmitting = false.obs;
@@ -684,7 +685,7 @@ class ElevatorResumeController extends GetxController {
       );
 
       print('📤 Submitting resume...');
-      final result = await _createResumeUseCase!(request);
+      final result = await _createResumeUseCase(request);
 
       result.fold(
         (failure) {

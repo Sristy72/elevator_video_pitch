@@ -21,8 +21,8 @@ class AboutRepositoryImpl implements AboutRepository {
     );
 
     return response.fold(
-          (failure) => Left(failure),
-          (success) => Right(success.data as NetworkSuccess<AboutContentModel>),
+      (failure) => Left(failure),
+      (success) => Right(success.data as NetworkSuccess<AboutContentModel>),
     );
   }
 }

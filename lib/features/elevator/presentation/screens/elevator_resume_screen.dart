@@ -635,8 +635,8 @@ class ElevatorResumeScreen extends StatelessWidget {
                                     .map(
                                       (cert) => Chip(
                                         label: Text(cert),
-                                        onDeleted: () =>
-                                            controller.removeCertification(cert),
+                                        onDeleted: () => controller
+                                            .removeCertification(cert),
                                         backgroundColor: Colors.grey[100],
                                       ),
                                     )

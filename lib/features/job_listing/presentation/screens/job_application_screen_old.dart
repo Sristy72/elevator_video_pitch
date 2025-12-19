@@ -35,8 +35,6 @@
 //   late final GetUserProfileUseCase _getUserProfileUseCase;
 //   late final SubmitJobApplicationUseCase _submitJobApplicationUseCase;
 
-
-
 //   @override
 //   void initState() {
 //     super.initState();
@@ -50,7 +48,7 @@
 
 //     try {
 //       final result = await _getUserProfileUseCase.call();
-      
+
 //       result.fold(
 //         (failure) {
 //           setState(() => isLoadingProfile = false);
@@ -146,7 +144,7 @@
 
 //       // Create the destination path
 //       final String newPath = '$documentsPath/${file.name}';
-      
+
 //       // Copy the file
 //       final File sourceFile = File(file.path!);
 //       await sourceFile.copy(newPath);
@@ -188,7 +186,7 @@
 //       // Get userId from secure storage
 //       final secureStore = SecureStoreServices();
 //       final userId = await secureStore.retrieveData(KeyConstants.userId);
-      
+
 //       if (userId == null || userId.isEmpty) {
 //         Get.snackbar(
 //           'Error',
@@ -202,10 +200,10 @@
 //       }
 
 //       final jobId = widget.jobData['_id'] ?? widget.jobData['id'] ?? '';
-      
+
 //       // Using placeholder resumeId
 //       final resumeId = selectedResume?.name ?? 'temp-resume-id';
-      
+
 //       final request = JobApplicationRequest(
 //         jobId: jobId,
 //         userId: userId,
@@ -233,7 +231,7 @@
 //             backgroundColor: Colors.green,
 //             colorText: Colors.white,
 //           );
-          
+
 //           // Navigate to success screen or plan pricing
 //           Get.to(() => PlanPricingScreen());
 //         },
@@ -288,14 +286,14 @@
 //                       : CircleAvatar(
 //                           radius: 50,
 //                           backgroundColor: Colors.grey[300],
-//                           backgroundImage: (userProfile?.avatarUrl != null && 
+//                           backgroundImage: (userProfile?.avatarUrl != null &&
 //                                   userProfile!.avatarUrl!.isNotEmpty)
 //                               ? NetworkImage(userProfile!.avatarUrl!)
 //                               : null,
-//                           child: (userProfile?.avatarUrl == null || 
+//                           child: (userProfile?.avatarUrl == null ||
 //                                   userProfile!.avatarUrl!.isEmpty)
 //                               ? Icon(
-//                                   Icons.person, 
+//                                   Icons.person,
 //                                   size: 60,
 //                                   color: Colors.grey[600],
 //                                 )
@@ -331,7 +329,7 @@
 //                 ],
 //               ),
 //             ),
-            
+
 //             const SizedBox(height: 32),
 
 //             // Contact Information
@@ -350,7 +348,7 @@
 //                         isLoadingProfile
 //                             ? 'Loading...'
 //                             : (userProfile?.address != null && userProfile!.address.isNotEmpty
-//                                 ? userProfile!.address 
+//                                 ? userProfile!.address
 //                                 : 'Location not provided'),
 //                       ),
 //                     ],
@@ -369,7 +367,7 @@
 //                         isLoadingProfile
 //                             ? 'Loading...'
 //                             : (userProfile?.email != null && userProfile!.email.isNotEmpty
-//                                 ? userProfile!.email 
+//                                 ? userProfile!.email
 //                                 : 'Email not provided'),
 //                       ),
 //                     ],
@@ -384,7 +382,7 @@
 //               style: TextStyle(fontWeight: FontWeight.w600),
 //             ),
 //             const SizedBox(height: 20),
-            
+
 //             // Elevator Pitch URL
 //             const Text(
 //               'Elevator Pitch URL',
@@ -489,7 +487,7 @@
 //                   ],
 //                 ),
 //               ),
-            
+
 //             const SizedBox(height: 12),
 //             ElevatedButton(
 //               onPressed: _pickResume,

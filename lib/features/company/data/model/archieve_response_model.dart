@@ -92,16 +92,18 @@ class ArchieveResponseModel {
       salaryRange: json['salaryRange'] as String? ?? '',
       location: json['location'] as String? ?? '',
       shift: json['shift'] as String? ?? '',
-      responsibilities: (json['responsibilities'] as List<dynamic>?)
+      responsibilities:
+          (json['responsibilities'] as List<dynamic>?)
               ?.map((e) => e.toString())
               .toList() ??
           <String>[],
       educationExperience:
           (json['educationExperience'] as List<dynamic>?)
-                  ?.map((e) => e.toString())
-                  .toList() ??
-              <String>[],
-      benefits: (json['benefits'] as List<dynamic>?)
+              ?.map((e) => e.toString())
+              .toList() ??
+          <String>[],
+      benefits:
+          (json['benefits'] as List<dynamic>?)
               ?.map((e) => e.toString())
               .toList() ??
           <String>[],
@@ -126,11 +128,14 @@ class ArchieveResponseModel {
           : (json['arcrivedJob']?.toString().toLowerCase() == 'true'),
       applicationRequirement:
           (json['applicationRequirement'] as List<dynamic>?)
-                  ?.map((e) => ApplicationRequirement.fromJson(
-                      e as Map<String, dynamic>))
-                  .toList() ??
-              <ApplicationRequirement>[],
-      customQuestion: (json['customQuestion'] as List<dynamic>?)
+              ?.map(
+                (e) =>
+                    ApplicationRequirement.fromJson(e as Map<String, dynamic>),
+              )
+              .toList() ??
+          <ApplicationRequirement>[],
+      customQuestion:
+          (json['customQuestion'] as List<dynamic>?)
               ?.map((e) => CustomQuestion.fromJson(e as Map<String, dynamic>))
               .toList() ??
           <CustomQuestion>[],
@@ -148,7 +153,9 @@ class ArchieveResponseModel {
       deactivatedAt: _parseNullableDate(json['deactivatedAt']),
       createdAt: _parseNullableDate(json['createdAt']),
       updatedAt: _parseNullableDate(json['updatedAt']),
-      v: (json['__v'] is int) ? json['__v'] as int : int.tryParse(json['__v']?.toString() ?? '') ?? 0,
+      v: (json['__v'] is int)
+          ? json['__v'] as int
+          : int.tryParse(json['__v']?.toString() ?? '') ?? 0,
     );
   }
 
@@ -176,8 +183,9 @@ class ArchieveResponseModel {
       'role': role,
       'compensation': compensation,
       'arcrivedJob': arcrivedJob,
-      'applicationRequirement':
-          applicationRequirement.map((e) => e.toJson()).toList(),
+      'applicationRequirement': applicationRequirement
+          .map((e) => e.toJson())
+          .toList(),
       'customQuestion': customQuestion.map((e) => e.toJson()).toList(),
       'jobApprove': jobApprove,
       'adminApprove': adminApprove,
@@ -229,11 +237,7 @@ class ApplicationRequirement {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'requirement': requirement,
-      'status': status,
-      '_id': id,
-    };
+    return {'requirement': requirement, 'status': status, '_id': id};
   }
 
   @override
@@ -245,10 +249,7 @@ class CustomQuestion {
   final String question;
   final String id;
 
-  CustomQuestion({
-    required this.question,
-    required this.id,
-  });
+  CustomQuestion({required this.question, required this.id});
 
   factory CustomQuestion.fromJson(Map<String, dynamic> json) {
     return CustomQuestion(
@@ -258,10 +259,7 @@ class CustomQuestion {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'question': question,
-      '_id': id,
-    };
+    return {'question': question, '_id': id};
   }
 
   @override

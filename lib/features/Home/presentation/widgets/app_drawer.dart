@@ -45,12 +45,13 @@ class _AppDrawerState extends State<AppDrawer> {
             ListTileForNav(
               title: "Elevator Pitch & Resume",
               onTap: () {
-                Get.to (()=> ElevatorResumeScreen ());
+                Get.to(() => ElevatorResumeScreen());
               },
             ),
             ListTileForNav(
               title: "Jobs",
-              liconPath: "assets/icons/list.png", // Reusing list icon or suitable one
+              liconPath:
+                  "assets/icons/list.png", // Reusing list icon or suitable one
               onTap: () {
                 Get.to(() => const AllJobsScreen());
               },
@@ -58,7 +59,7 @@ class _AppDrawerState extends State<AppDrawer> {
             ListTileForNav(
               title: "Blogs",
               onTap: () {
-                Get.to (()=> BlogScreen());
+                Get.to(() => BlogScreen());
               },
             ),
 
@@ -84,28 +85,28 @@ class _AppDrawerState extends State<AppDrawer> {
                       liconPath: "assets/icons/home.png",
                       title: "About Us",
                       onTap: () {
-                       Get.to(()=> AboutUs());
+                        Get.to(() => AboutUs());
                       },
                     ),
                     ListTileForNav(
                       liconPath: "assets/icons/list.png",
                       title: "Privacy Policy",
                       onTap: () {
-                        Get.to(()=> PrivacyPolicy());
+                        Get.to(() => PrivacyPolicy());
                       },
                     ),
                     ListTileForNav(
                       liconPath: "assets/icons/book-open-01.png",
                       title: "Terms & Conditions",
                       onTap: () {
-                        Get.to(()=> TermsandConditions());
+                        Get.to(() => TermsandConditions());
                       },
                     ),
                     ListTileForNav(
                       liconPath: "assets/icons/Icon (5).png",
                       title: "Frequently Asked Questions",
                       onTap: () {
-                        Get.to(()=> FrequentlyQuestions());
+                        Get.to(() => FrequentlyQuestions());
                       },
                     ),
 
@@ -113,10 +114,11 @@ class _AppDrawerState extends State<AppDrawer> {
                       liconPath: "assets/icons/contactus.png",
                       title: "Contact Us",
                       onTap: () {
-                        Get.to(()=> ContactUsScreen(member: EditProfileModel()));
+                        Get.to(
+                          () => ContactUsScreen(member: EditProfileModel()),
+                        );
                       },
                     ),
-                    
                   ],
                 ),
               ),
@@ -144,7 +146,7 @@ class _AppDrawerState extends State<AppDrawer> {
                       liconPath: "assets/icons/home.png",
                       title: "My Profile",
                       onTap: () {
-                        Get.to(()=> PersonalInfoScreen());
+                        Get.to(() => PersonalInfoScreen());
                       },
                     ),
                     ListTileForNav(

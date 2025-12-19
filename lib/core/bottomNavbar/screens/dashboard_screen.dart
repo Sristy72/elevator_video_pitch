@@ -10,8 +10,8 @@ class DashboardScreen extends StatelessWidget {
   DashboardScreen({super.key});
 
   // Try to find existing controller, or create new one
-  final BottomNavController navController = 
-    Get.isRegistered<BottomNavController>() 
+  final BottomNavController navController =
+      Get.isRegistered<BottomNavController>()
       ? Get.find<BottomNavController>()
       : Get.put(BottomNavController());
 

@@ -34,15 +34,18 @@ class ResumeData {
   factory ResumeData.fromJson(Map<String, dynamic> json) {
     return ResumeData(
       resume: Resume.fromJson(json['resume']),
-      experiences: (json['experiences'] as List?)
+      experiences:
+          (json['experiences'] as List?)
               ?.map((e) => Experience.fromJson(e))
               .toList() ??
           [],
-      education: (json['education'] as List?)
+      education:
+          (json['education'] as List?)
               ?.map((e) => Education.fromJson(e))
               .toList() ??
           [],
-      awardsAndHonors: (json['awardsAndHonors'] as List?)
+      awardsAndHonors:
+          (json['awardsAndHonors'] as List?)
               ?.map((e) => Award.fromJson(e))
               .toList() ??
           [],

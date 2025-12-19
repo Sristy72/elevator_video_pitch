@@ -20,15 +20,17 @@ class ContentRepositoryImpl implements ContentRepository {
     try {
       // Get the dio instance directly to bypass BaseResponse parsing
       final dio = Dio();
-      
+
       // Copy headers from the API client
       dio.options.headers.addAll({
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       });
-      
+
       // Add authorization header if available
-      final token = await _secureStoreServices.retrieveData(KeyConstants.accessToken);
+      final token = await _secureStoreServices.retrieveData(
+        KeyConstants.accessToken,
+      );
       if (token != null && token.isNotEmpty) {
         dio.options.headers['Authorization'] = 'Bearer $token';
       }
@@ -38,26 +40,30 @@ class ContentRepositoryImpl implements ContentRepository {
       );
 
       final responseData = response.data;
-      
+
       // Handle the custom response format: {status: "success", data: {...}}
       if (responseData['status'] == 'success' && responseData['data'] != null) {
         final contentData = ContentResponse.fromJson(responseData['data']);
-        return Right(NetworkSuccess(
-          data: contentData,
-          message: responseData['message'] ?? 'Content retrieved successfully',
-          statusCode: response.statusCode ?? 200,
-        ));
+        return Right(
+          NetworkSuccess(
+            data: contentData,
+            message:
+                responseData['message'] ?? 'Content retrieved successfully',
+            statusCode: response.statusCode ?? 200,
+          ),
+        );
       } else {
-        return Left(NetworkFailure(
-          message: responseData['message'] ?? 'Failed to fetch content',
-          statusCode: response.statusCode ?? 400,
-        ));
+        return Left(
+          NetworkFailure(
+            message: responseData['message'] ?? 'Failed to fetch content',
+            statusCode: response.statusCode ?? 400,
+          ),
+        );
       }
     } catch (e) {
-      return Left(NetworkFailure(
-        message: 'Failed to fetch content: $e',
-        statusCode: 500,
-      ));
+      return Left(
+        NetworkFailure(message: 'Failed to fetch content: $e', statusCode: 500),
+      );
     }
   }
 }

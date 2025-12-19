@@ -18,16 +18,16 @@ class RecruiterPageScreen extends StatefulWidget {
 }
 
 class _RecruiterPageScreenState extends State<RecruiterPageScreen> {
-  final RecruiterController recruiterController = Get.find<RecruiterController>();
+  final RecruiterController recruiterController =
+      Get.find<RecruiterController>();
   final ScrollController horizontalScrollController = ScrollController();
-
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await recruiterController.fetchProfile();
-      await recruiterController.getJob();   // <-- ADD THIS LINE
+      await recruiterController.getJob(); // <-- ADD THIS LINE
     });
   }
 
@@ -44,7 +44,9 @@ class _RecruiterPageScreenState extends State<RecruiterPageScreen> {
         backgroundColor: const Color(0xFF2B7FD0),
         elevation: 0,
 
-        iconTheme: const IconThemeData(color: Colors.white), // <-- Drawer icon visible
+        iconTheme: const IconThemeData(
+          color: Colors.white,
+        ), // <-- Drawer icon visible
       ),
       body: SafeArea(
         child: Obx(() {
@@ -63,7 +65,7 @@ class _RecruiterPageScreenState extends State<RecruiterPageScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 10,),
+                SizedBox(height: 10),
                 // Banner + Photo + Edit Button
                 SizedBox(
                   height: 300,
@@ -82,9 +84,9 @@ class _RecruiterPageScreenState extends State<RecruiterPageScreen> {
                             color: Colors.grey.shade300,
                             image: user.banner.isNotEmpty
                                 ? DecorationImage(
-                              image: NetworkImage(user.banner),
-                              fit: BoxFit.cover,
-                            )
+                                    image: NetworkImage(user.banner),
+                                    fit: BoxFit.cover,
+                                  )
                                 : null,
                           ),
                         ),
@@ -103,9 +105,9 @@ class _RecruiterPageScreenState extends State<RecruiterPageScreen> {
                             color: Colors.grey.shade300,
                             image: user.photo.isNotEmpty
                                 ? DecorationImage(
-                              image: NetworkImage(user.photo),
-                              fit: BoxFit.cover,
-                            )
+                                    image: NetworkImage(user.photo),
+                                    fit: BoxFit.cover,
+                                  )
                                 : null,
                           ),
                         ),
@@ -154,7 +156,10 @@ class _RecruiterPageScreenState extends State<RecruiterPageScreen> {
                     const SizedBox(height: 6),
                     Text(
                       user.title,
-                      style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                      style: const TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                     const SizedBox(height: 6),
                     Text(
@@ -184,17 +189,25 @@ class _RecruiterPageScreenState extends State<RecruiterPageScreen> {
                   spacing: 8,
                   runSpacing: 8,
                   children: (user.sLink)
-                      .map((link) => GestureDetector(
-                    onTap: () async {
-                      final Uri url = Uri.parse(link.url ?? '');
-                      if (await canLaunchUrl(url)) {
-                        await launchUrl(url, mode: LaunchMode.externalApplication);
-                      } else {
-                        Get.snackbar('Error', 'Could not open ${link.url}');
-                      }
-                    },
-                    child: SocialMedia(image: _getSocialIcon(link.label)),
-                  ))
+                      .map(
+                        (link) => GestureDetector(
+                          onTap: () async {
+                            final Uri url = Uri.parse(link.url ?? '');
+                            if (await canLaunchUrl(url)) {
+                              await launchUrl(
+                                url,
+                                mode: LaunchMode.externalApplication,
+                              );
+                            } else {
+                              Get.snackbar(
+                                'Error',
+                                'Could not open ${link.url}',
+                              );
+                            }
+                          },
+                          child: SocialMedia(image: _getSocialIcon(link.label)),
+                        ),
+                      )
                       .toList(),
                 ),
 
@@ -279,9 +292,9 @@ class _RecruiterPageScreenState extends State<RecruiterPageScreen> {
                 ),
                 const SizedBox(height: 20),
 
-                Divider(color: Color(0xFF999999),),
+                Divider(color: Color(0xFF999999)),
 
-                SizedBox(height: 20,),
+                SizedBox(height: 20),
                 Container(
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -306,7 +319,8 @@ class _RecruiterPageScreenState extends State<RecruiterPageScreen> {
                         'Accept': '*/*',
                         'Accept-Encoding': 'identity',
 
-                        "Authorization": "Bearer ${user.elevatorPitch?.video.encryptionKeyUrl}",
+                        "Authorization":
+                            "Bearer ${user.elevatorPitch?.video.encryptionKeyUrl}",
                         "Custom-Header": "value",
                       },
                     ),
@@ -438,7 +452,6 @@ class _RecruiterPageScreenState extends State<RecruiterPageScreen> {
                 //
                 //
                 // }),
-
               ],
             ),
           );
@@ -466,7 +479,6 @@ class _RecruiterPageScreenState extends State<RecruiterPageScreen> {
     }
   }
 
-
   // /// Safe date formatter — accepts String or DateTime (or null)
   // String formatDate(dynamic date) {
   //   if (date == null) return '';
@@ -485,5 +497,4 @@ class _RecruiterPageScreenState extends State<RecruiterPageScreen> {
   //     return date.toString();
   //   }
   // }
-
 }

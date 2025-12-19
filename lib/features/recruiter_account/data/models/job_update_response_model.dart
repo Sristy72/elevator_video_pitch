@@ -33,7 +33,8 @@ class JobUpdateResponseModel {
     required this.careerStage,
     required this.deadline,
     required this.applicationRequirement,
-    required this.customQuestion, required this.website_Url,
+    required this.customQuestion,
+    required this.website_Url,
   });
 
   factory JobUpdateResponseModel.fromJson(Map<String, dynamic> json) {
@@ -56,14 +57,15 @@ class JobUpdateResponseModel {
           : null,
       applicationRequirement: json['applicationRequirement'] != null
           ? (json['applicationRequirement'] as List)
-          .map((e) => ApplicationRequirement.fromJson(e))
-          .toList()
+                .map((e) => ApplicationRequirement.fromJson(e))
+                .toList()
           : [],
       customQuestion: json['customQuestion'] != null
           ? (json['customQuestion'] as List)
-          .map((e) => CustomQuestion.fromJson(e))
-          .toList()
-          : [], website_Url: json['website_Url'],
+                .map((e) => CustomQuestion.fromJson(e))
+                .toList()
+          : [],
+      website_Url: json['website_Url'],
     );
   }
 }
@@ -92,10 +94,7 @@ class CustomQuestion {
   final String question;
   final String id;
 
-  CustomQuestion({
-    required this.question,
-    required this.id,
-  });
+  CustomQuestion({required this.question, required this.id});
 
   factory CustomQuestion.fromJson(Map<String, dynamic> json) {
     return CustomQuestion(

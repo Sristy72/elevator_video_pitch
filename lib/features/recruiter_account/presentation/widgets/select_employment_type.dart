@@ -4,10 +4,7 @@ import '../../../../core/theme/input_decoration_extensions.dart';
 import '../controller/job_controller/employment_type_controller.dart';
 
 class SelectEmploymentType extends StatelessWidget {
-  const SelectEmploymentType({
-    super.key,
-    required this.employeeController,
-  });
+  const SelectEmploymentType({super.key, required this.employeeController});
 
   final EmploymentTypeController employeeController;
 
@@ -30,16 +27,16 @@ class SelectEmploymentType extends StatelessWidget {
       items: employeeController.employmentTypes
           .map(
             (type) => DropdownMenuItem<String>(
-          value: type,
-          child: Text(
-            type,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w400,
+              value: type,
+              child: Text(
+                type,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
             ),
-          ),
-        ),
-      )
+          )
           .toList(),
       onChanged: (value) {
         employeeController.selectedEmploymentType.value = value ?? '';

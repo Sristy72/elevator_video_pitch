@@ -310,12 +310,9 @@ class _ManageJobPostScreenState extends State<ManageJobPostScreen> {
                     );
                   }).toList(),
                 ),
-              
               ],
             ),
           ),
-
-   
         );
       }),
     );

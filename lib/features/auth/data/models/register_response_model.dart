@@ -25,7 +25,8 @@ class RegisterResponseModel {
 
   factory RegisterResponseModel.fromJson(Map<String, dynamic> json) {
     return RegisterResponseModel(
-      profileImage: json['profileImage'] ?? "", // fallback to empty string if null
+      profileImage:
+          json['profileImage'] ?? "", // fallback to empty string if null
       role: json['role'] ?? "",
       isVerified: json['isVerified'] ?? false,
       otp: json['otp'],

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controller/experience_controller.dart';
 
-
 class ExperienceDropdown extends StatelessWidget {
   ExperienceDropdown({super.key});
   final ExperienceController controller = Get.put(ExperienceController());
@@ -14,38 +13,34 @@ class ExperienceDropdown extends StatelessWidget {
     "10+ years",
   ];
 
-
   @override
   Widget build(BuildContext context) {
     return Obx(() {
       return DropdownButtonFormField<String>(
         decoration: InputDecoration(
           border: OutlineInputBorder(
-            borderSide: BorderSide(
-              color: Color(0xFF999999)
-            ),
+            borderSide: BorderSide(color: Color(0xFF999999)),
             borderRadius: BorderRadius.circular(8),
           ),
 
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-                color: Color(0xFF999999)
-            ),
+            borderSide: BorderSide(color: Color(0xFF999999)),
             borderRadius: BorderRadius.circular(8),
           ),
 
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(
-                color: Colors.black
-            ),
+            borderSide: BorderSide(color: Colors.black),
             borderRadius: BorderRadius.circular(8),
-          )
+          ),
         ),
-        hint: Text("Select Experience", style: TextStyle(
-          color: Color(0xFF787878),
-          fontSize: 14,
-          fontWeight: FontWeight.w400,
-        ),),
+        hint: Text(
+          "Select Experience",
+          style: TextStyle(
+            color: Color(0xFF787878),
+            fontSize: 14,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
         value: controller.selectedExperience.value.isEmpty
             ? null
             : controller.selectedExperience.value,
@@ -53,10 +48,7 @@ class ExperienceDropdown extends StatelessWidget {
           controller.selectedExperience.value = newValue ?? '';
         },
         items: experiences.map((experience) {
-          return DropdownMenuItem(
-            value: experience,
-            child: Text(experience),
-          );
+          return DropdownMenuItem(value: experience, child: Text(experience));
         }).toList(),
       );
     });

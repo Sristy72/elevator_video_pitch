@@ -38,7 +38,10 @@ class MultiFormDataManager {
   }
 
   // Add documents from PlatformFile with a custom key
-  Future<void> addDocuments(List<PlatformFile> files, {required String key}) async {
+  Future<void> addDocuments(
+    List<PlatformFile> files, {
+    required String key,
+  }) async {
     fileData.putIfAbsent(key, () => []);
     for (var file in files) {
       if (file.path != null) {
@@ -78,7 +81,9 @@ class MultiFormDataManager {
 
   // Remove file by index for a specific key
   void removeFileAt(String key, int index) {
-    if (fileData.containsKey(key) && index >= 0 && index < fileData[key]!.length) {
+    if (fileData.containsKey(key) &&
+        index >= 0 &&
+        index < fileData[key]!.length) {
       fileData[key]!.removeAt(index);
       if (fileData[key]!.isEmpty) {
         fileData.remove(key); // Clean up empty key
@@ -140,13 +145,15 @@ class MultiFormDataManager {
     // Add files with their respective keys
     fileData.forEach((key, files) {
       for (var i = 0; i < files.length; i++) {
-        formData.files.add(MapEntry(
-          key,
-          MultipartFile.fromFileSync(
-            files[i].path,
-            filename: _getFileName(files[i], '${key}_$i'),
+        formData.files.add(
+          MapEntry(
+            key,
+            MultipartFile.fromFileSync(
+              files[i].path,
+              filename: _getFileName(files[i], '${key}_$i'),
+            ),
           ),
-        ));
+        );
       }
     });
 
@@ -167,13 +174,15 @@ class MultiFormDataManager {
       final key = entry.key;
       final files = entry.value;
       for (var i = 0; i < files.length; i++) {
-        formData.files.add(MapEntry(
-          key,
-          await MultipartFile.fromFile(
-            files[i].path,
-            filename: _getFileName(files[i], '${key}_$i'),
+        formData.files.add(
+          MapEntry(
+            key,
+            await MultipartFile.fromFile(
+              files[i].path,
+              filename: _getFileName(files[i], '${key}_$i'),
+            ),
           ),
-        ));
+        );
       }
     }
 
@@ -183,7 +192,8 @@ class MultiFormDataManager {
   // Enhanced method with validation
   Future<FormData> toFormDataWithValidation({
     int maxFileSize = 10 * 1024 * 1024, // 10MB default
-    Map<String, List<String>> allowedFileTypes = const {}, // Map of key to allowed extensions
+    Map<String, List<String>> allowedFileTypes =
+        const {}, // Map of key to allowed extensions
   }) async {
     final formData = FormData();
     final errors = <String>[];
@@ -200,30 +210,49 @@ class MultiFormDataManager {
     for (var entry in fileData.entries) {
       final key = entry.key;
       final files = entry.value;
-      final allowedTypes = allowedFileTypes[key] ?? ['jpg', 'jpeg', 'png', 'gif', 'webp', 'pdf', 'doc', 'docx', 'txt', 'rtf'];
+      final allowedTypes =
+          allowedFileTypes[key] ??
+          [
+            'jpg',
+            'jpeg',
+            'png',
+            'gif',
+            'webp',
+            'pdf',
+            'doc',
+            'docx',
+            'txt',
+            'rtf',
+          ];
 
       for (var i = 0; i < files.length; i++) {
         final file = files[i];
         final extension = _getFileExtension(file.path);
 
         if (!allowedTypes.contains(extension.toLowerCase())) {
-          errors.add('File ${file.path} for key "$key" has invalid type: $extension');
+          errors.add(
+            'File ${file.path} for key "$key" has invalid type: $extension',
+          );
           continue;
         }
 
         final length = await file.length();
         if (length > maxFileSize) {
-          errors.add('File ${file.path} for key "$key" exceeds maximum size (${maxFileSize ~/ (1024 * 1024)}MB)');
+          errors.add(
+            'File ${file.path} for key "$key" exceeds maximum size (${maxFileSize ~/ (1024 * 1024)}MB)',
+          );
           continue;
         }
 
-        formData.files.add(MapEntry(
-          key,
-          await MultipartFile.fromFile(
-            file.path,
-            filename: _getFileName(file, '${key}_$i'),
+        formData.files.add(
+          MapEntry(
+            key,
+            await MultipartFile.fromFile(
+              file.path,
+              filename: _getFileName(file, '${key}_$i'),
+            ),
           ),
-        ));
+        );
       }
     }
 
@@ -238,7 +267,9 @@ class MultiFormDataManager {
   String _getFileName(File file, String fallbackName) {
     final path = file.path;
     final fileName = path.split('/').last;
-    return fileName.isNotEmpty ? fileName : '$fallbackName.${_getFileExtension(path)}';
+    return fileName.isNotEmpty
+        ? fileName
+        : '$fallbackName.${_getFileExtension(path)}';
   }
 
   // Helper method to get file extension

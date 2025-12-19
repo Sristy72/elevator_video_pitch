@@ -28,7 +28,7 @@ class CompanyDetailsController extends BaseController {
   // Change from Rxn (problematic) to Rx with explicit null
   final userInfo = Rx<SingleCompanyResponseModel?>(null);
   final employee = Rx<EmployeeFetchSingleModel?>(null);
-    var resume = <ResumeUpdatedResponseModel>[].obs;
+  var resume = <ResumeUpdatedResponseModel>[].obs;
   final remove = Rx<RemoveRecruiterResponseModel?>(
     null,
   ); // <AllUserResponseModel>
@@ -330,30 +330,29 @@ class CompanyDetailsController extends BaseController {
     );
   }
 
+  Future<void> fetchResume(String candidateUserId) async {
+    setLoading(true);
+    setError("");
 
-Future<void> fetchResume(String candidateUserId) async {
-  setLoading(true);
-  setError("");
+    if (candidateUserId.isEmpty) {
+      setError('Invalid candidate ID');
+      setLoading(false);
+      return;
+    }
 
-  if (candidateUserId.isEmpty) {
-    setError('Invalid candidate ID');
-    setLoading(false);
-    return;
+    final result = await _companyRepo.fetchResume(candidateUserId);
+
+    result.fold(
+      (fail) {
+        setError(fail.message);
+        DPrint.log('data fetch failed: ${fail.message}');
+        setLoading(false);
+      },
+      (success) {
+        DPrint.log('data fetch successfully: ${success.message}');
+        resume.value = success.data;
+        setLoading(false);
+      },
+    );
   }
-
-  final result = await _companyRepo.fetchResume(candidateUserId);
-
-  result.fold(
-    (fail) {
-      setError(fail.message);
-      DPrint.log('data fetch failed: ${fail.message}');
-      setLoading(false);
-    },
-    (success) {
-      DPrint.log('data fetch successfully: ${success.message}');
-      resume.value = success.data;
-      setLoading(false);
-    },
-  );
-}
 }

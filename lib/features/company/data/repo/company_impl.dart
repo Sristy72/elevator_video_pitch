@@ -224,7 +224,7 @@ class CompanyRepoImplementation extends CompanyRepository {
     );
   }
 
-   @override
+  @override
   NetworkResult<List<ResumeUpdatedResponseModel>> fetchResume(
     String candidateUserId,
   ) {

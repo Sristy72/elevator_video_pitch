@@ -17,7 +17,9 @@ class ApplicationModel {
 
   factory ApplicationModel.fromJson(Map<String, dynamic> json) {
     final job = json['jobId'] as Map<String, dynamic>?;
-    final company = job != null ? job['companyId'] as Map<String, dynamic>? : null;
+    final company = job != null
+        ? job['companyId'] as Map<String, dynamic>?
+        : null;
 
     return ApplicationModel(
       id: json['_id'] ?? '',
@@ -28,9 +30,6 @@ class ApplicationModel {
       raw: Map<String, dynamic>.from(json),
     );
   }
-
-
-
 }
 
 class CreateResumeModel {

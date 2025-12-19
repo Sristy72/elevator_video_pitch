@@ -6,11 +6,7 @@ class MonthYearPickerDialog extends StatefulWidget {
   final int? initialMonth;
   final int? initialYear;
 
-  const MonthYearPickerDialog({
-    super.key,
-    this.initialMonth,
-    this.initialYear,
-  });
+  const MonthYearPickerDialog({super.key, this.initialMonth, this.initialYear});
 
   @override
   State<MonthYearPickerDialog> createState() => _MonthYearPickerDialogState();
@@ -55,10 +51,12 @@ class _MonthYearPickerDialogState extends State<MonthYearPickerDialog> {
                       ),
                     ),
                     items: List.generate(12, (i) => i + 1)
-                        .map((m) => DropdownMenuItem(
-                              value: m,
-                              child: Text(m.toString().padLeft(2, '0')),
-                            ))
+                        .map(
+                          (m) => DropdownMenuItem(
+                            value: m,
+                            child: Text(m.toString().padLeft(2, '0')),
+                          ),
+                        )
                         .toList(),
                     onChanged: (val) => setState(() => selectedMonth = val!),
                   ),
@@ -77,7 +75,10 @@ class _MonthYearPickerDialogState extends State<MonthYearPickerDialog> {
                     ),
                     items: List.generate(55, (i) {
                       final year = DateTime.now().year - 50 + i;
-                      return DropdownMenuItem(value: year, child: Text("$year"));
+                      return DropdownMenuItem(
+                        value: year,
+                        child: Text("$year"),
+                      );
                     }),
                     onChanged: (val) => setState(() => selectedYear = val!),
                   ),

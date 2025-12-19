@@ -36,12 +36,17 @@ class UserRepositoryImpl implements UserRepository {
       if (data == null) throw Exception('Missing data in response');
       return UserModel.fromJson(data);
     } else {
-      throw Exception('Failed to fetch user: ${resp.statusCode} — ${resp.body}');
+      throw Exception(
+        'Failed to fetch user: ${resp.statusCode} — ${resp.body}',
+      );
     }
   }
 
   @override
-  Future<UserModel> updateUser(Map<String, dynamic> payload, {File? imageFile}) async {
+  Future<UserModel> updateUser(
+    Map<String, dynamic> payload, {
+    File? imageFile,
+  }) async {
     final uri = Uri.parse('${ApiConstants.baseUrl}/user/update');
     final token = await _authStorageService.getAccessToken();
 
@@ -63,8 +68,11 @@ class UserRepositoryImpl implements UserRepository {
     if (imageFile != null && await imageFile.exists()) {
       final fileName = imageFile.path.split('/').last;
       request.files.add(
-        await http.MultipartFile.fromPath('photo', imageFile.path, filename: fileName),
-
+        await http.MultipartFile.fromPath(
+          'photo',
+          imageFile.path,
+          filename: fileName,
+        ),
       );
       print('Attached file: $fileName');
     } else {
@@ -83,7 +91,9 @@ class UserRepositoryImpl implements UserRepository {
       if (data == null) throw Exception('Missing data in response');
       return UserModel.fromJson(data);
     } else {
-      throw Exception('Failed to update user: ${resp.statusCode} — ${resp.body}');
+      throw Exception(
+        'Failed to update user: ${resp.statusCode} — ${resp.body}',
+      );
     }
   }
 }

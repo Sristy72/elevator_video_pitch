@@ -6,7 +6,6 @@ import '../../../plan_pricing/presentation/controllers/plan_pricing_controller.d
 import '../../../plan_pricing/presentation/widgets/payment_option_dialog.dart';
 import '../../../plan_pricing/presentation/widgets/plan_pricing_card.dart';
 
-
 class PaymentHistoryScreen extends StatelessWidget {
   const PaymentHistoryScreen({super.key});
 
@@ -54,7 +53,7 @@ class PaymentHistoryScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 20),
-        
+
               /// Plan Pricing Cards with PageView
               Obx(() {
                 if (controller.isLoading.value) {
@@ -118,7 +117,9 @@ class PaymentHistoryScreen extends StatelessWidget {
                         itemBuilder: (context, index) {
                           final plan = plans[index];
                           return Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16.0,
+                            ),
                             child: PlanPricingCard(
                               title: plan.title,
                               price: plan.price,
@@ -131,7 +132,9 @@ class PaymentHistoryScreen extends StatelessWidget {
                                   planTitle: plan.title,
                                   price: plan.price,
                                   onPayNow: () {
-                                    print('Processing payment for: ${plan.title}');
+                                    print(
+                                      'Processing payment for: ${plan.title}',
+                                    );
                                   },
                                 );
                               },
@@ -143,19 +146,19 @@ class PaymentHistoryScreen extends StatelessWidget {
                   ],
                 );
               }),
-              
+
               // Page indicator dots - at the bottom of the page
               Obx(() {
                 if (controller.isLoading.value || !controller.hasPlans) {
                   return const SizedBox.shrink();
                 }
-                
+
                 final plans = controller.filteredPlans;
-                
+
                 if (plans.length <= 1) {
                   return const SizedBox.shrink();
                 }
-                
+
                 return Padding(
                   padding: const EdgeInsets.only(top: 20, bottom: 20),
                   child: Row(
@@ -180,7 +183,6 @@ class PaymentHistoryScreen extends StatelessWidget {
           ),
         ),
       ),
-
     );
   }
 }

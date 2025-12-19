@@ -134,7 +134,9 @@ class MyPlanScreen extends StatelessWidget {
                         itemBuilder: (context, index) {
                           final plan = plans[index];
                           return Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16.0,
+                            ),
                             child: PlanPricingCard(
                               title: plan.title,
                               price: plan.price,
@@ -147,7 +149,9 @@ class MyPlanScreen extends StatelessWidget {
                                   planTitle: plan.title,
                                   price: plan.price,
                                   onPayNow: () {
-                                    print('Processing payment for: ${plan.title}');
+                                    print(
+                                      'Processing payment for: ${plan.title}',
+                                    );
                                   },
                                 );
                               },
@@ -194,7 +198,6 @@ class MyPlanScreen extends StatelessWidget {
               }),
 
               const SizedBox(height: 30),
-
             ],
           ),
         ),

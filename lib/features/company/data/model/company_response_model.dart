@@ -252,17 +252,13 @@
 //       );
 // }
 
-
 import 'dart:convert';
 
 class CompanyResponseModel {
   final Company company;
   final List<Honor> honors;
 
-  CompanyResponseModel({
-    required this.company,
-    required this.honors,
-  });
+  CompanyResponseModel({required this.company, required this.honors});
 
   factory CompanyResponseModel.fromJson(Map<String, dynamic> json) {
     return CompanyResponseModel(
@@ -274,9 +270,9 @@ class CompanyResponseModel {
   }
 
   Map<String, dynamic> toJson() => {
-        'company': company.toJson(),
-        'honors': List<dynamic>.from(honors.map((x) => x.toJson())),
-      };
+    'company': company.toJson(),
+    'honors': List<dynamic>.from(honors.map((x) => x.toJson())),
+  };
 }
 
 class Company {
@@ -334,7 +330,8 @@ class Company {
       cemail: json['cemail'],
       sLink: json['sLink'] != null
           ? List<SocialLink>.from(
-              json['sLink'].map((x) => SocialLink.fromJson(x)))
+              json['sLink'].map((x) => SocialLink.fromJson(x)),
+            )
           : [],
       industry: json['industry'],
       service: json['service'] != null
@@ -351,25 +348,25 @@ class Company {
   }
 
   Map<String, dynamic> toJson() => {
-        'userId': userId,
-        'clogo': clogo,
-        'banner': banner,
-        'aboutUs': aboutUs,
-        'slug': slug,
-        'cname': cname,
-        'country': country,
-        'city': city,
-        'zipcode': zipcode,
-        'cemail': cemail,
-        'sLink': List<dynamic>.from(sLink.map((x) => x.toJson())),
-        'industry': industry,
-        'service': List<dynamic>.from(service),
-        'employeesId': List<dynamic>.from(employeesId),
-        '_id': id,
-        'createdAt': createdAt.toIso8601String(),
-        'updatedAt': updatedAt.toIso8601String(),
-        '__v': v,
-      };
+    'userId': userId,
+    'clogo': clogo,
+    'banner': banner,
+    'aboutUs': aboutUs,
+    'slug': slug,
+    'cname': cname,
+    'country': country,
+    'city': city,
+    'zipcode': zipcode,
+    'cemail': cemail,
+    'sLink': List<dynamic>.from(sLink.map((x) => x.toJson())),
+    'industry': industry,
+    'service': List<dynamic>.from(service),
+    'employeesId': List<dynamic>.from(employeesId),
+    '_id': id,
+    'createdAt': createdAt.toIso8601String(),
+    'updatedAt': updatedAt.toIso8601String(),
+    '__v': v,
+  };
 }
 
 class SocialLink {
@@ -377,25 +374,13 @@ class SocialLink {
   final String url;
   final String id;
 
-  SocialLink({
-    required this.label,
-    required this.url,
-    required this.id,
-  });
+  SocialLink({required this.label, required this.url, required this.id});
 
   factory SocialLink.fromJson(Map<String, dynamic> json) {
-    return SocialLink(
-      label: json['label'],
-      url: json['url'],
-      id: json['_id'],
-    );
+    return SocialLink(label: json['label'], url: json['url'], id: json['_id']);
   }
 
-  Map<String, dynamic> toJson() => {
-        'label': label,
-        'url': url,
-        '_id': id,
-      };
+  Map<String, dynamic> toJson() => {'label': label, 'url': url, '_id': id};
 }
 
 class Honor {
@@ -436,14 +421,14 @@ class Honor {
   }
 
   Map<String, dynamic> toJson() => {
-        'userId': userId,
-        'title': title,
-        'programeName': programeName,
-        'programeDate': programeDate.toIso8601String(),
-        'description': description,
-        '_id': id,
-        '__v': v,
-        'createdAt': createdAt.toIso8601String(),
-        'updatedAt': updatedAt.toIso8601String(),
-      };
+    'userId': userId,
+    'title': title,
+    'programeName': programeName,
+    'programeDate': programeDate.toIso8601String(),
+    'description': description,
+    '_id': id,
+    '__v': v,
+    'createdAt': createdAt.toIso8601String(),
+    'updatedAt': updatedAt.toIso8601String(),
+  };
 }

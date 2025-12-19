@@ -6,7 +6,8 @@ class SearchableBottomSheet extends StatelessWidget {
   final List<String> items;
   final Function(String) onSelect;
 
-  SearchableBottomSheet(BuildContext context, {
+  SearchableBottomSheet(
+    BuildContext context, {
     super.key,
     required this.title,
     required this.items,
@@ -14,8 +15,7 @@ class SearchableBottomSheet extends StatelessWidget {
   });
 
   final TextEditingController searchController = TextEditingController();
-  late final RxList<String> filteredItems =
-  RxList<String>(List.from(items));
+  late final RxList<String> filteredItems = RxList<String>(List.from(items));
 
   @override
   Widget build(BuildContext context) {
@@ -53,8 +53,7 @@ class SearchableBottomSheet extends StatelessWidget {
                   decoration: InputDecoration(
                     hintText: 'Search...',
                     prefixIcon: const Icon(Icons.search),
-                    contentPadding:
-                    const EdgeInsets.symmetric(horizontal: 12),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 12),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
@@ -63,17 +62,17 @@ class SearchableBottomSheet extends StatelessWidget {
                     filteredItems.assignAll(
                       items
                           .where(
-                            (item) => item
-                            .toLowerCase()
-                            .contains(query.toLowerCase()),
-                      )
+                            (item) => item.toLowerCase().contains(
+                              query.toLowerCase(),
+                            ),
+                          )
                           .toList(),
                     );
                   },
                 ),
               ),
               Obx(
-                    () => Expanded(
+                () => Expanded(
                   child: ListView.builder(
                     itemCount: filteredItems.length,
                     itemBuilder: (context, index) {

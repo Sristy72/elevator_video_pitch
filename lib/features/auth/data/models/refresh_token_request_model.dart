@@ -4,8 +4,6 @@ class RefreshTokenRequestModel {
   RefreshTokenRequestModel({this.refreshToken});
 
   Map<String, dynamic> toJson() {
-    return {
-      'refreshToken': refreshToken,
-    };
+    return {'refreshToken': refreshToken};
   }
 }

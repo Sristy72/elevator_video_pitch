@@ -8,12 +8,12 @@ import '../models/create_resume_response.dart';
 class ResumeRepositoryImpl implements ResumeRepository {
   final ApiClient _apiClient;
 
-  ResumeRepositoryImpl({required ApiClient apiClient})
-      : _apiClient = apiClient;
+  ResumeRepositoryImpl({required ApiClient apiClient}) : _apiClient = apiClient;
 
   @override
   NetworkResult<CreateResumeResponse> createResume(
-      CreateResumeRequest request) {
+    CreateResumeRequest request,
+  ) {
     return _apiClient.post<CreateResumeResponse>(
       '${ApiConstants.baseUrl}/create-resume/create-resume',
       data: request.toJson(),

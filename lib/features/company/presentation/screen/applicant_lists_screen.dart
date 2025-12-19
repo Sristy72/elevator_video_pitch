@@ -30,7 +30,7 @@ class _CompanyApplicantsListScreenState
     controller.fetchApplicantList().then((_) {
       // This runs only AFTER applicants are loaded
       for (var applicant in controller.venue) {
-        final candidateUserId = applicant.user.id; 
+        final candidateUserId = applicant.user.id;
 
         // Optional: Add safety check
         if (candidateUserId.isNotEmpty) {

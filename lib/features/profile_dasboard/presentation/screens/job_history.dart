@@ -39,10 +39,12 @@ class JobHistoryScreen extends StatelessWidget {
                     return const Center(child: CircularProgressIndicator());
                   }
 
-                  if (snapshot.hasError || !snapshot.hasData ||
+                  if (snapshot.hasError ||
+                      !snapshot.hasData ||
                       snapshot.data == null) {
                     return const Center(
-                        child: Text('Unable to load user data'));
+                      child: Text('Unable to load user data'),
+                    );
                   }
 
                   final userId = snapshot.data!;
@@ -167,88 +169,92 @@ class JobHistoryScreen extends StatelessWidget {
                         if (apps.isEmpty) ...[
                           const SizedBox(height: 24),
                           const Center(child: Text('No applications found')),
-                        ] else
-                          ...[
-                            Column(
-                              children: apps.map((a) {
-                                final isRejected =
-                                    a.status.toLowerCase().contains('reject') ||
-                                        a.status.toLowerCase().contains('not');
-                                return Container(
-                                  margin: const EdgeInsets.only(bottom: 10),
-                                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xFFF6FBFF),
-                                    borderRadius: BorderRadius.circular(6),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      Expanded(
-                                        flex: 2,
-                                        child: Center(
-                                          child: Text(
-                                            a.jobTitle,
-                                            textAlign: TextAlign.center,
-                                            style: const TextStyle(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                            overflow: TextOverflow.ellipsis,
+                        ] else ...[
+                          Column(
+                            children: apps.map((a) {
+                              final isRejected =
+                                  a.status.toLowerCase().contains('reject') ||
+                                  a.status.toLowerCase().contains('not');
+                              return Container(
+                                margin: const EdgeInsets.only(bottom: 10),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                  vertical: 6,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFFF6FBFF),
+                                  borderRadius: BorderRadius.circular(6),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Expanded(
+                                      flex: 2,
+                                      child: Center(
+                                        child: Text(
+                                          a.jobTitle,
+                                          textAlign: TextAlign.center,
+                                          style: const TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500,
                                           ),
+                                          overflow: TextOverflow.ellipsis,
                                         ),
                                       ),
-                                      Expanded(
-                                        flex: 2,
-                                        child: Center(
-                                          child: Text(
-                                            a.companyName,
-                                            textAlign: TextAlign.center,
-                                            style: const TextStyle(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                            overflow: TextOverflow.ellipsis,
+                                    ),
+                                    Expanded(
+                                      flex: 2,
+                                      child: Center(
+                                        child: Text(
+                                          a.companyName,
+                                          textAlign: TextAlign.center,
+                                          style: const TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500,
                                           ),
+                                          overflow: TextOverflow.ellipsis,
                                         ),
                                       ),
-                                      Expanded(
-                                        flex: 2,
-                                        child: Center(
-                                          child: Text(
-                                            a.appliedDate,
-                                            textAlign: TextAlign.center,
-                                            style: const TextStyle(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                            overflow: TextOverflow.ellipsis,
+                                    ),
+                                    Expanded(
+                                      flex: 2,
+                                      child: Center(
+                                        child: Text(
+                                          a.appliedDate,
+                                          textAlign: TextAlign.center,
+                                          style: const TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w500,
                                           ),
+                                          overflow: TextOverflow.ellipsis,
                                         ),
                                       ),
-                                      Expanded(
-                                        flex: 2,
-                                        child: Center(
-                                          child: Text(
-                                            a.status,
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w600,
-                                              color: isRejected ? Colors.red : Colors.blue,
-                                            ),
-                                            overflow: TextOverflow.ellipsis,
+                                    ),
+                                    Expanded(
+                                      flex: 2,
+                                      child: Center(
+                                        child: Text(
+                                          a.status,
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w600,
+                                            color: isRejected
+                                                ? Colors.red
+                                                : Colors.blue,
                                           ),
+                                          overflow: TextOverflow.ellipsis,
                                         ),
                                       ),
-                                    ],
-                                  ),
-                                );
-
-                              }).toList(),
-                            ),
-                          ],
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                        ],
                       ],
                     );
                   });

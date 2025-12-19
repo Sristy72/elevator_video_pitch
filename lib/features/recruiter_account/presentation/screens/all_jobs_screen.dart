@@ -18,7 +18,8 @@ class AllJobsScreen extends StatefulWidget {
 }
 
 class _AllJobsScreenState extends State<AllJobsScreen> {
-  final RecruiterController recruiterController = Get.find<RecruiterController>();
+  final RecruiterController recruiterController =
+      Get.find<RecruiterController>();
   final ScrollController horizontalScrollController = ScrollController();
 
   @override
@@ -27,12 +28,18 @@ class _AllJobsScreenState extends State<AllJobsScreen> {
     recruiterController.getJob();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
       appBar: AppBar(
-        title: Text("All Jobs List", style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20, color: Colors.black,),),
+        title: Text(
+          "All Jobs List",
+          style: TextStyle(
+            fontWeight: FontWeight.w700,
+            fontSize: 20,
+            color: Colors.black,
+          ),
+        ),
       ),
       body: Obx(() {
         if (recruiterController.isLoading.value) {
@@ -53,7 +60,9 @@ class _AllJobsScreenState extends State<AllJobsScreen> {
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: ConstrainedBox(
-              constraints: BoxConstraints(minWidth: MediaQuery.of(context).size.width),
+              constraints: BoxConstraints(
+                minWidth: MediaQuery.of(context).size.width,
+              ),
               child: IntrinsicWidth(
                 child: SingleChildScrollView(
                   child: Column(
@@ -62,13 +71,55 @@ class _AllJobsScreenState extends State<AllJobsScreen> {
                       // HEADER
                       Row(
                         children: const [
-                          SizedBox(width: 200, child: Text("Job Title", style: TextStyle(fontWeight: FontWeight.bold))),
-                          SizedBox(width: 100, child: Text("Status", style: TextStyle(fontWeight: FontWeight.bold))),
-                          SizedBox(width: 140, child: Text("Ordered", style: TextStyle(fontWeight: FontWeight.bold))),
-                          SizedBox(width: 140, child: Text("Published", style: TextStyle(fontWeight: FontWeight.bold))),
-                          SizedBox(width: 140, child: Text("Expiry", style: TextStyle(fontWeight: FontWeight.bold))),
-                          SizedBox(width: 120, child: Text("Applicants", style: TextStyle(fontWeight: FontWeight.bold))),
-                          SizedBox(width: 140, child: Text("Actions", style: TextStyle(fontWeight: FontWeight.bold))),
+                          SizedBox(
+                            width: 200,
+                            child: Text(
+                              "Job Title",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 100,
+                            child: Text(
+                              "Status",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 140,
+                            child: Text(
+                              "Ordered",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 140,
+                            child: Text(
+                              "Published",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 140,
+                            child: Text(
+                              "Expiry",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 120,
+                            child: Text(
+                              "Applicants",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 140,
+                            child: Text(
+                              "Actions",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ),
                         ],
                       ),
 
@@ -96,16 +147,35 @@ class _AllJobsScreenState extends State<AllJobsScreen> {
                             child: Row(
                               children: [
                                 SizedBox(width: 200, child: Text(job.title)),
-                                SizedBox(width: 100, child: Text(job.status ?? "")),
-                                SizedBox(width: 140, child: Text(formatDate(job.createdAt))),
-                                SizedBox(width: 140, child: Text(formatDate(job.publishDate))),
-                                SizedBox(width: 140, child: Text(formatDate(job.deadline))),
+                                SizedBox(
+                                  width: 100,
+                                  child: Text(job.status ?? ""),
+                                ),
+                                SizedBox(
+                                  width: 140,
+                                  child: Text(formatDate(job.createdAt)),
+                                ),
+                                SizedBox(
+                                  width: 140,
+                                  child: Text(formatDate(job.publishDate)),
+                                ),
+                                SizedBox(
+                                  width: 140,
+                                  child: Text(formatDate(job.deadline)),
+                                ),
 
                                 SizedBox(
                                   width: 120,
                                   child: GestureDetector(
-                                    onTap: () => Get.to(() => CompanyApplicantsListScreen(jobId: job.id)),
-                                    child: Text("View (${job.applicantCount})", style: TextStyle(color: Colors.blue)),
+                                    onTap: () => Get.to(
+                                      () => CompanyApplicantsListScreen(
+                                        jobId: job.id,
+                                      ),
+                                    ),
+                                    child: Text(
+                                      "View (${job.applicantCount})",
+                                      style: TextStyle(color: Colors.blue),
+                                    ),
                                   ),
                                 ),
 
@@ -113,80 +183,138 @@ class _AllJobsScreenState extends State<AllJobsScreen> {
                                   child: Row(
                                     children: [
                                       IconButton(
-                                        icon: const Icon(Icons.visibility, size: 20),
-                                        onPressed: () => Get.to(() => JobDetailEditScreen(jobId: job.id)),
+                                        icon: const Icon(
+                                          Icons.visibility,
+                                          size: 20,
+                                        ),
+                                        onPressed: () => Get.to(
+                                          () => JobDetailEditScreen(
+                                            jobId: job.id,
+                                          ),
+                                        ),
                                       ),
 
                                       // Archive/Unarchive Toggle – Pure GetX (Obx + .obs)
                                       Obx(() {
                                         // Unique loading state per job using job.id
-                                        final isLoading = recruiterController.archiveLoadingMap[job.id] ?? false;
-                                        final currentStatus = job.arcrivedJob ?? false;
+                                        final isLoading =
+                                            recruiterController
+                                                .archiveLoadingMap[job.id] ??
+                                            false;
+                                        final currentStatus =
+                                            job.arcrivedJob ?? false;
 
                                         return Expanded(
                                           child: TextButton(
                                             onPressed: isLoading
                                                 ? null
                                                 : () async {
-                                              // Set loading only for this job
-                                              recruiterController.archiveLoadingMap[job.id] = true;
+                                                    // Set loading only for this job
+                                                    recruiterController
+                                                            .archiveLoadingMap[job
+                                                            .id] =
+                                                        true;
 
-                                              final newStatus = !currentStatus;
+                                                    final newStatus =
+                                                        !currentStatus;
 
-                                              try {
-                                                final request = ArchieveJobRequestModel(
-                                                  arcrivedJob: newStatus,
-                                                  id: job.id,
-                                                );
+                                                    try {
+                                                      final request =
+                                                          ArchieveJobRequestModel(
+                                                            arcrivedJob:
+                                                                newStatus,
+                                                            id: job.id,
+                                                          );
 
-                                                await recruiterController.updateArchieveJob(
-                                                  request: request,
-                                                  jobId: job.id,
-                                                );
+                                                      await recruiterController
+                                                          .updateArchieveJob(
+                                                            request: request,
+                                                            jobId: job.id,
+                                                          );
 
-                                                // // Optional: refresh list (your controller already does Get.back() or you can refresh)
-                                                // recruiterController.getJob();
-                                              } catch (e) {
-                                                Get.snackbar(
-                                                  "Failed",
-                                                  "Could not update archive status",
-                                                  backgroundColor: Colors.red.shade600,
-                                                  colorText: Colors.white,
-                                                );
-                                              } finally {
-                                                //recruiterController.archiveLoadingMap[job.id] = false;
-                                                // Trigger UI update
-                                                recruiterController.archiveLoadingMap[job.id] = false; // This alone is enough!
-                                              }
-                                            },
+                                                      // // Optional: refresh list (your controller already does Get.back() or you can refresh)
+                                                      // recruiterController.getJob();
+                                                    } catch (e) {
+                                                      Get.snackbar(
+                                                        "Failed",
+                                                        "Could not update archive status",
+                                                        backgroundColor:
+                                                            Colors.red.shade600,
+                                                        colorText: Colors.white,
+                                                      );
+                                                    } finally {
+                                                      //recruiterController.archiveLoadingMap[job.id] = false;
+                                                      // Trigger UI update
+                                                      recruiterController
+                                                              .archiveLoadingMap[job
+                                                              .id] =
+                                                          false; // This alone is enough!
+                                                    }
+                                                  },
                                             style: TextButton.styleFrom(
-                                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(4),
+                                              ),
                                               backgroundColor: isLoading
-                                                  ? (currentStatus ? Colors.red.shade200 : Colors.green.shade200)
-                                                  : (currentStatus ? Colors.red.shade100 : Colors.green.shade100),
+                                                  ? (currentStatus
+                                                        ? Colors.red.shade200
+                                                        : Colors.green.shade200)
+                                                  : (currentStatus
+                                                        ? Colors.red.shade100
+                                                        : Colors
+                                                              .green
+                                                              .shade100),
                                               foregroundColor: isLoading
-                                                  ? (currentStatus ? Colors.red.shade900 : Colors.green.shade900)
-                                                  : (currentStatus ? Colors.red.shade800 : Colors.green.shade800),
-                                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                                                  ? (currentStatus
+                                                        ? Colors.red.shade900
+                                                        : Colors.green.shade900)
+                                                  : (currentStatus
+                                                        ? Colors.red.shade800
+                                                        : Colors
+                                                              .green
+                                                              .shade800),
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                    horizontal: 8,
+                                                    vertical: 4,
+                                                  ),
                                               minimumSize: const Size(50, 30),
                                             ),
                                             child: isLoading
                                                 ? Row(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: const [
-                                                SizedBox(
-                                                  width: 14,
-                                                  height: 14,
-                                                  child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
-                                                ),
-                                                SizedBox(width: 6),
-                                                Text("Processing...", style: TextStyle(fontSize: 11)),
-                                              ],
-                                            )
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
+                                                    children: const [
+                                                      SizedBox(
+                                                        width: 14,
+                                                        height: 14,
+                                                        child:
+                                                            CircularProgressIndicator(
+                                                              strokeWidth: 2,
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                      ),
+                                                      SizedBox(width: 6),
+                                                      Text(
+                                                        "Processing...",
+                                                        style: TextStyle(
+                                                          fontSize: 11,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  )
                                                 : Text(
-                                              currentStatus ? "Unarchive" : "Archive",
-                                              style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 13),
-                                            ),
+                                                    currentStatus
+                                                        ? "Unarchive"
+                                                        : "Archive",
+                                                    style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontSize: 13,
+                                                    ),
+                                                  ),
                                           ),
                                         );
                                       }),
@@ -203,11 +331,12 @@ class _AllJobsScreenState extends State<AllJobsScreen> {
                 ),
               ),
             ),
-          )
+          ),
         );
       }),
     );
   }
+
   /// Safe date formatter — accepts String or DateTime (or null)
   String formatDate(dynamic date) {
     if (date == null) return '';

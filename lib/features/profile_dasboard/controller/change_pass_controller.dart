@@ -39,9 +39,6 @@ class ChangePasswordController extends GetxController {
       newPassword: newPassword.value,
     );
 
-
-
-
     final result = await _repo.changePassword(request);
     result.fold(
       (fail) {

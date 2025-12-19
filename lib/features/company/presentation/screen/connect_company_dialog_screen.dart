@@ -5,7 +5,6 @@ import '../../../../core/theme/app_colors.dart';
 import '../widget/custom_text_field.dart';
 
 class RecruiterDialogContent extends StatefulWidget {
-
   RecruiterDialogContent({super.key});
 
   @override
@@ -15,7 +14,6 @@ class RecruiterDialogContent extends StatefulWidget {
 class _RecruiterDialogContentState extends State<RecruiterDialogContent> {
   final CompanyAccountController controller = Get.find();
   //  Map<TextEditingController, String> employeeIdMap = {};
-
 
   @override
   Widget build(BuildContext context) {
@@ -128,7 +126,7 @@ class _RecruiterDialogContentState extends State<RecruiterDialogContent> {
               Get.snackbar("Error", "Select at least one recruiter");
               return;
             }
-            await controller.connectRecruiter( employeeIds);
+            await controller.connectRecruiter(employeeIds);
           },
           child: const Text("Add"),
         ),
@@ -136,4 +134,3 @@ class _RecruiterDialogContentState extends State<RecruiterDialogContent> {
     );
   }
 }
-

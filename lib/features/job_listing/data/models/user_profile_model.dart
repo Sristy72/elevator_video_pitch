@@ -11,7 +11,7 @@ class UserProfileModel {
   final bool deactivate;
   final DateTime createdAt;
   final DateTime updatedAt;
-  
+
   // Social media links
   final String? linkedinUrl;
   final String? githubUrl;

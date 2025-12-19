@@ -36,11 +36,13 @@ class TermsandConditions extends StatelessWidget {
       ),
 
       body: Obx(() {
-        if (controller.isLoading.value && controller.termsContent.value == null) {
+        if (controller.isLoading.value &&
+            controller.termsContent.value == null) {
           return const Center(child: CircularProgressIndicator());
         }
 
-        if (controller.error.value != null && controller.termsContent.value == null) {
+        if (controller.error.value != null &&
+            controller.termsContent.value == null) {
           return Center(
             child: Text(
               controller.error.value ?? 'Failed to load',
@@ -55,7 +57,8 @@ class TermsandConditions extends StatelessWidget {
         }
 
         return RefreshIndicator(
-          onRefresh: () async => controller.fetchTermsContent(forceRefresh: true),
+          onRefresh: () async =>
+              controller.fetchTermsContent(forceRefresh: true),
           child: SafeArea(
             child: SingleChildScrollView(
               physics: const AlwaysScrollableScrollPhysics(),
@@ -104,4 +107,3 @@ class TermsandConditions extends StatelessWidget {
     );
   }
 }
-

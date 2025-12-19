@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 
 import '../../../profile_dasboard/controller/change_pass_controller.dart';
 
-
 class CompanyChangePasswordScreen extends StatelessWidget {
   CompanyChangePasswordScreen({super.key});
 

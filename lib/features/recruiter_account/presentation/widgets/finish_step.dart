@@ -18,23 +18,23 @@ class FinishStep extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<JobPostingController>();
     final locationController = Get.find<LocationController>();
-    final RecruiterController recruiterController = Get.find<
-        RecruiterController>();
+    final RecruiterController recruiterController =
+        Get.find<RecruiterController>();
 
     final EmploymentTypeController employmentTypeController =
-    Get.find<EmploymentTypeController>();
+        Get.find<EmploymentTypeController>();
     final ExperienceLevelController experienceController =
-    Get.find<ExperienceLevelController>();
+        Get.find<ExperienceLevelController>();
     final LocationTypeController locationTypeController =
-    Get.find<LocationTypeController>();
+        Get.find<LocationTypeController>();
     final CareerStageController careerStageController =
-    Get.find<CareerStageController>();
+        Get.find<CareerStageController>();
     final JobPostingExpirationController jobPostingExpirationController =
-    Get.find<JobPostingExpirationController>();
+        Get.find<JobPostingExpirationController>();
 
     // Find category by name
     final selectedCategoryModel = recruiterController.category.firstWhereOrNull(
-          (c) => c.name == controller.selectedCategory.value,
+      (c) => c.name == controller.selectedCategory.value,
     );
 
     // Extract category ID (or empty if null)
@@ -42,30 +42,35 @@ class FinishStep extends StatelessWidget {
 
     submit() {
       recruiterController.createJobPost(
-          controller.jobTitle.value,
-          controller.jobDescriptionPlain.value,
-          '${locationController.selectedCity.value ?? ''}, ${locationController.selectedCountry.value ?? ''}',
-          controller.vacanciesInt,
-          // 5. Experience Level → backend expects: "Entry Level", "Senior Level", etc.
-          experienceController.selectedExperienceLevel.value.isNotEmpty
-              ? experienceController.selectedExperienceLevel.value
-              : '',
-          '${jobPostingExpirationController.finalDeadlineDate.value}',
-          categoryId,
-          controller.selectedCategory.value,
-          controller.selectedRole.value,
-          controller.compensation.value,
-          controller.applicationRequirement,
-          controller.customQuestions,
-          employmentTypeController.getBackendValue(
-            employmentTypeController.selectedEmploymentType.value,
-          ),
-          controller.companyWebsite.value,
-          controller.selectedDate.value.toString(),
-          careerStageController.getBackendValue(careerStageController.selectedCareerStage.value),
-          locationTypeController.getBackendValue(locationTypeController.selectedLocationType.value), controller.companyWebsite.value);
+        controller.jobTitle.value,
+        controller.jobDescriptionPlain.value,
+        '${locationController.selectedCity.value ?? ''}, ${locationController.selectedCountry.value ?? ''}',
+        controller.vacanciesInt,
+        // 5. Experience Level → backend expects: "Entry Level", "Senior Level", etc.
+        experienceController.selectedExperienceLevel.value.isNotEmpty
+            ? experienceController.selectedExperienceLevel.value
+            : '',
+        '${jobPostingExpirationController.finalDeadlineDate.value}',
+        categoryId,
+        controller.selectedCategory.value,
+        controller.selectedRole.value,
+        controller.compensation.value,
+        controller.applicationRequirement,
+        controller.customQuestions,
+        employmentTypeController.getBackendValue(
+          employmentTypeController.selectedEmploymentType.value,
+        ),
+        controller.companyWebsite.value,
+        controller.selectedDate.value.toString(),
+        careerStageController.getBackendValue(
+          careerStageController.selectedCareerStage.value,
+        ),
+        locationTypeController.getBackendValue(
+          locationTypeController.selectedLocationType.value,
+        ),
+        controller.companyWebsite.value,
+      );
     }
-
 
     return Center(
       child: Column(
@@ -73,10 +78,7 @@ class FinishStep extends StatelessWidget {
         children: [
           const Text(
             "Your job posting is ready!",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 20),
 
@@ -90,8 +92,7 @@ class FinishStep extends StatelessWidget {
                   Get.to(() => JobPreviewScreen());
                 },
                 style: OutlinedButton.styleFrom(
-                  side: const BorderSide(
-                      color: Color(0xFF2B7FD0), width: 1.5),
+                  side: const BorderSide(color: Color(0xFF2B7FD0), width: 1.5),
                   minimumSize: const Size(160, 48),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
@@ -134,7 +135,7 @@ class FinishStep extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 30,)
+          SizedBox(height: 30),
         ],
       ),
     );

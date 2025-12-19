@@ -17,8 +17,6 @@ class CategoryResponse {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'category': categories.map((item) => item.toJson()).toList(),
-    };
+    return {'category': categories.map((item) => item.toJson()).toList()};
   }
 }

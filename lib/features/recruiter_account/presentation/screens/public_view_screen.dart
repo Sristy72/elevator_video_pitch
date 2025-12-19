@@ -14,7 +14,8 @@ class PublicViewScreen extends StatefulWidget {
 }
 
 class _PublicViewScreenState extends State<PublicViewScreen> {
-  final RecruiterController recruiterController = Get.find<RecruiterController>();
+  final RecruiterController recruiterController =
+      Get.find<RecruiterController>();
 
   @override
   void initState() {
@@ -27,9 +28,7 @@ class _PublicViewScreenState extends State<PublicViewScreen> {
   @override
   Widget build(BuildContext context) {
     return AppScaffold(
-      appBar: AppBar(
-        title: Text('Public view'),
-      ),
+      appBar: AppBar(title: Text('Public view')),
       body: SafeArea(
         child: Obx(() {
           if (recruiterController.isLoading.value) {
@@ -65,9 +64,9 @@ class _PublicViewScreenState extends State<PublicViewScreen> {
                             color: Colors.grey.shade300,
                             image: user.banner.isNotEmpty
                                 ? DecorationImage(
-                              image: NetworkImage(user.banner),
-                              fit: BoxFit.cover,
-                            )
+                                    image: NetworkImage(user.banner),
+                                    fit: BoxFit.cover,
+                                  )
                                 : null,
                           ),
                         ),
@@ -86,9 +85,9 @@ class _PublicViewScreenState extends State<PublicViewScreen> {
                             color: Colors.grey.shade300,
                             image: user.photo.isNotEmpty
                                 ? DecorationImage(
-                              image: NetworkImage(user.photo),
-                              fit: BoxFit.cover,
-                            )
+                                    image: NetworkImage(user.photo),
+                                    fit: BoxFit.cover,
+                                  )
                                 : null,
                           ),
                         ),
@@ -114,7 +113,10 @@ class _PublicViewScreenState extends State<PublicViewScreen> {
                     const SizedBox(height: 6),
                     Text(
                       user.title,
-                      style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                      style: const TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                     const SizedBox(height: 6),
                     Text(
@@ -144,31 +146,48 @@ class _PublicViewScreenState extends State<PublicViewScreen> {
                   spacing: 8,
                   runSpacing: 8,
                   children: (user.sLink)
-                      .map((link) => GestureDetector(
-                    onTap: () async {
-                      final Uri url = Uri.parse(link.url ?? '');
-                      if (await canLaunchUrl(url)) {
-                        await launchUrl(url, mode: LaunchMode.externalApplication);
-                      } else {
-                        Get.snackbar('Error', 'Could not open ${link.url}');
-                      }
-                    },
-                    child: SocialMedia(image: _getSocialIcon(link.label)),
-                  ))
+                      .map(
+                        (link) => GestureDetector(
+                          onTap: () async {
+                            final Uri url = Uri.parse(link.url ?? '');
+                            if (await canLaunchUrl(url)) {
+                              await launchUrl(
+                                url,
+                                mode: LaunchMode.externalApplication,
+                              );
+                            } else {
+                              Get.snackbar(
+                                'Error',
+                                'Could not open ${link.url}',
+                              );
+                            }
+                          },
+                          child: SocialMedia(image: _getSocialIcon(link.label)),
+                        ),
+                      )
                       .toList(),
                 ),
 
-                SizedBox(height: 20,),
-                
-                ElevatedButton(onPressed: (){}, style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF2B7FD0),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
+                SizedBox(height: 20),
+
+                ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF2B7FD0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
                   ),
-                ), child: Text('Follow', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),)),
+                  child: Text(
+                    'Follow',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
 
                 const SizedBox(height: 20),
-                
               ],
             ),
           );

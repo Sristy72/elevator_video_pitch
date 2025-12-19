@@ -59,7 +59,11 @@ class JobCard extends StatelessWidget {
                         height: 40,
                         fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) =>
-                             const Icon(Icons.business, size: 40, color: Colors.grey),
+                            const Icon(
+                              Icons.business,
+                              size: 40,
+                              color: Colors.grey,
+                            ),
                       )
                     : const Icon(Icons.business, size: 40, color: Colors.grey),
               ),
@@ -91,13 +95,18 @@ class JobCard extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                   OutlinedButton(
+                  OutlinedButton(
                     onPressed: onEasyApply,
                     style: OutlinedButton.styleFrom(
                       foregroundColor: Colors.black,
                       side: const BorderSide(color: Colors.grey),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 0,
+                      ),
                       minimumSize: const Size(0, 32),
                     ),
                     child: const Text("Apply", style: TextStyle(fontSize: 12)),
@@ -115,26 +124,38 @@ class JobCard extends StatelessWidget {
                     ),
                   ),
                 ],
-              )
+              ),
             ],
           ),
-          
+
           const SizedBox(height: 16),
-          
+
           // Description
           Text(
             "We are looking for a knowledgeable and patient $title to join our academic team.", // Dynamic description
-            style: const TextStyle(fontSize: 13, color: Colors.black87, height: 1.4),
+            style: const TextStyle(
+              fontSize: 13,
+              color: Colors.black87,
+              height: 1.4,
+            ),
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
           ),
-           GestureDetector(
-             onTap: onTap,
-             child: Padding(
-               padding: const EdgeInsets.only(top: 4.0),
-               child: const Text("See more", style: TextStyle(color: AppColors.primaryBlue, fontSize: 13, fontWeight: FontWeight.w500, decoration: TextDecoration.underline)),
-             )
-           ),
+          GestureDetector(
+            onTap: onTap,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 4.0),
+              child: const Text(
+                "See more",
+                style: TextStyle(
+                  color: AppColors.primaryBlue,
+                  fontSize: 13,
+                  fontWeight: FontWeight.w500,
+                  decoration: TextDecoration.underline,
+                ),
+              ),
+            ),
+          ),
 
           const SizedBox(height: 16),
 
@@ -147,32 +168,54 @@ class JobCard extends StatelessWidget {
             ),
             child: Row(
               children: [
-                 const Icon(Icons.auto_awesome, size: 20, color: Colors.cyan),
-                 const SizedBox(width: 8),
-                 Expanded(
-                   child: Column(
-                     crossAxisAlignment: CrossAxisAlignment.start,
-                     children: [
-                       Text("PROFILE FIT", style: TextStyle(fontSize: 10, color: Colors.grey.shade600, fontWeight: FontWeight.bold)),
-                       const Text("Check your fit", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: Colors.black87)),
-                     ],
-                   ),
-                 ),
-                 OutlinedButton(
-                   onPressed: () {},
-                   style: OutlinedButton.styleFrom(
-                      backgroundColor: Colors.transparent,
-                      side: BorderSide(color: Colors.grey.shade400),
-                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
-                       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
-                       minimumSize: const Size(0, 30),
-                   ),
-                   child: const Text("Analyze", style: TextStyle(color: Colors.black87, fontSize: 12)),
-                 ),
+                const Icon(Icons.auto_awesome, size: 20, color: Colors.cyan),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "PROFILE FIT",
+                        style: TextStyle(
+                          fontSize: 10,
+                          color: Colors.grey.shade600,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const Text(
+                        "Check your fit",
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black87,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                OutlinedButton(
+                  onPressed: () {},
+                  style: OutlinedButton.styleFrom(
+                    backgroundColor: Colors.transparent,
+                    side: BorderSide(color: Colors.grey.shade400),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 0,
+                    ),
+                    minimumSize: const Size(0, 30),
+                  ),
+                  child: const Text(
+                    "Analyze",
+                    style: TextStyle(color: Colors.black87, fontSize: 12),
+                  ),
+                ),
               ],
             ),
           ),
-          
+
           const SizedBox(height: 16),
 
           // Chips / Tags
@@ -188,18 +231,17 @@ class JobCard extends StatelessWidget {
             ],
           ),
 
-           const SizedBox(height: 16),
-           
-           // Footer Date
-           Text(
-             timePosted.contains("ago") ? timePosted : "Posted on $timePosted",
-             style: const TextStyle(
-               color: Colors.green,
-               fontWeight: FontWeight.bold,
-               fontSize: 13,
-             ),
-           )
+          const SizedBox(height: 16),
 
+          // Footer Date
+          Text(
+            timePosted.contains("ago") ? timePosted : "Posted on $timePosted",
+            style: const TextStyle(
+              color: Colors.green,
+              fontWeight: FontWeight.bold,
+              fontSize: 13,
+            ),
+          ),
         ],
       ),
     );
@@ -216,10 +258,13 @@ class JobCard extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           if (icon != null) ...[
-             Icon(icon, size: 14, color: Colors.black54),
-             const SizedBox(width: 4),
+            Icon(icon, size: 14, color: Colors.black54),
+            const SizedBox(width: 4),
           ],
-          Text(label, style: const TextStyle(fontSize: 12, color: Colors.black87)),
+          Text(
+            label,
+            style: const TextStyle(fontSize: 12, color: Colors.black87),
+          ),
         ],
       ),
     );

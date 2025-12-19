@@ -90,74 +90,77 @@ class ManageJobResponseModel {
     required this.derivedStatus,
   });
 
-factory ManageJobResponseModel.fromJson(Map<String, dynamic> json) =>
-    ManageJobResponseModel(
-      id: json["_id"],
-      userId: json["userId"],
-      companyId: CompanyId.fromJson(json["companyId"] ?? {}),
-      title: json["title"],
-      description: json["description"],
-      salaryRange: json["salaryRange"],
-      location: json["location"],
-      shift: json["shift"],
-      responsibilities: json["responsibilities"] != null
-          ? List<dynamic>.from(json["responsibilities"])
-          : [],
-      educationExperience: json["educationExperience"] != null
-          ? List<dynamic>.from(json["educationExperience"])
-          : [],
-      benefits: json["benefits"] != null
-          ? List<dynamic>.from(json["benefits"])
-          : [],
-      vacancy: json["vacancy"] ?? 0,
-      counter: json["counter"] ?? 0,
-      embedding: json["embedding"] != null
-          ? List<double>.from(json["embedding"].map((x) => x.toDouble()))
-          : [],
-      experience: json["experience"] ?? "",
-      deadline: json["deadline"] != null
-          ? DateTime.parse(json["deadline"])
-          : DateTime.now(),
-      status: json["status"] ?? "",
-      jobCategoryId: json["jobCategoryId"] ?? "",
-      name: json["name"] ?? "",
-      role: json["role"] ?? "",
-      compensation: json["compensation"] ?? "",
-      arcrivedJob: json["arcrivedJob"] ?? false,
-      applicationRequirement: json["applicationRequirement"] != null
-          ? List<ApplicationRequirement>.from(json["applicationRequirement"]
-              .map((x) => ApplicationRequirement.fromJson(x)))
-          : [],
-      customQuestion: json["customQuestion"] != null
-          ? List<CustomQuestion>.from(
-              json["customQuestion"].map((x) => CustomQuestion.fromJson(x)))
-          : [],
-      jobApprove: json["jobApprove"] ?? "",
-      adminApprove: json["adminApprove"] ?? false,
-      publishDate: json["publishDate"] != null
-          ? DateTime.parse(json["publishDate"])
-          : DateTime.now(),
-      employementType: json["employement_Type"] ?? "",
-      locationType: json["location_Type"] ?? "",
-      careerStage: json["career_Stage"] ?? "",
-      websiteUrl: json["website_Url"],
-      expiryDate: json["expiryDate"] != null
-          ? DateTime.parse(json["expiryDate"])
-          : DateTime.now(),
-      billingPlanType: json["billingPlanType"] ?? "",
-      deactivatedAt: json["deactivatedAt"] != null
-          ? DateTime.parse(json["deactivatedAt"])
-          : null,
-      createdAt: json["createdAt"] != null
-          ? DateTime.parse(json["createdAt"])
-          : DateTime.now(),
-      updatedAt: json["updatedAt"] != null
-          ? DateTime.parse(json["updatedAt"])
-          : DateTime.now(),
-      applicantCount: json["applicantCount"] ?? 0,
-      derivedStatus: json["derivedStatus"] ?? "Pending",
-    );
-
+  factory ManageJobResponseModel.fromJson(Map<String, dynamic> json) =>
+      ManageJobResponseModel(
+        id: json["_id"],
+        userId: json["userId"],
+        companyId: CompanyId.fromJson(json["companyId"] ?? {}),
+        title: json["title"],
+        description: json["description"],
+        salaryRange: json["salaryRange"],
+        location: json["location"],
+        shift: json["shift"],
+        responsibilities: json["responsibilities"] != null
+            ? List<dynamic>.from(json["responsibilities"])
+            : [],
+        educationExperience: json["educationExperience"] != null
+            ? List<dynamic>.from(json["educationExperience"])
+            : [],
+        benefits: json["benefits"] != null
+            ? List<dynamic>.from(json["benefits"])
+            : [],
+        vacancy: json["vacancy"] ?? 0,
+        counter: json["counter"] ?? 0,
+        embedding: json["embedding"] != null
+            ? List<double>.from(json["embedding"].map((x) => x.toDouble()))
+            : [],
+        experience: json["experience"] ?? "",
+        deadline: json["deadline"] != null
+            ? DateTime.parse(json["deadline"])
+            : DateTime.now(),
+        status: json["status"] ?? "",
+        jobCategoryId: json["jobCategoryId"] ?? "",
+        name: json["name"] ?? "",
+        role: json["role"] ?? "",
+        compensation: json["compensation"] ?? "",
+        arcrivedJob: json["arcrivedJob"] ?? false,
+        applicationRequirement: json["applicationRequirement"] != null
+            ? List<ApplicationRequirement>.from(
+                json["applicationRequirement"].map(
+                  (x) => ApplicationRequirement.fromJson(x),
+                ),
+              )
+            : [],
+        customQuestion: json["customQuestion"] != null
+            ? List<CustomQuestion>.from(
+                json["customQuestion"].map((x) => CustomQuestion.fromJson(x)),
+              )
+            : [],
+        jobApprove: json["jobApprove"] ?? "",
+        adminApprove: json["adminApprove"] ?? false,
+        publishDate: json["publishDate"] != null
+            ? DateTime.parse(json["publishDate"])
+            : DateTime.now(),
+        employementType: json["employement_Type"] ?? "",
+        locationType: json["location_Type"] ?? "",
+        careerStage: json["career_Stage"] ?? "",
+        websiteUrl: json["website_Url"],
+        expiryDate: json["expiryDate"] != null
+            ? DateTime.parse(json["expiryDate"])
+            : DateTime.now(),
+        billingPlanType: json["billingPlanType"] ?? "",
+        deactivatedAt: json["deactivatedAt"] != null
+            ? DateTime.parse(json["deactivatedAt"])
+            : null,
+        createdAt: json["createdAt"] != null
+            ? DateTime.parse(json["createdAt"])
+            : DateTime.now(),
+        updatedAt: json["updatedAt"] != null
+            ? DateTime.parse(json["updatedAt"])
+            : DateTime.now(),
+        applicantCount: json["applicantCount"] ?? 0,
+        derivedStatus: json["derivedStatus"] ?? "Pending",
+      );
 
   Map<String, dynamic> toJson() => {
     "_id": id,
@@ -242,35 +245,34 @@ class CompanyId {
     required this.updatedAt,
   });
 
-factory CompanyId.fromJson(Map<String, dynamic> json) => CompanyId(
-      id: json["_id"] ?? "",
-      userId: json["userId"] ?? "",
-      banner: json["banner"],
-      aboutUs: json["aboutUs"] ?? "",
-      slug: json["slug"] ?? "",
-      cname: json["cname"] ?? "",
-      country: json["country"] ?? "",
-      city: json["city"] ?? "",
-      zipcode: json["zipcode"] ?? "",
-      cemail: json["cemail"] ?? "",
-      sLink: json["sLink"] != null
-          ? List<SocialLink>.from(
-              json["sLink"].map((x) => SocialLink.fromJson(x)))
-          : [],
-      industry: json["industry"] ?? "",
-      service: json["service"] != null
-          ? List<String>.from(json["service"])
-          : [],
-      employeesId: json["employeesId"] != null
-          ? List<dynamic>.from(json["employeesId"])
-          : [],
-      createdAt: json["createdAt"] != null
-          ? DateTime.parse(json["createdAt"])
-          : DateTime.now(),
-      updatedAt: json["updatedAt"] != null
-          ? DateTime.parse(json["updatedAt"])
-          : DateTime.now(),
-    );
+  factory CompanyId.fromJson(Map<String, dynamic> json) => CompanyId(
+    id: json["_id"] ?? "",
+    userId: json["userId"] ?? "",
+    banner: json["banner"],
+    aboutUs: json["aboutUs"] ?? "",
+    slug: json["slug"] ?? "",
+    cname: json["cname"] ?? "",
+    country: json["country"] ?? "",
+    city: json["city"] ?? "",
+    zipcode: json["zipcode"] ?? "",
+    cemail: json["cemail"] ?? "",
+    sLink: json["sLink"] != null
+        ? List<SocialLink>.from(
+            json["sLink"].map((x) => SocialLink.fromJson(x)),
+          )
+        : [],
+    industry: json["industry"] ?? "",
+    service: json["service"] != null ? List<String>.from(json["service"]) : [],
+    employeesId: json["employeesId"] != null
+        ? List<dynamic>.from(json["employeesId"])
+        : [],
+    createdAt: json["createdAt"] != null
+        ? DateTime.parse(json["createdAt"])
+        : DateTime.now(),
+    updatedAt: json["updatedAt"] != null
+        ? DateTime.parse(json["updatedAt"])
+        : DateTime.now(),
+  );
 
   Map<String, dynamic> toJson() => {
     "_id": id,

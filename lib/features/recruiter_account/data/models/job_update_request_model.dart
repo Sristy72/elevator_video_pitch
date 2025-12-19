@@ -66,8 +66,11 @@ class UpdateJobRequest {
   factory UpdateJobRequest.fromJson(Map<String, dynamic> json) {
     return UpdateJobRequest(
       applicationRequirement: json['applicationRequirement'] != null
-          ? List<ApplicationRequirement>.from(json['applicationRequirement']
-          .map((x) => ApplicationRequirement.fromJson(x)))
+          ? List<ApplicationRequirement>.from(
+              json['applicationRequirement'].map(
+                (x) => ApplicationRequirement.fromJson(x),
+              ),
+            )
           : [],
       arcrivedJob: json['arcrivedJob'],
       website_Url: json['website_Url'],
@@ -76,7 +79,8 @@ class UpdateJobRequest {
       createdAt: json['createdAt'],
       customQuestion: json['customQuestion'] != null
           ? List<CustomQuestion>.from(
-          json['customQuestion'].map((x) => CustomQuestion.fromJson(x)))
+              json['customQuestion'].map((x) => CustomQuestion.fromJson(x)),
+            )
           : [],
       deadline: json['deadline'],
       description: json['description'],
@@ -109,8 +113,9 @@ class UpdateJobRequest {
       'career_Stage': careerStage,
       'compensation': compensation,
       'createdAt': createdAt,
-      "applicationRequirement":
-      applicationRequirement?.map((e) => e.toJson()).toList(),
+      "applicationRequirement": applicationRequirement
+          ?.map((e) => e.toJson())
+          .toList(),
       "customQuestion": customQuestion?.map((e) => e.toJson()).toList(),
       'deadline': deadline,
       'description': description,
@@ -168,14 +173,8 @@ class CustomQuestion {
   CustomQuestion({this.question, this.id});
 
   factory CustomQuestion.fromJson(Map<String, dynamic> json) {
-    return CustomQuestion(
-      question: json['question'],
-      id: json['_id'],
-    );
+    return CustomQuestion(question: json['question'], id: json['_id']);
   }
 
-  Map<String, dynamic> toJson() => {
-    'question': question,
-    '_id': id,
-  };
+  Map<String, dynamic> toJson() => {'question': question, '_id': id};
 }

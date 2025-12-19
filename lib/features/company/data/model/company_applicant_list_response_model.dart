@@ -215,17 +215,16 @@
 //   }
 // }
 
-
 class ApplicantListResponseModel {
   final String id;
   final String jobId;
   final User user;
   final String status;
   final List<Answer> answer;
-  final ResumeId? resumeId;   // nullable
+  final ResumeId? resumeId; // nullable
   final String createdAt;
   final String updatedAt;
-  final Resume? resume;       // nullable
+  final Resume? resume; // nullable
 
   ApplicantListResponseModel({
     required this.id,
@@ -245,21 +244,19 @@ class ApplicantListResponseModel {
       jobId: json["jobId"]?.toString() ?? "",
       user: User.fromJson(json["userId"] ?? {}),
       status: json["status"] ?? "",
-      answer: (json["answer"] as List?)
-              ?.map((e) => Answer.fromJson(e))
-              .toList() 
-              ?? [],
+      answer:
+          (json["answer"] as List?)?.map((e) => Answer.fromJson(e)).toList() ??
+          [],
       resumeId: json["resumeId"] == null
           ? null
           : ResumeId.fromJson(json["resumeId"]),
       createdAt: json["createdAt"] ?? "",
       updatedAt: json["updatedAt"] ?? "",
-      resume: json["resume"] == null
-          ? null
-          : Resume.fromJson(json["resume"]),
+      resume: json["resume"] == null ? null : Resume.fromJson(json["resume"]),
     );
   }
 }
+
 class User {
   final String id;
   final String name;
@@ -285,16 +282,13 @@ class User {
     );
   }
 }
+
 class Answer {
-  final String? question;   // nullable
-  final String? ans;        // nullable
+  final String? question; // nullable
+  final String? ans; // nullable
   final String id;
 
-  Answer({
-    this.question,
-    this.ans,
-    required this.id,
-  });
+  Answer({this.question, this.ans, required this.id});
 
   factory Answer.fromJson(Map<String, dynamic> json) {
     return Answer(
@@ -304,6 +298,7 @@ class Answer {
     );
   }
 }
+
 class ResumeFile {
   final String filename;
   final String url;
@@ -326,6 +321,7 @@ class ResumeFile {
     );
   }
 }
+
 class ResumeId {
   final String id;
   final String userId;
@@ -343,14 +339,16 @@ class ResumeId {
     return ResumeId(
       id: json["_id"] ?? "",
       userId: json["userId"]?.toString() ?? "",
-      file: (json["file"] as List?)
+      file:
+          (json["file"] as List?)
               ?.map((e) => ResumeFile.fromJson(e))
-              .toList()
-              ?? [],
+              .toList() ??
+          [],
       uploadDate: json["uploadDate"] ?? "",
     );
   }
 }
+
 class Resume {
   final String id;
   final String userId;
@@ -409,19 +407,16 @@ class Resume {
       country: json["country"] ?? "",
       city: json["city"] ?? "",
       email: json["email"] ?? "",
-      certifications: (json["certifications"] as List?)
+      certifications:
+          (json["certifications"] as List?)
               ?.map((e) => e.toString())
-              .toList()
-              ?? [],
-      languages: (json["languages"] as List?)
-              ?.map((e) => e.toString())
-              .toList()
-              ?? [],
+              .toList() ??
+          [],
+      languages:
+          (json["languages"] as List?)?.map((e) => e.toString()).toList() ?? [],
       sLink: json["sLink"] ?? [],
-      skills: (json["skills"] as List?)
-              ?.map((e) => e.toString())
-              .toList()
-              ?? [],
+      skills:
+          (json["skills"] as List?)?.map((e) => e.toString()).toList() ?? [],
       immediatelyAvailable: json["immediatelyAvailable"] ?? false,
       createdAt: json["createdAt"] ?? "",
       updatedAt: json["updatedAt"] ?? "",

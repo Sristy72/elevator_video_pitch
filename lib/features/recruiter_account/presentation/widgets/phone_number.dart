@@ -7,7 +7,8 @@ class PhoneNumberAndEmail extends StatelessWidget {
     super.key,
     required TextEditingController emailTEController,
     required FocusNode emailFocusNode,
-  }) : _emailTEController = emailTEController, _emailFocusNode = emailFocusNode;
+  }) : _emailTEController = emailTEController,
+       _emailFocusNode = emailFocusNode;
 
   final TextEditingController _emailTEController;
   final FocusNode _emailFocusNode;
@@ -23,10 +24,7 @@ class PhoneNumberAndEmail extends StatelessWidget {
             children: [
               Text(
                 'Email Address*',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
               ),
               SizedBox(height: 6),
               TextFormField(

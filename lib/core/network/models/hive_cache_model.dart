@@ -10,25 +10,25 @@ part 'hive_cache_model.g.dart';
 class HiveCacheModel {
   @HiveField(0)
   final String responseBody;
-  
+
   @HiveField(1)
   final String dataType;
-  
+
   @HiveField(2)
   final int statusCode;
-  
+
   @HiveField(3)
   final DateTime cachedAt;
-  
+
   @HiveField(4)
   DateTime lastAccessedAt;
-  
+
   @HiveField(5)
   final int size;
-  
+
   @HiveField(6)
   final String? etag;
-  
+
   @HiveField(7)
   final String? lastModified;
 

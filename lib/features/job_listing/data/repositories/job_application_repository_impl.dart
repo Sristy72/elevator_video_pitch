@@ -15,18 +15,22 @@ class JobApplicationRepositoryImpl implements JobApplicationRepository {
   final SecureStoreServices _secureStoreServices = SecureStoreServices();
 
   @override
-  NetworkResult<JobApplicationResponse> submitApplication(JobApplicationRequest request) async {
+  NetworkResult<JobApplicationResponse> submitApplication(
+    JobApplicationRequest request,
+  ) async {
     try {
       final dio = Dio();
-      
+
       // Copy headers from the API client
       dio.options.headers.addAll({
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       });
-      
+
       // Add authorization header if available
-      final token = await _secureStoreServices.retrieveData(KeyConstants.accessToken);
+      final token = await _secureStoreServices.retrieveData(
+        KeyConstants.accessToken,
+      );
       if (token != null && token.isNotEmpty) {
         dio.options.headers['Authorization'] = 'Bearer $token';
       }
@@ -44,32 +48,38 @@ class JobApplicationRepositoryImpl implements JobApplicationRepository {
       );
 
       final responseData = response.data;
-      
+
       // Debug: Print response details
       print('========== JOB APPLICATION API RESPONSE ==========');
       print('Status Code: ${response.statusCode}');
       print('Response Data: $responseData');
       print('Response Type: ${responseData.runtimeType}');
       print('==================================================');
-      
+
       // Handle different response formats
       // 1. Check if it's a wrapped response with status and data
       if (responseData is Map<String, dynamic>) {
         final status = responseData['status'];
-        final message = responseData['message'] ?? 'Application submitted successfully';
-        
+        final message =
+            responseData['message'] ?? 'Application submitted successfully';
+
         print('Response status: $status');
         print('Response message: $message');
-        
+
         // Success if status is 'success' or HTTP status code is 2xx
         if (status == 'success' && responseData['data'] != null) {
-          final applicationData = JobApplicationResponse.fromJson(responseData['data']);
-          return Right(NetworkSuccess(
-            data: applicationData,
-            message: message,
-            statusCode: response.statusCode ?? 200,
-          ));
-        } else if ((response.statusCode ?? 200) >= 200 && (response.statusCode ?? 200) < 300) {
+          final applicationData = JobApplicationResponse.fromJson(
+            responseData['data'],
+          );
+          return Right(
+            NetworkSuccess(
+              data: applicationData,
+              message: message,
+              statusCode: response.statusCode ?? 200,
+            ),
+          );
+        } else if ((response.statusCode ?? 200) >= 200 &&
+            (response.statusCode ?? 200) < 300) {
           // If status code is 2xx, treat as success regardless of status field
           final appData = responseData['data'] ?? responseData;
           Map<String, dynamic> dataMap = {};
@@ -77,23 +87,29 @@ class JobApplicationRepositoryImpl implements JobApplicationRepository {
             dataMap = Map<String, dynamic>.from(appData);
           }
           final applicationData = JobApplicationResponse.fromJson(dataMap);
-          return Right(NetworkSuccess(
-            data: applicationData,
-            message: message,
-            statusCode: response.statusCode ?? 200,
-          ));
+          return Right(
+            NetworkSuccess(
+              data: applicationData,
+              message: message,
+              statusCode: response.statusCode ?? 200,
+            ),
+          );
         } else {
-          return Left(NetworkFailure(
-            message: message,
-            statusCode: response.statusCode ?? 400,
-          ));
+          return Left(
+            NetworkFailure(
+              message: message,
+              statusCode: response.statusCode ?? 400,
+            ),
+          );
         }
       } else {
         // If response is not a map, return error
-        return Left(NetworkFailure(
-          message: 'Invalid response format',
-          statusCode: response.statusCode ?? 400,
-        ));
+        return Left(
+          NetworkFailure(
+            message: 'Invalid response format',
+            statusCode: response.statusCode ?? 400,
+          ),
+        );
       }
     } on DioException catch (e) {
       print('========== JOB APPLICATION API ERROR (DioException) ==========');
@@ -103,21 +119,27 @@ class JobApplicationRepositoryImpl implements JobApplicationRepository {
       print('Response Data: ${e.response?.data}');
       print('Stack Trace: ${e.stackTrace}');
       print('===============================================================');
-      
-      return Left(NetworkFailure(
-        message: e.response?.data['message'] ?? 'Failed to submit application: ${e.message}',
-        statusCode: e.response?.statusCode ?? 500,
-      ));
+
+      return Left(
+        NetworkFailure(
+          message:
+              e.response?.data['message'] ??
+              'Failed to submit application: ${e.message}',
+          statusCode: e.response?.statusCode ?? 500,
+        ),
+      );
     } catch (e, stackTrace) {
       print('========== JOB APPLICATION API ERROR (General) ==========');
       print('Error: $e');
       print('Stack Trace: $stackTrace');
       print('=========================================================');
-      
-      return Left(NetworkFailure(
-        message: 'Failed to submit application: $e',
-        statusCode: 500,
-      ));
+
+      return Left(
+        NetworkFailure(
+          message: 'Failed to submit application: $e',
+          statusCode: 500,
+        ),
+      );
     }
   }
 }

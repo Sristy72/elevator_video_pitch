@@ -2,10 +2,7 @@ class GetCategoryResponseModel {
   final List<Category> category;
   final Meta meta;
 
-  GetCategoryResponseModel({
-    required this.category,
-    required this.meta,
-  });
+  GetCategoryResponseModel({required this.category, required this.meta});
 
   factory GetCategoryResponseModel.fromJson(Map<String, dynamic> json) {
     return GetCategoryResponseModel(

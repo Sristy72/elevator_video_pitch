@@ -28,8 +28,11 @@ class LocationController extends GetxController {
         final data = jsonDecode(response.body);
 
         for (var country in data['data']) {
-          if (country['cities'] != null && (country['cities'] as List).isNotEmpty) {
-            countryCityMap[country['country']] = List<String>.from(country['cities']);
+          if (country['cities'] != null &&
+              (country['cities'] as List).isNotEmpty) {
+            countryCityMap[country['country']] = List<String>.from(
+              country['cities'],
+            );
           }
         }
 

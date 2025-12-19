@@ -40,10 +40,8 @@ class UpdatedSuccess<T> extends NetworkSuccess<T> {
 }
 
 class DeletedSuccess extends NetworkSuccess<void> {
-  const DeletedSuccess({
-    required super.message,
-    super.statusCode = 204,
-  }) : super(data: null);
+  const DeletedSuccess({required super.message, super.statusCode = 204})
+    : super(data: null);
 }
 
 class RetrievedSuccess<T> extends NetworkSuccess<T> {
