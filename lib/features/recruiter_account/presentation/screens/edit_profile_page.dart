@@ -26,8 +26,10 @@ class EditProfilePage extends StatefulWidget {
 
 class _EditProfilePageState extends State<EditProfilePage> {
   late final TextEditingController _biocontroller = TextEditingController();
-  late final TextEditingController _firstNameTEController = TextEditingController();
-  late final TextEditingController _surNameTEController = TextEditingController();
+  late final TextEditingController _firstNameTEController =
+      TextEditingController();
+  late final TextEditingController _surNameTEController =
+      TextEditingController();
   final TextEditingController _linkedINTEController = TextEditingController();
   final TextEditingController _twitterTEController = TextEditingController();
   final TextEditingController _upworkTEController = TextEditingController();

@@ -7,7 +7,8 @@ class RequirementItem extends StatelessWidget {
   final RxString selectedStatus;
   final VoidCallback onDelete;
 
-  const RequirementItem({super.key, 
+  const RequirementItem({
+    super.key,
     required this.label,
     //required this.onChanged,
     required this.selectedStatus,

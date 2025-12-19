@@ -747,7 +747,7 @@ class CompanyAccountController extends BaseController {
       },
       (success) {
         manageJobList.value = success.data;
-              setLoading(false);
+        setLoading(false);
       },
     );
   }

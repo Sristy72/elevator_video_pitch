@@ -105,7 +105,6 @@
 /////////////////////////updated no 2
 library;
 
-
 // import 'dart:convert';
 
 // CompanyResponseModel singleCompanyResponseModelFromJson(String str) =>
@@ -253,7 +252,6 @@ library;
 //         updatedAt: json["updatedAt"],
 //       );
 // }
-
 
 class CompanyResponseModel {
   final Company company;

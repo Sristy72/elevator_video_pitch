@@ -370,7 +370,8 @@ class JobDetailsStep extends StatelessWidget {
             Obx(
               () => DropdownButtonFormField<String>(
                 isExpanded: true,
-                initialValue: employeeController.selectedEmploymentType.value.isEmpty
+                initialValue:
+                    employeeController.selectedEmploymentType.value.isEmpty
                     ? null
                     : employeeController.selectedEmploymentType.value,
                 decoration: context.primaryInputDecoration.copyWith(
@@ -462,7 +463,8 @@ class JobDetailsStep extends StatelessWidget {
             Obx(
               () => DropdownButtonFormField<String>(
                 isExpanded: true,
-                initialValue: locationTypeController.selectedLocationType.value.isEmpty
+                initialValue:
+                    locationTypeController.selectedLocationType.value.isEmpty
                     ? null
                     : locationTypeController.selectedLocationType.value,
                 decoration: InputDecoration(
@@ -508,7 +510,8 @@ class JobDetailsStep extends StatelessWidget {
             Obx(
               () => DropdownButtonFormField<String>(
                 isExpanded: true,
-                initialValue: careerStageController.selectedCareerStage.value.isEmpty
+                initialValue:
+                    careerStageController.selectedCareerStage.value.isEmpty
                     ? null
                     : careerStageController.selectedCareerStage.value,
                 decoration: InputDecoration(

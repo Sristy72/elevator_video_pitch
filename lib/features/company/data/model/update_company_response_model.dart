@@ -178,7 +178,6 @@
 //   String toString() => 'SocialLink(label: $label, url: $url)';
 // }
 
-
 class CompanyUpdateResponse {
   final UpdateCompanyResponseModel? updated;
   final List<AwardResult>? results;

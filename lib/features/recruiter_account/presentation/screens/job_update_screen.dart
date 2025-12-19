@@ -420,7 +420,8 @@ class _JobUpdateScreenState extends State<JobUpdateScreen> {
             Obx(
               () => DropdownButtonFormField<String>(
                 isExpanded: true,
-                initialValue: employeeController.selectedEmploymentType.value.isEmpty
+                initialValue:
+                    employeeController.selectedEmploymentType.value.isEmpty
                     ? null
                     : employeeController.selectedEmploymentType.value,
                 decoration: context.primaryInputDecoration.copyWith(
@@ -512,7 +513,8 @@ class _JobUpdateScreenState extends State<JobUpdateScreen> {
             Obx(
               () => DropdownButtonFormField<String>(
                 isExpanded: true,
-                initialValue: locationTypeController.selectedLocationType.value.isEmpty
+                initialValue:
+                    locationTypeController.selectedLocationType.value.isEmpty
                     ? null
                     : locationTypeController.selectedLocationType.value,
                 decoration: InputDecoration(
@@ -558,7 +560,8 @@ class _JobUpdateScreenState extends State<JobUpdateScreen> {
             Obx(
               () => DropdownButtonFormField<String>(
                 isExpanded: true,
-                initialValue: careerStageController.selectedCareerStage.value.isEmpty
+                initialValue:
+                    careerStageController.selectedCareerStage.value.isEmpty
                     ? null
                     : careerStageController.selectedCareerStage.value,
                 decoration: InputDecoration(

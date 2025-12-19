@@ -7,7 +7,8 @@ class AppliedJobCard extends StatelessWidget {
   final String title;
   final String description;
 
-  const AppliedJobCard({super.key, 
+  const AppliedJobCard({
+    super.key,
     required this.title,
     required this.description,
     required this.jobLogo,
