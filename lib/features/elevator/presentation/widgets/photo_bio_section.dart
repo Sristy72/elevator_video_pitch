@@ -6,6 +6,11 @@ import 'package:get/get.dart';
 
 import '../controller/elevator_resume_controller.dart';
 
+// Helper function to check if path is a URL
+bool _isUrl(String path) {
+  return path.startsWith('http://') || path.startsWith('https://');
+}
+
 class PhotoBioSection extends StatelessWidget {
   const PhotoBioSection({super.key});
 
@@ -45,7 +50,24 @@ class PhotoBioSection extends StatelessWidget {
                     ? _PhotoPlaceholder(theme: theme)
                     : ClipRRect(
                         borderRadius: BorderRadius.circular(8),
-                        child: Image.file(File(path), fit: BoxFit.cover),
+                        child: _isUrl(path)
+                            ? Image.network(
+                                path,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Container(
+                                    color: Colors.grey.shade200,
+                                    child: const Center(
+                                      child: Icon(
+                                        Icons.broken_image,
+                                        size: 50,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              )
+                            : Image.file(File(path), fit: BoxFit.cover),
                       ),
               ),
             );
@@ -251,6 +273,11 @@ class PhotoBioSection extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  // Helper function to check if path is a URL
+  bool _isUrl(String path) {
+    return path.startsWith('http://') || path.startsWith('https://');
   }
 }
 
