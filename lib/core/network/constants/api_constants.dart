@@ -200,7 +200,7 @@ class PaymentEndpoints {
   final String createPayment = '$_base/create-payment';
 
   final String confirmPayment = '$_base/confirm-payment';
-  
+
   String getUserPayments(String userId, int page, int limit) =>
       '$_base/user/$userId?page=$page&limit=$limit';
 }
