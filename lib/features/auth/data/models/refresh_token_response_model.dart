@@ -2,7 +2,6 @@ class RefreshTokenResponseModel {
   final String refreshToken;
   final String accessToken;
 
-
   RefreshTokenResponseModel({
     required this.refreshToken,
     required this.accessToken,
