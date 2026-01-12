@@ -29,32 +29,27 @@ class PhotoBioSection extends StatelessWidget {
 
         AspectRatio(
           aspectRatio: 1,
-          child: Obx(
-                () {
-              final path = controller.photoPath.value;
+          child: Obx(() {
+            final path = controller.photoPath.value;
 
-              return InkWell(
-                onTap: controller.pickPhoto,
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: Colors.grey.shade300),
-                    color: Colors.white,
-                  ),
-                  padding: const EdgeInsets.all(16),
-                  child: path == null
-                      ? _PhotoPlaceholder(theme: theme)
-                      : ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Image.file(
-                      File(path),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+            return InkWell(
+              onTap: controller.pickPhoto,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: Colors.grey.shade300),
+                  color: Colors.white,
                 ),
-              );
-            },
-          ),
+                padding: const EdgeInsets.all(16),
+                child: path == null
+                    ? _PhotoPlaceholder(theme: theme)
+                    : ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Image.file(File(path), fit: BoxFit.cover),
+                      ),
+              ),
+            );
+          }),
         ),
 
         const SizedBox(height: 16),
@@ -92,20 +87,24 @@ class PhotoBioSection extends StatelessWidget {
                         onSelected: (value) {
                           switch (value) {
                             case 'Heading 1':
-                              controller.aboutMeQuillController
-                                  .formatSelection(quill.Attribute.h1);
+                              controller.aboutMeQuillController.formatSelection(
+                                quill.Attribute.h1,
+                              );
                               break;
                             case 'Heading 2':
-                              controller.aboutMeQuillController
-                                  .formatSelection(quill.Attribute.h2);
+                              controller.aboutMeQuillController.formatSelection(
+                                quill.Attribute.h2,
+                              );
                               break;
                             case 'Heading 3':
-                              controller.aboutMeQuillController
-                                  .formatSelection(quill.Attribute.h3);
+                              controller.aboutMeQuillController.formatSelection(
+                                quill.Attribute.h3,
+                              );
                               break;
                             default:
-                              controller.aboutMeQuillController
-                                  .formatSelection(quill.Attribute.header);
+                              controller.aboutMeQuillController.formatSelection(
+                                quill.Attribute.header,
+                              );
                           }
                         },
                         itemBuilder: (context) => const [
@@ -139,10 +138,7 @@ class PhotoBioSection extends StatelessWidget {
                               ),
                             ),
                           ),
-                          PopupMenuItem(
-                            value: 'Normal',
-                            child: Text('Normal'),
-                          ),
+                          PopupMenuItem(value: 'Normal', child: Text('Normal')),
                         ],
                         child: Container(
                           padding: const EdgeInsets.symmetric(
@@ -157,10 +153,7 @@ class PhotoBioSection extends StatelessWidget {
                             children: const [
                               Text('Normal'),
                               SizedBox(width: 4),
-                              Icon(
-                                Icons.keyboard_arrow_down_rounded,
-                                size: 18,
-                              ),
+                              Icon(Icons.keyboard_arrow_down_rounded, size: 18),
                             ],
                           ),
                         ),
@@ -249,7 +242,7 @@ class PhotoBioSection extends StatelessWidget {
         const SizedBox(height: 4),
 
         Obx(
-              () => Text(
+          () => Text(
             'Word count: ${controller.aboutMeWordCount.value}/200',
             style: theme.textTheme.bodySmall?.copyWith(
               color: Colors.grey.shade600,
@@ -309,10 +302,7 @@ class _ToolbarIcon extends StatelessWidget {
   final IconData icon;
   final VoidCallback? onTap;
 
-  const _ToolbarIcon({
-    required this.icon,
-    this.onTap,
-  });
+  const _ToolbarIcon({required this.icon, this.onTap});
 
   @override
   Widget build(BuildContext context) {

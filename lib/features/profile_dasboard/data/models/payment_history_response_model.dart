@@ -2,15 +2,15 @@ class PaymentHistoryResponseModel {
   final List<PaymentTransaction> transactions;
   final PaymentMeta meta;
 
-  PaymentHistoryResponseModel({
-    required this.transactions,
-    required this.meta,
-  });
+  PaymentHistoryResponseModel({required this.transactions, required this.meta});
 
   factory PaymentHistoryResponseModel.fromJson(Map<String, dynamic> json) {
     return PaymentHistoryResponseModel(
-      transactions: (json['data'] as List<dynamic>?)
-              ?.map((e) => PaymentTransaction.fromJson(e as Map<String, dynamic>))
+      transactions:
+          (json['data'] as List<dynamic>?)
+              ?.map(
+                (e) => PaymentTransaction.fromJson(e as Map<String, dynamic>),
+              )
               .toList() ??
           [],
       meta: PaymentMeta.fromJson(json['meta'] as Map<String, dynamic>? ?? {}),
@@ -118,12 +118,7 @@ class PaymentPlan {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      '_id': id,
-      'title': title,
-      'price': price,
-      'valid': valid,
-    };
+    return {'_id': id, 'title': title, 'price': price, 'valid': valid};
   }
 }
 

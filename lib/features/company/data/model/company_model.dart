@@ -37,11 +37,7 @@ class EmployeeModel {
   final String role;
   final String phone;
 
-  EmployeeModel({
-    required this.name,
-    required this.role,
-    required this.phone,
-  });
+  EmployeeModel({required this.name, required this.role, required this.phone});
 
   factory EmployeeModel.fromJson(Map<String, dynamic> json) {
     return EmployeeModel(

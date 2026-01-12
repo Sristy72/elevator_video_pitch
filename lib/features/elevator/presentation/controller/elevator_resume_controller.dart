@@ -41,6 +41,9 @@ class ElevatorResumeController extends GetxController {
   /// Immediately Available checkbox
   var immediatelyAvailable = false.obs;
 
+  /// Profile data loading state
+  var isProfileDataLoaded = false.obs;
+
   /// Check if resume upload is in progress
   var isUploadingResume = false.obs;
   var elevatorVideoPath = ''.obs;
@@ -174,10 +177,8 @@ class ElevatorResumeController extends GetxController {
     fetchCountriesWithCities();
     fetchLanguages();
 
-    // Load user profile data with delay to ensure service is ready
-    Future.delayed(Duration.zero, () {
-      _loadUserProfileData();
-    });
+    // Load user profile data immediately (no delay)
+    _loadUserProfileData();
 
     // Also listen to userInfoRx for reactive updates
     _setupUserProfileListener();
@@ -314,6 +315,9 @@ class ElevatorResumeController extends GetxController {
     // Set email
     print('Setting email to: "${user.email}"');
     emailController.text = user.email;
+
+    // Mark profile data as loaded
+    isProfileDataLoaded.value = true;
 
     // Set phone number
     print(

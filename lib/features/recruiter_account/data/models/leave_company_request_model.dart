@@ -47,19 +47,14 @@ class LeaveCompanyRequestModel {
     };
   }
 }
+
 class SocialLinkRequest {
   final String label;
   final String url;
 
-  SocialLinkRequest({
-    required this.label,
-    required this.url,
-  });
+  SocialLinkRequest({required this.label, required this.url});
 
   Map<String, dynamic> toJson() {
-    return {
-      "label": label,
-      "url": url,
-    };
+    return {"label": label, "url": url};
   }
 }

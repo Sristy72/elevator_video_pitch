@@ -15,7 +15,6 @@ class CreateJobPostingScreen extends StatelessWidget {
   final CategoryController categoryController = Get.put(
     CategoryController(Get.find()),
   );
-  
 
   CreateJobPostingScreen({super.key});
 

@@ -110,7 +110,7 @@ class PaypalServices {
             "executeUrl": executeUrl,
             "approvalUrl": approvalUrl,
             "token": token,
-            "id": body["id"] ?? ""
+            "id": body["id"] ?? "",
           };
         }
         print('⚠️ PayPal API: No links found in response');

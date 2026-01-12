@@ -179,7 +179,6 @@ class EmployeeFetchSingleModel {
   }
 }
 
-
 class Employee {
   final String id;
   final String name;
@@ -247,6 +246,7 @@ class Company {
     );
   }
 }
+
 class RequestModel {
   final String id;
   final RequestUser? userId;
@@ -286,6 +286,7 @@ class RequestModel {
     );
   }
 }
+
 class RequestUser {
   final String id;
   final String name;
@@ -312,12 +313,11 @@ class RequestUser {
       email: json['email'] ?? '',
       role: json['role'] ?? '',
       slug: json['slug'] ?? '',
-      avatar: json['avatar'] != null
-          ? Avatar.fromJson(json['avatar'])
-          : null,
+      avatar: json['avatar'] != null ? Avatar.fromJson(json['avatar']) : null,
     );
   }
 }
+
 class Photo {
   final String url;
 

@@ -19,7 +19,7 @@ class _AccountPreviewScreenState extends State<AccountPreviewScreen> {
 
   // Make email and password observable
   final RxString email = ''.obs;
-  final RxString  password = ''.obs;
+  final RxString password = ''.obs;
 
   @override
   void initState() {
@@ -39,9 +39,7 @@ class _AccountPreviewScreenState extends State<AccountPreviewScreen> {
     return Obx(() {
       if (email.isEmpty || password.isEmpty) {
         // fallback if data is not found
-        return const Scaffold(
-          body: Center(child: CircularProgressIndicator()),
-        );
+        return const Scaffold(body: Center(child: CircularProgressIndicator()));
       }
 
       return Scaffold(
@@ -62,45 +60,54 @@ class _AccountPreviewScreenState extends State<AccountPreviewScreen> {
 
               Text(
                 email.value,
-                style: const TextStyle(fontSize: 18, color: AppColors.primaryWhite),
+                style: const TextStyle(
+                  fontSize: 18,
+                  color: AppColors.primaryWhite,
+                ),
               ),
               const SizedBox(height: 10),
 
               // Hidden password
               Text(
                 '*' * password.value.length,
-                style: const TextStyle(fontSize: 18, letterSpacing: 3, color: AppColors.primaryWhite),
+                style: const TextStyle(
+                  fontSize: 18,
+                  letterSpacing: 3,
+                  color: AppColors.primaryWhite,
+                ),
               ),
               const SizedBox(height: 30),
 
-          // AccountPreviewScreen (only showing the relevant part)
+              // AccountPreviewScreen (only showing the relevant part)
+              Obx(
+                () => PrimaryButton(
+                  isLoading: _authController.isLoading.value,
+                  onPressed: () async {
+                    final secureStore = SecureStoreServices();
 
-          Obx(() => PrimaryButton(
-            isLoading: _authController.isLoading.value,
-            onPressed: () async {
-              final secureStore = SecureStoreServices();
+                    // store a flag that user has confirmed this account preview
+                    await secureStore.storeData('previewConfirmed', 'true');
 
-              // store a flag that user has confirmed this account preview
-              await secureStore.storeData('previewConfirmed', 'true');
+                    // use existing RememberMeController if present, otherwise create one
+                    final rememberMeCtrl =
+                        Get.isRegistered<RememberMeController>()
+                        ? Get.find<RememberMeController>()
+                        : Get.put(RememberMeController());
 
-              // use existing RememberMeController if present, otherwise create one
-              final rememberMeCtrl = Get.isRegistered<RememberMeController>()
-                  ? Get.find<RememberMeController>()
-                  : Get.put(RememberMeController());
+                    // call login (your login already stores credentials when rememberMe is true)
+                    await _authController.login(
+                      rememberMeCtrl,
+                      email: email.value,
+                      password: password.value,
+                    );
 
-              // call login (your login already stores credentials when rememberMe is true)
-              await _authController.login(
-                rememberMeCtrl,
-                email: email.value,
-                password: password.value,
-              );
+                    // login might already navigate; if not, you can safely navigate here:
 
-              // login might already navigate; if not, you can safely navigate here:
-
-                // Get.offAll(() => const HomeScreen()); <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-            },
-            text: "Is this your account?",
-          )),
+                    // Get.offAll(() => const HomeScreen()); <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+                  },
+                  text: "Is this your account?",
+                ),
+              ),
             ],
           ),
         ),

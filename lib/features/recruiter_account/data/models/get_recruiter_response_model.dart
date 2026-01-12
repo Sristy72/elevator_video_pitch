@@ -57,8 +57,8 @@ class FetchRecruiterResponseModel {
       slug: json["slug"] ?? '',
       sLink: (json["sLink"] is List)
           ? List<SocialLink>.from(
-        json["sLink"].map((x) => SocialLink.fromJson(x)),
-      )
+              json["sLink"].map((x) => SocialLink.fromJson(x)),
+            )
           : [],
       companyId: (json["companyId"] is Map<String, dynamic>)
           ? Company.fromJson(json["companyId"])
@@ -78,10 +78,7 @@ class SocialLink {
   SocialLink({required this.label, this.url});
 
   factory SocialLink.fromJson(Map<String, dynamic> json) {
-    return SocialLink(
-      label: json["label"] ?? '',
-      url: json["url"],
-    );
+    return SocialLink(label: json["label"] ?? '', url: json["url"]);
   }
 }
 
@@ -139,8 +136,8 @@ class Company {
       cemail: json["cemail"] ?? '',
       sLink: (json["sLink"] is List)
           ? List<SocialLink>.from(
-        json["sLink"].map((x) => SocialLink.fromJson(x)),
-      )
+              json["sLink"].map((x) => SocialLink.fromJson(x)),
+            )
           : [],
       industry: json["industry"] ?? '',
       service: json["service"] is List ? json["service"] : [],
@@ -156,7 +153,6 @@ class Company {
     );
   }
 }
-
 
 class ElevatorPitch {
   final ElevatorVideo video;

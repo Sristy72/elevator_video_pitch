@@ -51,14 +51,14 @@ class UpdateRecruiterResponseModel {
       emailAddress: json['emailAddress'],
       phoneNumber: json['phoneNumber'],
       sLink: json['sLink'] != null
-          ? (json['sLink'] as List)
-          .map((e) => SocialLink.fromJson(e))
-          .toList()
+          ? (json['sLink'] as List).map((e) => SocialLink.fromJson(e)).toList()
           : [],
-      createdAt:
-      json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
-      updatedAt:
-      json['updatedAt'] != null ? DateTime.parse(json['updatedAt']) : null,
+      createdAt: json['createdAt'] != null
+          ? DateTime.parse(json['createdAt'])
+          : null,
+      updatedAt: json['updatedAt'] != null
+          ? DateTime.parse(json['updatedAt'])
+          : null,
     );
   }
 
@@ -92,18 +92,10 @@ class SocialLink {
   SocialLink({this.label, this.url, this.id});
 
   factory SocialLink.fromJson(Map<String, dynamic> json) {
-    return SocialLink(
-      label: json['label'],
-      url: json['url'],
-      id: json['_id'],
-    );
+    return SocialLink(label: json['label'], url: json['url'], id: json['_id']);
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'label': label,
-      'url': url,
-      '_id': id,
-    };
+    return {'label': label, 'url': url, '_id': id};
   }
 }

@@ -49,9 +49,11 @@ class JobDetailsStep extends StatelessWidget {
     );
     final FocusNode _compensationFocusNode = FocusNode();
 
-    TextEditingController _companyWebTEController = TextEditingController(text: controller.companyWebsite.value.isNotEmpty
-        ? controller.companyWebsite.value
-        : '',);
+    TextEditingController _companyWebTEController = TextEditingController(
+      text: controller.companyWebsite.value.isNotEmpty
+          ? controller.companyWebsite.value
+          : '',
+    );
     final FocusNode _companyWebFocusNode = FocusNode();
 
     final LocationController countryCityController = Get.put(
@@ -559,7 +561,8 @@ class JobDetailsStep extends StatelessWidget {
                     return;
                   }
 
-                  final selected = await showModalBottomSheet<GetCurrencyResponseModel>(
+                  final selected =
+                      await showModalBottomSheet<GetCurrencyResponseModel>(
                         context: context,
                         isScrollControlled: true,
                         builder: (ctx) {
@@ -693,13 +696,20 @@ class JobDetailsStep extends StatelessWidget {
             SizedBox(height: 6),
 
             Obx(
-                  () => DropdownButtonFormField<String>(
+              () => DropdownButtonFormField<String>(
                 isExpanded: true,
-                value: jobPostingExpirationController.selectedJobPostingExpiration.value.isEmpty
+                value:
+                    jobPostingExpirationController
+                        .selectedJobPostingExpiration
+                        .value
+                        .isEmpty
                     ? null
-                    : jobPostingExpirationController.selectedJobPostingExpiration.value,
+                    : jobPostingExpirationController
+                          .selectedJobPostingExpiration
+                          .value,
                 decoration: context.primaryInputDecoration.copyWith(
-                  hintText: jobPostingExpirationController.jobPostingExpiration[2],
+                  hintText:
+                      jobPostingExpirationController.jobPostingExpiration[2],
                   hintStyle: const TextStyle(
                     color: Colors.black,
                     fontSize: 16,
@@ -710,20 +720,23 @@ class JobDetailsStep extends StatelessWidget {
                 items: jobPostingExpirationController.jobPostingExpiration
                     .map(
                       (type) => DropdownMenuItem<String>(
-                    value: type,
-                    child: Text(
-                      type,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.black,
+                        value: type,
+                        child: Text(
+                          type,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.black,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                )
+                    )
                     .toList(),
                 onChanged: (value) {
-                  jobPostingExpirationController.selectedJobPostingExpiration.value = value ?? '';
+                  jobPostingExpirationController
+                          .selectedJobPostingExpiration
+                          .value =
+                      value ?? '';
                 },
               ),
             ),
@@ -762,7 +775,9 @@ class JobDetailsStep extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: ElevatedButton(
-                    onPressed: () {Get.back();},
+                    onPressed: () {
+                      Get.back();
+                    },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),

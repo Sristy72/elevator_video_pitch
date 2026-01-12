@@ -10,7 +10,9 @@ class JobListingResponseModel {
     List<JobModel> parsedJobs = [];
     MetaModel? parsedMeta;
 
-    print("DEBUG: JobListingResponseModel received json type: ${json.runtimeType}");
+    print(
+      "DEBUG: JobListingResponseModel received json type: ${json.runtimeType}",
+    );
     print("DEBUG: JobListingResponseModel received json: $json");
 
     if (json == null) {
@@ -18,28 +20,30 @@ class JobListingResponseModel {
     }
 
     if (json is List) {
-       parsedJobs = json.map((e) => JobModel.fromJson(e as Map<String, dynamic>)).toList();
+      parsedJobs = json
+          .map((e) => JobModel.fromJson(e as Map<String, dynamic>))
+          .toList();
     } else if (json is Map<String, dynamic>) {
       // Try to find the list of jobs in various keys
-      final jobsList = json['jobs'] ?? json['docs'] ?? json['data'] ?? json['results'];
-      
+      final jobsList =
+          json['jobs'] ?? json['docs'] ?? json['data'] ?? json['results'];
+
       if (jobsList is List) {
-        parsedJobs = jobsList.map((e) => JobModel.fromJson(e as Map<String, dynamic>)).toList();
+        parsedJobs = jobsList
+            .map((e) => JobModel.fromJson(e as Map<String, dynamic>))
+            .toList();
       }
 
       // Try to find meta
       if (json['meta'] != null) {
         parsedMeta = MetaModel.fromJson(json['meta']);
       } else if (json['currentPage'] != null) {
-         // Maybe meta is merged in root
-         parsedMeta = MetaModel.fromJson(json);
+        // Maybe meta is merged in root
+        parsedMeta = MetaModel.fromJson(json);
       }
     }
 
-    return JobListingResponseModel(
-      meta: parsedMeta,
-      jobs: parsedJobs,
-    );
+    return JobListingResponseModel(meta: parsedMeta, jobs: parsedJobs);
   }
 
   Map<String, dynamic> toJson() {

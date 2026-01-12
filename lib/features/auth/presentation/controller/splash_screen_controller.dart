@@ -29,14 +29,11 @@ class SplashController extends GetxController {
 
       if (userRole == 'candidate') {
         Get.offAll(() => DashboardScreen());
-      } 
-      else if (userRole == 'recruiter') {
+      } else if (userRole == 'recruiter') {
         Get.offAll(() => RecruiterPageScreen());
-      } 
-      else if (userRole == 'company') {
+      } else if (userRole == 'company') {
         Get.offAll(() => CompanyDetailsPage());
-      } 
-      else {
+      } else {
         // Unknown role, go to login
         Get.offAll(() => LoginScreen());
       }

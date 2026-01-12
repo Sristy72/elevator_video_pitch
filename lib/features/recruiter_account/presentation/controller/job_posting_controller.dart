@@ -4,8 +4,6 @@ import 'package:karlfive/features/recruiter_account/data/models/get_currency_res
 import 'package:karlfive/features/recruiter_account/presentation/controller/recruiter_controller.dart';
 import 'package:karlfive/features/recruiter_account/data/models/job_create_request_model.dart';
 
-
-
 class JobPostingController extends GetxController {
   final recruiterController = Get.find<RecruiterController>();
 
@@ -17,19 +15,15 @@ class JobPostingController extends GetxController {
   RxString selectedCategory = ''.obs;
   RxString selectedRole = ''.obs;
 
-
   RxString jobTitle = ''.obs;
   RxString department = ''.obs;
 
   RxString vacancies = ''.obs;
   late int vacanciesInt = int.tryParse(vacancies.value) ?? 0;
 
-
   // Add these setter methods for cleaner updates (optional)
   void setJobTitle(String value) => jobTitle.value = value;
   void setDepartment(String value) => department.value = value;
-
-
 
   // Data sources
   List<Category> get categories => recruiterController.category;
@@ -39,7 +33,6 @@ class JobPostingController extends GetxController {
   var selectedCurrency = Rxn<GetCurrencyResponseModel>();
   RxString compensation = ''.obs;
 
-
   // add these near the other application requirements state variables
   RxString resumeStatus = ''.obs;
   String resume = 'Resume';
@@ -48,8 +41,6 @@ class JobPostingController extends GetxController {
   RxString visaStatus = ''.obs;
   String visa = 'Valid visa for this job location?';
   RxBool visaVisible = true.obs; // <-- controls whether the row is shown
-
-
 
   // Job Description (HTML) & Publish
 
@@ -66,17 +57,15 @@ class JobPostingController extends GetxController {
   RxBool publishNow = true.obs;
   Rx<DateTime> selectedDate = DateTime.now().obs;
 
-  RxString companyWebsite= ''.obs;
+  RxString companyWebsite = ''.obs;
 
-  RxList<String> customQuestion= <String>[].obs;
-
+  RxList<String> customQuestion = <String>[].obs;
 
   // -----------------------------
   // Single Job Fetching
   // -----------------------------
   RxBool isLoading = false.obs;
   RxString error = ''.obs;
-
 
   void populateFieldsFromSingleJob() {
     final job = recruiterController.singleJob.value;
@@ -99,7 +88,8 @@ class JobPostingController extends GetxController {
     updateJobDescriptionHtml(job.description ?? '');
 
     // Publish Date & Flag
-    publishNow.value = job.publishDate == null || job.publishDate!.isBefore(DateTime.now());
+    publishNow.value =
+        job.publishDate == null || job.publishDate!.isBefore(DateTime.now());
     selectedDate.value = job.publishDate ?? DateTime.now();
 
     // --- Application Requirements ---
@@ -117,13 +107,11 @@ class JobPostingController extends GetxController {
 
     // --- Custom Questions ---
     if (job.customQuestion != null) {
-      customQuestion.value = job.customQuestion!.map((q) => q.question ?? '').toList();
+      customQuestion.value = job.customQuestion!
+          .map((q) => q.question ?? '')
+          .toList();
     }
-
   }
-
-
-
 
   // -----------------------------
   // Lifecycle
@@ -145,9 +133,7 @@ class JobPostingController extends GetxController {
     loadCurrenciesIfEmpty();
   }
 
-
-
-// add a remove method
+  // add a remove method
   void removeRequirement(String key) {
     switch (key) {
       case 'resume':
@@ -169,14 +155,11 @@ class JobPostingController extends GetxController {
   List<CustomQuestion> get customQuestions =>
       customQuestion.map((q) => CustomQuestion(question: q)).toList();
 
-
-
   // -----------------------------
   // Step Navigation
   // -----------------------------
   void nextStep() {
     if (currentStep.value < 5) currentStep.value++;
-
   }
 
   void previousStep() {
@@ -247,4 +230,3 @@ class JobPostingController extends GetxController {
     super.onClose();
   }
 }
-

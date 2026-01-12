@@ -17,10 +17,7 @@ class VisaSponsorshipSection extends StatelessWidget {
       children: [
         const Text(
           'Do you need visa sponsorship?',
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
         ),
         const SizedBox(height: 8),
         Row(

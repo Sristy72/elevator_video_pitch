@@ -12,4 +12,3 @@ class ChangePasswordRequestModel {
     'newPassword': newPassword,
   };
 }
-

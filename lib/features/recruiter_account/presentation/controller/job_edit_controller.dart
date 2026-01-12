@@ -64,7 +64,8 @@ class JobEditController extends GetxController {
   List<ApplicationRequirement> get applicationRequirement => [
     if (resumeVisible.value)
       ApplicationRequirement(requirement: resume, status: resumeStatus.value),
-    if (visaVisible.value) ApplicationRequirement(requirement: visa, status: visaStatus.value),
+    if (visaVisible.value)
+      ApplicationRequirement(requirement: visa, status: visaStatus.value),
   ];
 
   List<CustomQuestion> get customQuestionsList => customQuestions
@@ -121,7 +122,10 @@ class JobEditController extends GetxController {
 
       if (parts.length >= 2) {
         city = parts[0];
-        country = parts.sublist(1).join(', ').trim(); // handles "New York, NY, USA"
+        country = parts
+            .sublist(1)
+            .join(', ')
+            .trim(); // handles "New York, NY, USA"
       } else if (parts.length == 1) {
         country = parts[0];
       }
@@ -152,20 +156,21 @@ class JobEditController extends GetxController {
     selectedRole.value = j.role ?? '';
 
     // Other dropdowns - convert backend values to display names
-    employeeController.selectedEmploymentType.value =
-        employeeController.getDisplayName(j.employementType ?? '');
+    employeeController.selectedEmploymentType.value = employeeController
+        .getDisplayName(j.employementType ?? '');
 
-    locationTypeController.selectedLocationType.value =
-        locationTypeController.getDisplayName(j.locationType ?? '');
+    locationTypeController.selectedLocationType.value = locationTypeController
+        .getDisplayName(j.locationType ?? '');
 
     experienceLevelController.selectedExperienceLevel.value =
         experienceLevelController.getDisplayName(j.experience ?? '');
 
-    careerStageController.selectedCareerStage.value =
-        careerStageController.getDisplayName(j.careerStage ?? '');
+    careerStageController.selectedCareerStage.value = careerStageController
+        .getDisplayName(j.careerStage ?? '');
 
     // Publish settings
-    publishNow.value = j.publishDate == null || j.publishDate!.isBefore(DateTime.now());
+    publishNow.value =
+        j.publishDate == null || j.publishDate!.isBefore(DateTime.now());
     selectedPublishDate.value = j.publishDate;
 
     // Requirements
@@ -189,8 +194,9 @@ class JobEditController extends GetxController {
   }
 
   void _updateRolesForCategory(String categoryName) {
-    final cat = recruiterController.category
-        .firstWhereOrNull((c) => c.name == categoryName);
+    final cat = recruiterController.category.firstWhereOrNull(
+      (c) => c.name == categoryName,
+    );
     roles.assignAll(cat?.role ?? []);
   }
 
@@ -216,7 +222,11 @@ class JobEditController extends GetxController {
   }
 
   DateTime get safeInitialDate {
-    final today = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+    final today = DateTime(
+      DateTime.now().year,
+      DateTime.now().month,
+      DateTime.now().day,
+    );
     final selected = selectedPublishDate.value;
     if (selected == null) return today.add(const Duration(days: 1));
     final sel = DateTime(selected.year, selected.month, selected.day);
@@ -250,13 +260,17 @@ class JobEditController extends GetxController {
 
       // 🔥 FIX: Use backend values instead of display names
       employementType: employeeController.getBackendValue(
-          employeeController.selectedEmploymentType.value),
+        employeeController.selectedEmploymentType.value,
+      ),
       locationType: locationTypeController.getBackendValue(
-          locationTypeController.selectedLocationType.value),
+        locationTypeController.selectedLocationType.value,
+      ),
       experience: experienceLevelController.getBackendValue(
-          experienceLevelController.selectedExperienceLevel.value),
+        experienceLevelController.selectedExperienceLevel.value,
+      ),
       careerStage: careerStageController.getBackendValue(
-          careerStageController.selectedCareerStage.value),
+        careerStageController.selectedCareerStage.value,
+      ),
 
       name: selectedCategory.value,
       role: selectedRole.value,
@@ -281,10 +295,6 @@ class JobEditController extends GetxController {
     isEditMode.value = false;
   }
 }
-
-
-
-
 
 // // features/recruiter_account/presentation/controller/job_edit_controller.dart
 // import 'package:get/get.dart';

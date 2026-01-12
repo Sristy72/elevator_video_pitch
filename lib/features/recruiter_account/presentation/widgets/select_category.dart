@@ -43,13 +43,10 @@ class SearchableDropdown extends StatelessWidget {
           items: items
               .map(
                 (item) => DropdownMenuItem(
-              value: item,
-              child: Text(
-                item,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-          )
+                  value: item,
+                  child: Text(item, overflow: TextOverflow.ellipsis),
+                ),
+              )
               .toList(),
           onChanged: (_) {},
         ),

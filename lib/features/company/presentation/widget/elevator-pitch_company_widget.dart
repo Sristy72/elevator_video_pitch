@@ -17,8 +17,6 @@
 //   VideoPlayerController? _videoController;
 //   ChewieController? _chewieController;
 
-
-
 //   @override
 //   void initState() {
 //     super.initState();
@@ -248,10 +246,7 @@ class _ElevatorPitchCompanySectionState
       return const Center(
         child: Text(
           "No pitch added yet.",
-          style: TextStyle(
-            fontSize: 15,
-            color: Colors.white70,
-          ),
+          style: TextStyle(fontSize: 15, color: Colors.white70),
         ),
       );
     }
@@ -280,4 +275,3 @@ class _ElevatorPitchCompanySectionState
     );
   }
 }
-

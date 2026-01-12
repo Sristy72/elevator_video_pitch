@@ -313,8 +313,21 @@ class RecruiterController extends BaseController {
     );
   }
 
-  Future leaveCompany(String cname, String aboutUs,String industry, String country, String city, String zipcode, String cemail,
-   String clogo, String banner, String slug, List<String> employeesId, List<SocialLinkRequest> sLink, List<String> service) async {
+  Future leaveCompany(
+    String cname,
+    String aboutUs,
+    String industry,
+    String country,
+    String city,
+    String zipcode,
+    String cemail,
+    String clogo,
+    String banner,
+    String slug,
+    List<String> employeesId,
+    List<SocialLinkRequest> sLink,
+    List<String> service,
+  ) async {
     setLoading(true);
     setError("");
 

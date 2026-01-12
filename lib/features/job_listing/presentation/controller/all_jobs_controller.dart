@@ -14,7 +14,7 @@ class AllJobsController extends GetxController {
   var isLoading = false.obs;
   var isMoreLoading = false.obs;
   var jobList = <JobModel>[].obs;
-  
+
   // Pagination
   var currentPage = 1.obs;
   var totalPages = 1.obs;
@@ -35,10 +35,10 @@ class AllJobsController extends GetxController {
         fetchJobs(isRefresh: true);
       }
     }, time: const Duration(milliseconds: 500));
-    
+
     fetchJobs();
   }
-  
+
   @override
   void onClose() {
     _debounceWorker?.dispose();
@@ -72,9 +72,13 @@ class AllJobsController extends GetxController {
       },
       (success) {
         final data = success.data;
-        print("DEBUG: AllJobsController fetchJobs success. Jobs count: ${data.jobs.length}");
+        print(
+          "DEBUG: AllJobsController fetchJobs success. Jobs count: ${data.jobs.length}",
+        );
         if (data.meta != null) {
-          print("DEBUG: Pagination - Current: ${data.meta!.currentPage}, Total: ${data.meta!.totalPages}");
+          print(
+            "DEBUG: Pagination - Current: ${data.meta!.currentPage}, Total: ${data.meta!.totalPages}",
+          );
           currentPage.value = data.meta!.currentPage;
           totalPages.value = data.meta!.totalPages;
           totalItems.value = data.meta!.totalItems;
@@ -93,7 +97,9 @@ class AllJobsController extends GetxController {
   }
 
   void loadMore() {
-    if (currentPage.value < totalPages.value && !isMoreLoading.value && !isLoading.value) {
+    if (currentPage.value < totalPages.value &&
+        !isMoreLoading.value &&
+        !isLoading.value) {
       currentPage.value++;
       fetchJobs();
     }

@@ -21,7 +21,7 @@ class YourJobResponseModel {
   final String name;
   final String role;
   final String compensation;
-   bool arcrivedJob;
+  bool arcrivedJob;
   final List<ApplicationRequirement> applicationRequirement;
   final List<CustomQuestion> customQuestion;
   final String jobApprove;
@@ -95,7 +95,13 @@ class YourJobResponseModel {
   factory YourJobResponseModel.fromJson(Map<String, dynamic> json) {
     List<double> toDoubleList(dynamic list) {
       if (list is! List) return [];
-      return list.map<double>((e) => (e is num) ? e.toDouble() : double.tryParse(e.toString()) ?? 0.0).toList();
+      return list
+          .map<double>(
+            (e) => (e is num)
+                ? e.toDouble()
+                : double.tryParse(e.toString()) ?? 0.0,
+          )
+          .toList();
     }
 
     return YourJobResponseModel(
@@ -110,8 +116,12 @@ class YourJobResponseModel {
       responsibilities: json['responsibilities'] as List<dynamic>? ?? [],
       educationExperience: json['educationExperience'] as List<dynamic>? ?? [],
       benefits: json['benefits'] as List<dynamic>? ?? [],
-      vacancy: (json['vacancy'] is int) ? json['vacancy'] : int.tryParse('${json['vacancy']}') ?? 0,
-      counter: (json['counter'] is int) ? json['counter'] : int.tryParse('${json['counter']}') ?? 0,
+      vacancy: (json['vacancy'] is int)
+          ? json['vacancy']
+          : int.tryParse('${json['vacancy']}') ?? 0,
+      counter: (json['counter'] is int)
+          ? json['counter']
+          : int.tryParse('${json['counter']}') ?? 0,
       embedding: toDoubleList(json['embedding']),
       experience: json['experience']?.toString() ?? '',
       deadline: _parseDate(json['deadline']),
@@ -121,13 +131,18 @@ class YourJobResponseModel {
       role: json['role']?.toString() ?? '',
       compensation: json['compensation']?.toString() ?? '',
       arcrivedJob: json['arcrivedJob'] == true,
-      applicationRequirement: (json['applicationRequirement'] as List<dynamic>?)
-          ?.map((e) => ApplicationRequirement.fromJson(e as Map<String, dynamic>))
-          .toList() ??
+      applicationRequirement:
+          (json['applicationRequirement'] as List<dynamic>?)
+              ?.map(
+                (e) =>
+                    ApplicationRequirement.fromJson(e as Map<String, dynamic>),
+              )
+              .toList() ??
           [],
-      customQuestion: (json['customQuestion'] as List<dynamic>?)
-          ?.map((e) => CustomQuestion.fromJson(e as Map<String, dynamic>))
-          .toList() ??
+      customQuestion:
+          (json['customQuestion'] as List<dynamic>?)
+              ?.map((e) => CustomQuestion.fromJson(e as Map<String, dynamic>))
+              .toList() ??
           [],
       jobApprove: json['jobApprove']?.toString() ?? '',
       adminApprove: json['adminApprove'] == true,
@@ -141,8 +156,12 @@ class YourJobResponseModel {
       deactivatedAt: _parseDate(json['deactivatedAt']),
       createdAt: _parseDate(json['createdAt']),
       updatedAt: _parseDate(json['updatedAt']),
-      v: (json['__v'] is int) ? json['__v'] : int.tryParse('${json['__v']}') ?? 0,
-      applicantCount: (json['applicantCount'] is int) ? json['applicantCount'] : int.tryParse('${json['applicantCount']}') ?? 0,
+      v: (json['__v'] is int)
+          ? json['__v']
+          : int.tryParse('${json['__v']}') ?? 0,
+      applicantCount: (json['applicantCount'] is int)
+          ? json['applicantCount']
+          : int.tryParse('${json['applicantCount']}') ?? 0,
       derivedStatus: json['derivedStatus']?.toString() ?? '',
     );
   }
@@ -172,7 +191,9 @@ class YourJobResponseModel {
       'role': role,
       'compensation': compensation,
       'arcrivedJob': arcrivedJob,
-      'applicationRequirement': applicationRequirement.map((e) => e.toJson()).toList(),
+      'applicationRequirement': applicationRequirement
+          .map((e) => e.toJson())
+          .toList(),
       'customQuestion': customQuestion.map((e) => e.toJson()).toList(),
       'jobApprove': jobApprove,
       'adminApprove': adminApprove,
@@ -213,11 +234,7 @@ class ApplicationRequirement {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'requirement': requirement,
-      'status': status,
-      '_id': id,
-    };
+    return {'requirement': requirement, 'status': status, '_id': id};
   }
 }
 
@@ -225,10 +242,7 @@ class CustomQuestion {
   final String question;
   final String id;
 
-  CustomQuestion({
-    required this.question,
-    required this.id,
-  });
+  CustomQuestion({required this.question, required this.id});
 
   factory CustomQuestion.fromJson(Map<String, dynamic> json) {
     return CustomQuestion(

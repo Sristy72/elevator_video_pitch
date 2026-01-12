@@ -38,14 +38,21 @@ class ArchiveJobsPage extends StatelessWidget {
             final job = recruiterController.archiveJobs[index];
 
             return ListTile(
-              contentPadding:
-              const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              leading: const Icon(Icons.business_center,
-                  color: Colors.green, size: 32),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 8,
+              ),
+              leading: const Icon(
+                Icons.business_center,
+                color: Colors.green,
+                size: 32,
+              ),
               title: Text(
                 job.title ?? 'Untitled Job',
-                style:
-                const TextStyle(fontWeight: FontWeight.w600, fontSize: 15),
+                style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 15,
+                ),
               ),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,12 +61,14 @@ class ArchiveJobsPage extends StatelessWidget {
                     '${job.companyName ?? ''} | ${job.country ?? ''} (${job.jobType ?? ''})',
                     style: const TextStyle(fontSize: 13),
                   ),
-                  Text(job.location ?? '',
-                      style:
-                      const TextStyle(color: Colors.grey, fontSize: 13)),
-                  Text('${job.daysAgo ?? ''} days ago',
-                      style:
-                      const TextStyle(color: Colors.grey, fontSize: 12)),
+                  Text(
+                    job.location ?? '',
+                    style: const TextStyle(color: Colors.grey, fontSize: 13),
+                  ),
+                  Text(
+                    '${job.daysAgo ?? ''} days ago',
+                    style: const TextStyle(color: Colors.grey, fontSize: 12),
+                  ),
                 ],
               ),
               trailing: PopupMenuButton<String>(
@@ -74,7 +83,8 @@ class ArchiveJobsPage extends StatelessWidget {
                   // }
                 },
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12)),
+                  borderRadius: BorderRadius.circular(12),
+                ),
                 itemBuilder: (context) => [
                   _buildMenuItem('View Details'),
                   _buildMenuItem('Copy link'),
@@ -90,9 +100,6 @@ class ArchiveJobsPage extends StatelessWidget {
   }
 
   PopupMenuItem<String> _buildMenuItem(String label) {
-    return PopupMenuItem<String>(
-      value: label,
-      child: Text(label),
-    );
+    return PopupMenuItem<String>(value: label, child: Text(label));
   }
 }

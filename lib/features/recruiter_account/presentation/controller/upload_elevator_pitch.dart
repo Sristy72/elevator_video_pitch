@@ -4,12 +4,11 @@ import 'package:image_picker/image_picker.dart';
 import 'package:video_player/video_player.dart';
 import 'package:flutter/material.dart';
 
-class ElevatorPitchController extends GetxController{
-
-// final Repo recruiterRepo;
-// final AuthStorageService authStorageService;
-//
-// ElevatorPitchController(this.authStorageService, this.recruiterRepo);
+class ElevatorPitchController extends GetxController {
+  // final Repo recruiterRepo;
+  // final AuthStorageService authStorageService;
+  //
+  // ElevatorPitchController(this.authStorageService, this.recruiterRepo);
 
   final picker = ImagePicker();
 
@@ -92,8 +91,7 @@ class ElevatorPitchController extends GetxController{
       isPlaying.value = false;
     } else {
       // If the video is finished, replay from start
-      if (currentPosition.value >=
-          videoPlayerController!.value.duration) {
+      if (currentPosition.value >= videoPlayerController!.value.duration) {
         videoPlayerController!.seekTo(Duration.zero);
       }
       videoPlayerController!.play();

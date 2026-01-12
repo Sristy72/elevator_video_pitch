@@ -5,7 +5,11 @@ import '../../../../core/theme/app_colors.dart';
 class SearchFilterIconCard extends StatelessWidget {
   final String iconPath;
   final VoidCallback onTap;
-  const SearchFilterIconCard({super.key, required this.iconPath, required this.onTap});
+  const SearchFilterIconCard({
+    super.key,
+    required this.iconPath,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {

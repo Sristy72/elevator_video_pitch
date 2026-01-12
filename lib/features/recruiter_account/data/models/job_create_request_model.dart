@@ -4,7 +4,7 @@ class JobPostRequestModel {
   final String userId;
   final String title;
   final String description;
-   String? salaryRange;
+  String? salaryRange;
   final String location;
   String? shift;
   final List<String>? responsibilities;
@@ -41,12 +41,12 @@ class JobPostRequestModel {
     required this.vacancy,
     required this.experience,
     required this.deadline,
-     this.status,
+    this.status,
     required this.jobCategoryId,
     required this.name,
     required this.role,
     required this.compensation,
-     this.archivedJob,
+    this.archivedJob,
     required this.applicationRequirement,
     required this.customQuestion,
     required this.employementType,
@@ -77,8 +77,9 @@ class JobPostRequestModel {
       "role": role,
       "compensation": compensation,
       "archivedJob": archivedJob,
-      "applicationRequirement":
-      applicationRequirement.map((e) => e.toJson()).toList(),
+      "applicationRequirement": applicationRequirement
+          .map((e) => e.toJson())
+          .toList(),
       "customQuestion": customQuestion.map((e) => e.toJson()).toList(),
       "employement_Type": employementType,
       "website_Url": websiteUrl,
@@ -93,16 +94,10 @@ class ApplicationRequirement {
   final String requirement;
   final String status;
 
-  ApplicationRequirement({
-    required this.requirement,
-    required this.status,
-  });
+  ApplicationRequirement({required this.requirement, required this.status});
 
   Map<String, dynamic> toJson() {
-    return {
-      "requirement": requirement,
-      "status": status,
-    };
+    return {"requirement": requirement, "status": status};
   }
 
   factory ApplicationRequirement.fromJson(Map<String, dynamic> json) {
@@ -119,14 +114,10 @@ class CustomQuestion {
   CustomQuestion({required this.question});
 
   Map<String, dynamic> toJson() {
-    return {
-      "question": question,
-    };
+    return {"question": question};
   }
 
   factory CustomQuestion.fromJson(Map<String, dynamic> json) {
-    return CustomQuestion(
-      question: json["question"],
-    );
+    return CustomQuestion(question: json["question"]);
   }
 }

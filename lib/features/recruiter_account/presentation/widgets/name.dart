@@ -9,7 +9,10 @@ class Name extends StatelessWidget {
     required FocusNode firstNameFocusNode,
     required TextEditingController surNameTEController,
     required FocusNode surNameFocusNode,
-  }) : _firstNameTEController = firstNameTEController, _firstNameFocusNode = firstNameFocusNode, _surNameTEController = surNameTEController, _surNameFocusNode = surNameFocusNode;
+  }) : _firstNameTEController = firstNameTEController,
+       _firstNameFocusNode = firstNameFocusNode,
+       _surNameTEController = surNameTEController,
+       _surNameFocusNode = surNameFocusNode;
 
   final TextEditingController _firstNameTEController;
   final FocusNode _firstNameFocusNode;
@@ -27,10 +30,7 @@ class Name extends StatelessWidget {
             children: [
               Text(
                 'First Name*',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
               ),
               SizedBox(height: 6),
               TextFormField(
@@ -59,10 +59,7 @@ class Name extends StatelessWidget {
             children: [
               Text(
                 'Surname (Optional)',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                ),
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
               ),
               SizedBox(height: 6),
               TextFormField(

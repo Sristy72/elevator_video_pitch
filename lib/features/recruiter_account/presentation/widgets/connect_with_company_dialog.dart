@@ -12,7 +12,7 @@ class ConnectCompanyDialog extends StatelessWidget {
     // Initialize search query if not already
     controller.companySearchQuery ??= ''.obs;
 
-    _submit(){
+    _submit() {
       controller.connectCompany(controller.selectedCompany.value.toString());
     }
 
@@ -180,7 +180,10 @@ class ConnectCompanyDialog extends StatelessWidget {
                       ),
                       child: const Text(
                         'Connect',
-                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ],

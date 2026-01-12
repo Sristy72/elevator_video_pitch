@@ -38,5 +38,7 @@ class GetCompanyResponseModel {
 
 /// If your API returns a list of companies:
 List<GetCompanyResponseModel> companyListFromJson(List<dynamic> jsonList) {
-  return jsonList.map((json) => GetCompanyResponseModel.fromJson(json)).toList();
+  return jsonList
+      .map((json) => GetCompanyResponseModel.fromJson(json))
+      .toList();
 }

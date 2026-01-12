@@ -40,7 +40,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
   final RecruiterController reCruiController = Get.find<RecruiterController>();
 
   final ImageController imagePickerController = Get.put(ImageController());
-  final CompanyImageController companyImageController = Get.put(CompanyImageController());
+  final CompanyImageController companyImageController = Get.put(
+    CompanyImageController(),
+  );
 
   final FocusNode _firstNameFocusNode = FocusNode();
   final FocusNode _surNameFocusNode = FocusNode();
@@ -53,8 +55,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   late LocationController controller = Get.put(LocationController());
 
-  final DescriptionController descriptionController = Get.put(DescriptionController());
-  final ElevatorPitchController elevatorPitchController = Get.put(ElevatorPitchController());
+  final DescriptionController descriptionController = Get.put(
+    DescriptionController(),
+  );
+  final ElevatorPitchController elevatorPitchController = Get.put(
+    ElevatorPitchController(),
+  );
 
   @override
   void initState() {
@@ -65,30 +71,54 @@ class _EditProfilePageState extends State<EditProfilePage> {
     _biocontroller.text = recruiter.bio;
     _firstNameTEController.text = recruiter.firstName;
     _surNameTEController.text = recruiter.sureName ?? '';
-    _linkedINTEController.text = recruiter.sLink.firstWhere(
-            (e) => e.label.toLowerCase() == "linkedin",
-        orElse: () => SocialLink(label: '', url: '')
-    ).url ?? '';
-    _twitterTEController.text = recruiter.sLink.firstWhere(
-            (e) => e.label.toLowerCase() == "twitter",
-        orElse: () => SocialLink(label: '', url: '')
-    ).url ?? '';
-    _upworkTEController.text = recruiter.sLink.firstWhere(
-            (e) => e.label.toLowerCase() == "upwork",
-        orElse: () => SocialLink(label: '', url: '')
-    ).url ?? '';
-    _facebookTEController.text = recruiter.sLink.firstWhere(
-            (e) => e.label.toLowerCase() == "facebook",
-        orElse: () => SocialLink(label: '', url: '')
-    ).url ?? '';
-    _tiktokTEController.text = recruiter.sLink.firstWhere(
-            (e) => e.label.toLowerCase() == "tiktok",
-        orElse: () => SocialLink(label: '', url: '')
-    ).url ?? '';
-    _instaTEController.text = recruiter.sLink.firstWhere(
-            (e) => e.label.toLowerCase() == "instagram",
-        orElse: () => SocialLink(label: '', url: '')
-    ).url ?? '';
+    _linkedINTEController.text =
+        recruiter.sLink
+            .firstWhere(
+              (e) => e.label.toLowerCase() == "linkedin",
+              orElse: () => SocialLink(label: '', url: ''),
+            )
+            .url ??
+        '';
+    _twitterTEController.text =
+        recruiter.sLink
+            .firstWhere(
+              (e) => e.label.toLowerCase() == "twitter",
+              orElse: () => SocialLink(label: '', url: ''),
+            )
+            .url ??
+        '';
+    _upworkTEController.text =
+        recruiter.sLink
+            .firstWhere(
+              (e) => e.label.toLowerCase() == "upwork",
+              orElse: () => SocialLink(label: '', url: ''),
+            )
+            .url ??
+        '';
+    _facebookTEController.text =
+        recruiter.sLink
+            .firstWhere(
+              (e) => e.label.toLowerCase() == "facebook",
+              orElse: () => SocialLink(label: '', url: ''),
+            )
+            .url ??
+        '';
+    _tiktokTEController.text =
+        recruiter.sLink
+            .firstWhere(
+              (e) => e.label.toLowerCase() == "tiktok",
+              orElse: () => SocialLink(label: '', url: ''),
+            )
+            .url ??
+        '';
+    _instaTEController.text =
+        recruiter.sLink
+            .firstWhere(
+              (e) => e.label.toLowerCase() == "instagram",
+              orElse: () => SocialLink(label: '', url: ''),
+            )
+            .url ??
+        '';
 
     // Preload banner & logo URLs
     if (recruiter.banner.isNotEmpty) {
@@ -114,7 +144,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       onTap: () => FocusScope.of(context).unfocus(),
       child: AppScaffold(
         appBar: AppBar(
-          title: Text('Edit Profile', style: TextStyle(color: Colors.white),),
+          title: Text('Edit Profile', style: TextStyle(color: Colors.white)),
           backgroundColor: const Color(0xFF2B7FD0),
           elevation: 0,
         ),
@@ -137,8 +167,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           child: GestureDetector(
                             onTap: companyImageController.showPickerOptions,
                             child: Obx(() {
-                              final file = companyImageController.selectedImage.value;
-                              final url = companyImageController.existingImageUrl.value;
+                              final file =
+                                  companyImageController.selectedImage.value;
+                              final url =
+                                  companyImageController.existingImageUrl.value;
                               return Container(
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(4),
@@ -147,52 +179,54 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 height: 150,
                                 child: file != null
                                     ? ClipRRect(
-                                  borderRadius: BorderRadius.circular(8),
-                                  child: Image.file(
-                                    file,
-                                    width: double.infinity,
-                                    height: 150,
-                                    fit: BoxFit.cover,
-                                  ),
-                                )
+                                        borderRadius: BorderRadius.circular(8),
+                                        child: Image.file(
+                                          file,
+                                          width: double.infinity,
+                                          height: 150,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      )
                                     : url.isNotEmpty
                                     ? ClipRRect(
-                                  borderRadius: BorderRadius.circular(8),
-                                  child: Image.network(
-                                    url,
-                                    width: double.infinity,
-                                    height: 150,
-                                    fit: BoxFit.cover,
-                                  ),
-                                )
+                                        borderRadius: BorderRadius.circular(8),
+                                        child: Image.network(
+                                          url,
+                                          width: double.infinity,
+                                          height: 150,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      )
                                     : Column(
-                                  children: [
-                                    SizedBox(height: 20),
-                                    SizedBox(
-                                      height: 18,
-                                      width: 18,
-                                      child: Image.asset('assets/icons/gallery.png'),
-                                    ),
-                                    SizedBox(height: 7),
-                                    Text(
-                                      'Edit Company Banner',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w400,
-                                        color: Colors.white,
+                                        children: [
+                                          SizedBox(height: 20),
+                                          SizedBox(
+                                            height: 18,
+                                            width: 18,
+                                            child: Image.asset(
+                                              'assets/icons/gallery.png',
+                                            ),
+                                          ),
+                                          SizedBox(height: 7),
+                                          Text(
+                                            'Edit Company Banner',
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w400,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                          SizedBox(height: 9.5),
+                                          Text(
+                                            'Choose file',
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w400,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                    SizedBox(height: 9.5),
-                                    Text(
-                                      'Choose file',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w400,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ],
-                                ),
                               );
                             }),
                           ),
@@ -203,8 +237,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           child: GestureDetector(
                             onTap: imagePickerController.showPickerOptions,
                             child: Obx(() {
-                              final file = imagePickerController.selectedImage.value;
-                              final url = imagePickerController.existingImageUrl.value;
+                              final file =
+                                  imagePickerController.selectedImage.value;
+                              final url =
+                                  imagePickerController.existingImageUrl.value;
                               return Container(
                                 height: 110,
                                 width: 110,
@@ -215,33 +251,37 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 child: Center(
                                   child: file != null
                                       ? ClipRRect(
-                                    borderRadius: BorderRadius.circular(8),
-                                    child: Image.file(
-                                      file,
-                                      height: 110,
-                                      width: 110,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  )
+                                          borderRadius: BorderRadius.circular(
+                                            8,
+                                          ),
+                                          child: Image.file(
+                                            file,
+                                            height: 110,
+                                            width: 110,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        )
                                       : url.isNotEmpty
                                       ? ClipRRect(
-                                    borderRadius: BorderRadius.circular(8),
-                                    child: Image.network(
-                                      url,
-                                      height: 110,
-                                      width: 110,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  )
+                                          borderRadius: BorderRadius.circular(
+                                            8,
+                                          ),
+                                          child: Image.network(
+                                            url,
+                                            height: 110,
+                                            width: 110,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        )
                                       : const Text(
-                                    'photo/recruiter logo',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.black,
-                                    ),
-                                  ),
+                                          'photo/recruiter logo',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            fontSize: 13,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.black,
+                                          ),
+                                        ),
                                 ),
                               );
                             }),
@@ -268,10 +308,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(4),
-                        border: Border.all(
-                          color: Color(0xFF999999),
-                          width: .5,
-                        )
+                      border: Border.all(color: Color(0xFF999999), width: .5),
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -345,8 +382,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 borderRadius: BorderRadius.circular(6),
                                 border: Border.all(
                                   width: 1,
-                                  color: Color(0xFF999999)
-                                )
+                                  color: Color(0xFF999999),
+                                ),
                               ),
                               child: TextField(
                                 controller: _biocontroller,
@@ -363,10 +400,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                         .split(RegExp(r'\s+'))
                                         .take(descriptionController.maxWords);
                                     _biocontroller.text = words.join(' ');
-                                    _biocontroller
-                                        .selection = TextSelection.fromPosition(
-                                      TextPosition(offset: _biocontroller.text.length),
-                                    );
+                                    _biocontroller.selection =
+                                        TextSelection.fromPosition(
+                                          TextPosition(
+                                            offset: _biocontroller.text.length,
+                                          ),
+                                        );
                                     descriptionController.wordCount.value =
                                         descriptionController.maxWords;
                                   } else {
@@ -379,7 +418,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                   filled: true,
                                   fillColor: const Color(0xFFFAFAFA),
                                   hintText:
-                                  'Write your description (max 400 words)',
+                                      'Write your description (max 400 words)',
                                   hintStyle: const TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.w400,
@@ -390,7 +429,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                     borderRadius: BorderRadius.circular(8),
                                     //  Makes it circular
                                     borderSide:
-                                    BorderSide.none, // Removes border line
+                                        BorderSide.none, // Removes border line
                                   ),
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(8),
@@ -407,13 +446,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             ),
                             const SizedBox(height: 6),
                             Obx(
-                                  () => Text(
+                              () => Text(
                                 '${descriptionController.wordCount.value} / ${descriptionController.maxWords} words',
                                 style: TextStyle(
                                   fontSize: 12,
                                   color:
-                                  descriptionController.wordCount.value >
-                                      descriptionController.maxWords
+                                      descriptionController.wordCount.value >
+                                          descriptionController.maxWords
                                       ? Colors.red
                                       : Colors.grey,
                                 ),
@@ -447,14 +486,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               focusNode: _firstNameFocusNode,
                               keyboardType: TextInputType.name,
                               textInputAction: TextInputAction.next,
-                              decoration: context.primaryInputDecoration.copyWith(
-                                hintText: "Enter Your First Name",
-                                hintStyle: TextStyle(
-                                  color: Color(0xFF787878),
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
+                              decoration: context.primaryInputDecoration
+                                  .copyWith(
+                                    hintText: "Enter Your First Name",
+                                    hintStyle: TextStyle(
+                                      color: Color(0xFF787878),
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
                               validator: Validators.name,
                             ),
                           ],
@@ -479,14 +519,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               keyboardType: TextInputType.name,
                               focusNode: _surNameFocusNode,
                               textInputAction: TextInputAction.next,
-                              decoration: context.primaryInputDecoration.copyWith(
-                                hintText: "Enter Your Surname",
-                                hintStyle: TextStyle(
-                                  color: Color(0xFF787878),
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
+                              decoration: context.primaryInputDecoration
+                                  .copyWith(
+                                    hintText: "Enter Your Surname",
+                                    hintStyle: TextStyle(
+                                      color: Color(0xFF787878),
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
                               validator: Validators.name,
                             ),
                           ],
@@ -515,7 +556,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           ],
                         ),
                       ),
-
                     ],
                   ),
 
@@ -614,13 +654,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                       textInputAction: TextInputAction.next,
                                       decoration: context.primaryInputDecoration
                                           .copyWith(
-                                        hintText: "Enter Here",
-                                        hintStyle: TextStyle(
-                                          color: Color(0xFF787878),
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                      ),
+                                            hintText: "Enter Here",
+                                            hintStyle: TextStyle(
+                                              color: Color(0xFF787878),
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
                                       validator: Validators.name,
                                     ),
 
@@ -640,13 +680,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                       textInputAction: TextInputAction.next,
                                       decoration: context.primaryInputDecoration
                                           .copyWith(
-                                        hintText: "Enter Here",
-                                        hintStyle: TextStyle(
-                                          color: Color(0xFF787878),
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                      ),
+                                            hintText: "Enter Here",
+                                            hintStyle: TextStyle(
+                                              color: Color(0xFF787878),
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
                                       validator: Validators.name,
                                     ),
 
@@ -666,13 +706,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                       textInputAction: TextInputAction.next,
                                       decoration: context.primaryInputDecoration
                                           .copyWith(
-                                        hintText: "Enter Here",
-                                        hintStyle: TextStyle(
-                                          color: Color(0xFF787878),
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                      ),
+                                            hintText: "Enter Here",
+                                            hintStyle: TextStyle(
+                                              color: Color(0xFF787878),
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
                                       validator: Validators.name,
                                     ),
 
@@ -692,13 +732,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                       textInputAction: TextInputAction.next,
                                       decoration: context.primaryInputDecoration
                                           .copyWith(
-                                        hintText: "Enter Here",
-                                        hintStyle: TextStyle(
-                                          color: Color(0xFF787878),
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                      ),
+                                            hintText: "Enter Here",
+                                            hintStyle: TextStyle(
+                                              color: Color(0xFF787878),
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
                                       validator: Validators.name,
                                     ),
 
@@ -718,13 +758,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                       textInputAction: TextInputAction.next,
                                       decoration: context.primaryInputDecoration
                                           .copyWith(
-                                        hintText: "Enter Here",
-                                        hintStyle: TextStyle(
-                                          color: Color(0xFF787878),
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                      ),
+                                            hintText: "Enter Here",
+                                            hintStyle: TextStyle(
+                                              color: Color(0xFF787878),
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
                                       validator: Validators.name,
                                     ),
 
@@ -744,13 +784,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                       textInputAction: TextInputAction.next,
                                       decoration: context.primaryInputDecoration
                                           .copyWith(
-                                        hintText: "Enter Here",
-                                        hintStyle: TextStyle(
-                                          color: Color(0xFF787878),
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400,
-                                        ),
-                                      ),
+                                            hintText: "Enter Here",
+                                            hintStyle: TextStyle(
+                                              color: Color(0xFF787878),
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
                                       validator: Validators.name,
                                     ),
                                   ],
@@ -765,75 +805,80 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
                   SizedBox(height: 15),
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: 150,
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            await reCruiController.updateRecruiter(
+                              companyImageController
+                                  .selectedImage
+                                  .value, // nullable banner
+                              imagePickerController
+                                  .selectedImage
+                                  .value, // nullable photo
+                              _biocontroller.text,
+                              _firstNameTEController.text,
+                              _surNameTEController.text,
+                              widget.recruiterResponseModel.title,
+                              controller.selectedCountry.toString(),
+                              controller.selectedCity.toString(),
+                              _linkedINTEController.text,
+                              _twitterTEController.text,
+                              _upworkTEController.text,
+                              _facebookTEController.text,
+                              _tiktokTEController.text,
+                              _instaTEController.text,
+                            );
 
-                    width: 150,
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        await reCruiController.updateRecruiter(
-                          companyImageController.selectedImage.value, // nullable banner
-                          imagePickerController.selectedImage.value,  // nullable photo
-                          _biocontroller.text,
-                          _firstNameTEController.text,
-                          _surNameTEController.text,
-                          widget.recruiterResponseModel.title,
-                          controller.selectedCountry.toString(),
-                          controller.selectedCity.toString(),
-                          _linkedINTEController.text,
-                          _twitterTEController.text,
-                          _upworkTEController.text,
-                          _facebookTEController.text,
-                          _tiktokTEController.text,
-                          _instaTEController.text,
-                        );
-
-                        if (reCruiController.errorMessage.value.isEmpty) {
-                          Get.back();
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFF2B7FD0),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(
-                            5,
+                            if (reCruiController.errorMessage.value.isEmpty) {
+                              Get.back();
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xFF2B7FD0),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                          ),
+                          child: const Text(
+                            'Save',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ),
                       ),
-                      child: const Text(
-                        'Save',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w600,
+
+                      SizedBox(width: 10),
+
+                      Container(
+                        width: 150,
+                        child: ElevatedButton(
+                          onPressed: () => Get.to(() => RecruiterPageScreen()),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xFF2B7FD0),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                          ),
+                          child: Text(
+                            'Cancle',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
                         ),
                       ),
-                    ),
+                    ],
                   ),
-
-                  SizedBox(width: 10,),
-
-                  Container(
-                    width: 150,
-                    child: ElevatedButton(onPressed: () => Get.to(() => RecruiterPageScreen()),
-                        style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF2B7FD0),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                          5,
-                        ),
-                      ),
-                    ), child: Text('Cancle', style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                    ),)),
-                  )
-                ],
-              ),
                 ],
               ),
             ),

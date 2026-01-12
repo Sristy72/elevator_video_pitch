@@ -128,6 +128,4 @@ class CreateJobPostingController extends GetxController {
         )
         .toList();
   }
-
-  
 }

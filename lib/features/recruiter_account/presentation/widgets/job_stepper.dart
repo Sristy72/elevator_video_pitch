@@ -54,7 +54,7 @@ class JobStepper extends StatelessWidget {
                         children: [
                           GestureDetector(
                             onTap: () =>
-                            controller.currentStep.value = stepNumber,
+                                controller.currentStep.value = stepNumber,
                             child: CircleAvatar(
                               radius: 25,
                               backgroundColor: circleColor,

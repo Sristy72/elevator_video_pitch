@@ -63,7 +63,7 @@ class _EditProfileState extends State<EditProfile> {
     _surnameCtrl.text = lastName;
     _emailCtrl.text = user.email;
     _addressCtrl.text = user.address ?? '';
-    
+
     // Set selected country if user has an address
     if (user.address != null && user.address!.isNotEmpty) {
       _ctrl.selectedCountry.value = user.address;
@@ -369,9 +369,11 @@ class _EditProfileState extends State<EditProfile> {
                               : (user != null &&
                                         user.avatarUrl != null &&
                                         user.avatarUrl!.isNotEmpty
-                                    ? NetworkImage(user.avatarUrl!.startsWith('http')
-                                        ? user.avatarUrl!
-                                        : '${ApiConstants.baseDomain}/${user.avatarUrl!}')
+                                    ? NetworkImage(
+                                        user.avatarUrl!.startsWith('http')
+                                            ? user.avatarUrl!
+                                            : '${ApiConstants.baseDomain}/${user.avatarUrl!}',
+                                      )
                                     : const AssetImage(
                                         "assets/images/profile.jpg",
                                       )),
@@ -509,8 +511,6 @@ class _EditProfileState extends State<EditProfile> {
                   ],
                 ),
               ),
-
-        
 
               const SizedBox(height: 8),
 

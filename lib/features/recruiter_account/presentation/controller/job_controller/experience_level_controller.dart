@@ -20,5 +20,4 @@ class ExperienceLevelController extends GetxController {
   String getBackendValue(String displayName) {
     return experienceLevelMap[displayName] ?? displayName;
   }
-
 }

@@ -9,7 +9,8 @@ class Vacancy extends StatelessWidget {
     required TextEditingController vacanciesTEController,
     required FocusNode vacanciesFocusNode,
     required this.controller,
-  }) : _vacanciesTEController = vacanciesTEController, _vacanciesFocusNode = vacanciesFocusNode;
+  }) : _vacanciesTEController = vacanciesTEController,
+       _vacanciesFocusNode = vacanciesFocusNode;
 
   final TextEditingController _vacanciesTEController;
   final FocusNode _vacanciesFocusNode;
@@ -33,8 +34,7 @@ class Vacancy extends StatelessWidget {
               //Increment Button
               GestureDetector(
                 onTap: () {
-                  int value =
-                      int.tryParse(_vacanciesTEController.text) ?? 0;
+                  int value = int.tryParse(_vacanciesTEController.text) ?? 0;
                   if (value < 50) {
                     value++;
                     _vacanciesTEController.text = value.toString();
@@ -47,10 +47,7 @@ class Vacancy extends StatelessWidget {
                   width: 22,
                   decoration: BoxDecoration(
                     color: Colors.grey.shade200,
-                    border: Border.all(
-                      width: 1,
-                      color: Colors.grey.shade300,
-                    ),
+                    border: Border.all(width: 1, color: Colors.grey.shade300),
                     borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(4),
                       topRight: Radius.circular(4),
@@ -70,8 +67,7 @@ class Vacancy extends StatelessWidget {
               //Removed SizedBox, now only 1-pixel border gap
               GestureDetector(
                 onTap: () {
-                  int value =
-                      int.tryParse(_vacanciesTEController.text) ?? 0;
+                  int value = int.tryParse(_vacanciesTEController.text) ?? 0;
                   if (value > 1) {
                     value--;
                     _vacanciesTEController.text = value.toString();
@@ -84,10 +80,7 @@ class Vacancy extends StatelessWidget {
                   width: 22,
                   decoration: BoxDecoration(
                     color: Colors.grey.shade200,
-                    border: Border.all(
-                      width: 1,
-                      color: Colors.grey.shade300,
-                    ),
+                    border: Border.all(width: 1, color: Colors.grey.shade300),
                     borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(4),
                       bottomRight: Radius.circular(4),

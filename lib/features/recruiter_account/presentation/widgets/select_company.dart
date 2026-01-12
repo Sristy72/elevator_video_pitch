@@ -25,13 +25,16 @@ class CompanyDropdown extends StatelessWidget {
         decoration: context.primaryInputDecoration.copyWith(
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
         ),
-        hint:Text('Select Company', style: TextStyle(
-          color: Color(0xFF787878),
-          fontSize: 14,
-          fontWeight: FontWeight.w400,
-        ),),
+        hint: Text(
+          'Select Company',
+          style: TextStyle(
+            color: Color(0xFF787878),
+            fontSize: 14,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
         value: controller.companies.firstWhereOrNull(
-              (company) => company.id == controller.selectedCompany.value,
+          (company) => company.id == controller.selectedCompany.value,
         ),
         onChanged: (value) {
           DPrint.log("Select Company Drop -> ${value!.id}");
@@ -41,15 +44,17 @@ class CompanyDropdown extends StatelessWidget {
           return DropdownMenuItem(
             value: company,
             child: SizedBox(
-                width: 200,      // make sure this is wide enough for avatar + text
-                height: 50,
+              width: 200, // make sure this is wide enough for avatar + text
+              height: 50,
               child: Row(
                 children: [
                   CircleAvatar(
                     backgroundImage: NetworkImage(company.clogo),
                     radius: 15,
                   ),
-                  Expanded(child: Text(company.cname, overflow: TextOverflow.ellipsis,)),
+                  Expanded(
+                    child: Text(company.cname, overflow: TextOverflow.ellipsis),
+                  ),
                 ],
               ),
             ),

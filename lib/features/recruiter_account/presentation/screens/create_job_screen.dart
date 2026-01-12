@@ -58,7 +58,12 @@ class CreateJobScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 10,bottom: 20,left: 16, right: 16),
+                      padding: const EdgeInsets.only(
+                        top: 10,
+                        bottom: 20,
+                        left: 16,
+                        right: 16,
+                      ),
                       child: Container(
                         color: Color(0xFFE6E6FA).withOpacity(.3),
                         width: double.infinity,
@@ -66,7 +71,7 @@ class CreateJobScreen extends StatelessWidget {
                       ),
                     ),
 
-                    SizedBox()
+                    SizedBox(),
                   ],
                 ),
               );

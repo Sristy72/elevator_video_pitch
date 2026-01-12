@@ -26,8 +26,9 @@ class _UploadCardWidgetState extends State<UploadCardWidget> {
   File? _pickedImage;
 
   Future<void> _pickImage() async {
-    final XFile? pickedFile =
-        await _picker.pickImage(source: ImageSource.gallery);
+    final XFile? pickedFile = await _picker.pickImage(
+      source: ImageSource.gallery,
+    );
 
     if (pickedFile != null) {
       setState(() {
@@ -50,10 +51,7 @@ class _UploadCardWidgetState extends State<UploadCardWidget> {
           // Title
           Text(
             widget.title,
-            style: const TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.w600,
-            ),
+            style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
           ),
           if (widget.subtitle.isNotEmpty) ...[
             const SizedBox(height: 4),
@@ -85,10 +83,7 @@ class _UploadCardWidgetState extends State<UploadCardWidget> {
                   : Text(
                       widget.fileType,
                       textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 13,
-                      ),
+                      style: const TextStyle(color: Colors.white, fontSize: 13),
                     ),
             ),
           ),

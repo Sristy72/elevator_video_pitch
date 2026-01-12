@@ -17,72 +17,82 @@ class _ElevatorPitchSectionState extends State<ElevatorPitchSection> {
   VideoPlayerController? _videoController;
   ChewieController? _chewieController;
 
-
-
   @override
   void initState() {
     super.initState();
 
     DPrint.log("Initial Video : -> ${widget.videoUrl}");
     if (widget.videoUrl != null && widget.videoUrl!.isNotEmpty) {
-      _videoController = VideoPlayerController.networkUrl(
-          Uri.parse(widget.videoUrl!),
-        formatHint: VideoFormat.hls,
-        videoPlayerOptions: VideoPlayerOptions(
-          mixWithOthers: true,
-          allowBackgroundPlayback: false,
-        ),
-          httpHeaders: widget.httpHeaders ?? {},
-      )
-        ..initialize().then((_) {
-          _chewieController = ChewieController(
-            videoPlayerController: _videoController!,
-            autoPlay: false,
-            looping: false,
-            aspectRatio: _videoController!.value.aspectRatio,
-
-            placeholder: Container(
-              color: Colors.black,
-              child: Center(
-                child: CircularProgressIndicator(color: Colors.white),
+      _videoController =
+          VideoPlayerController.networkUrl(
+              Uri.parse(widget.videoUrl!),
+              formatHint: VideoFormat.hls,
+              videoPlayerOptions: VideoPlayerOptions(
+                mixWithOthers: true,
+                allowBackgroundPlayback: false,
               ),
-            ),
-            errorBuilder: (context, errorMessage) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.error_outline, color: Colors.red, size: 48),
-                    SizedBox(height: 16),
-                    Text(
-                      'Failed to load video',
-                      style: TextStyle(color: Colors.white, fontSize: 16),
-                    ),
-                    SizedBox(height: 8),
-                    Text(
-                      errorMessage,
-                      style: TextStyle(color: Colors.grey, fontSize: 12),
-                      textAlign: TextAlign.center,
-                    ),
+              httpHeaders: widget.httpHeaders ?? {},
+            )
+            ..initialize()
+                .then((_) {
+                  _chewieController = ChewieController(
+                    videoPlayerController: _videoController!,
+                    autoPlay: false,
+                    looping: false,
+                    aspectRatio: _videoController!.value.aspectRatio,
 
-                  ],
-                ),
-              );
-            },
-          );
-          setState(() {});
-        }).catchError((error) {
-          // Handle init failure (e.g., network/URL invalid)
-          debugPrint('Video init error: $error');  // Log for debugging
-          if (mounted) {
-            setState(() {
-              // Show error UI instead of spinner
-            });
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Failed to load video: $error')),
-            );
-          }
-        });
+                    placeholder: Container(
+                      color: Colors.black,
+                      child: Center(
+                        child: CircularProgressIndicator(color: Colors.white),
+                      ),
+                    ),
+                    errorBuilder: (context, errorMessage) {
+                      return Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.error_outline,
+                              color: Colors.red,
+                              size: 48,
+                            ),
+                            SizedBox(height: 16),
+                            Text(
+                              'Failed to load video',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                              ),
+                            ),
+                            SizedBox(height: 8),
+                            Text(
+                              errorMessage,
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 12,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  );
+                  setState(() {});
+                })
+                .catchError((error) {
+                  // Handle init failure (e.g., network/URL invalid)
+                  debugPrint('Video init error: $error'); // Log for debugging
+                  if (mounted) {
+                    setState(() {
+                      // Show error UI instead of spinner
+                    });
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Failed to load video: $error')),
+                    );
+                  }
+                });
     }
   }
 
@@ -116,17 +126,15 @@ class _ElevatorPitchSectionState extends State<ElevatorPitchSection> {
           const SizedBox(height: 10),
           if (widget.videoUrl != null && widget.videoUrl!.isNotEmpty)
             _chewieController != null &&
-                _videoController != null &&
-                _videoController!.value.isInitialized
+                    _videoController != null &&
+                    _videoController!.value.isInitialized
                 ? AspectRatio(
-              aspectRatio: _videoController!.value.aspectRatio,
-              child: Chewie(controller: _chewieController!),
-            )
+                    aspectRatio: _videoController!.value.aspectRatio,
+                    child: Chewie(controller: _chewieController!),
+                  )
                 : const Center(
-              child: CircularProgressIndicator(
-                color: Colors.white,
-              ),
-            )
+                    child: CircularProgressIndicator(color: Colors.white),
+                  )
           else
             const Text(
               "No pitch added yet.",

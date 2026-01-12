@@ -12,7 +12,6 @@ void main() async {
   await AppInitializer.initializeApp();
 
   runApp(const MyApp());
-
 }
 
 class MyApp extends StatelessWidget {

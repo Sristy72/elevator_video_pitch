@@ -3,11 +3,7 @@ class AnswerModel {
   final String ans;
   final String id;
 
-  AnswerModel({
-    required this.question,
-    required this.ans,
-    required this.id,
-  });
+  AnswerModel({required this.question, required this.ans, required this.id});
 
   factory AnswerModel.fromJson(Map<String, dynamic> json) {
     return AnswerModel(
@@ -18,11 +14,7 @@ class AnswerModel {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'question': question,
-      'ans': ans,
-      '_id': id,
-    };
+    return {'question': question, 'ans': ans, '_id': id};
   }
 }
 
@@ -53,7 +45,8 @@ class JobApplicationResponse {
       jobId: json['jobId'] ?? '',
       userId: json['userId'] ?? '',
       status: json['status'] ?? 'pending',
-      answer: (json['answer'] as List<dynamic>?)
+      answer:
+          (json['answer'] as List<dynamic>?)
               ?.map((e) => AnswerModel.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],

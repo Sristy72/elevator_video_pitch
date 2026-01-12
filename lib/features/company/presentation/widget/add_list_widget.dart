@@ -24,10 +24,7 @@ class DynamicListField extends StatelessWidget {
       children: [
         Text(
           label,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
         ),
         const SizedBox(height: 8),
         Row(
@@ -42,29 +39,28 @@ class DynamicListField extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 8),
-            ElevatedButton(
-              onPressed: onAdd,
-              child: const Text("Add more +"),
-            ),
+            ElevatedButton(onPressed: onAdd, child: const Text("Add more +")),
           ],
         ),
         const SizedBox(height: 8),
-        Obx(() => Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: items
-                  .asMap()
-                  .entries
-                  .map(
-                    (entry) => ListTile(
-                      title: Text(entry.value),
-                      trailing: IconButton(
-                        icon: const Icon(Icons.delete, color: Colors.red),
-                        onPressed: () => items.removeAt(entry.key),
-                      ),
+        Obx(
+          () => Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: items
+                .asMap()
+                .entries
+                .map(
+                  (entry) => ListTile(
+                    title: Text(entry.value),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.delete, color: Colors.red),
+                      onPressed: () => items.removeAt(entry.key),
                     ),
-                  )
-                  .toList(),
-            )),
+                  ),
+                )
+                .toList(),
+          ),
+        ),
       ],
     );
   }

@@ -10,16 +10,23 @@ class CustomQuestionsStep extends StatelessWidget {
     final controller = Get.find<JobPostingController>();
 
     // Reactive list of extra question controllers (after the first one)
-    final RxList<TextEditingController> extraQuestionControllers = <TextEditingController>[].obs;
+    final RxList<TextEditingController> extraQuestionControllers =
+        <TextEditingController>[].obs;
 
     // First question controller (always present)
     final TextEditingController firstQuestionController = TextEditingController(
-        text: controller.customQuestion.isNotEmpty ? controller.customQuestion[0] : '');
+      text: controller.customQuestion.isNotEmpty
+          ? controller.customQuestion[0]
+          : '',
+    );
 
     // Initialize extra questions if they exist
-    if (extraQuestionControllers.isEmpty && controller.customQuestion.length > 1) {
+    if (extraQuestionControllers.isEmpty &&
+        controller.customQuestion.length > 1) {
       for (int i = 1; i < controller.customQuestion.length; i++) {
-        extraQuestionControllers.add(TextEditingController(text: controller.customQuestion[i]));
+        extraQuestionControllers.add(
+          TextEditingController(text: controller.customQuestion[i]),
+        );
       }
     }
 
@@ -28,124 +35,125 @@ class CustomQuestionsStep extends StatelessWidget {
       extraQuestionControllers.add(TextEditingController());
     }
 
-    return Obx(() => Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            "Add Custom Questions",
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
+    return Obx(
+      () => Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              "Add Custom Questions",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-          ),
-          const SizedBox(height: 16),
+            const SizedBox(height: 16),
 
-          // First mandatory question
-          _buildQuestionField(firstQuestionController, "Ask a question"),
+            // First mandatory question
+            _buildQuestionField(firstQuestionController, "Ask a question"),
 
-          // Extra questions
-          Column(
-            children: List.generate(extraQuestionControllers.length, (index) {
-              return Padding(
-                padding: const EdgeInsets.only(top: 16.0),
-                child: _buildQuestionField(
-                    extraQuestionControllers[index], "Ask a question"),
-              );
-            }),
-          ),
-
-          const SizedBox(height: 16),
-
-          // Add question button
-          TextButton.icon(
-            onPressed: addQuestion,
-            icon: Container(
-              decoration: BoxDecoration(
-                color: const Color(0xFF2B7FD0),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: const Padding(
-                padding: EdgeInsets.all(2.0),
-                child: Icon(Icons.add, color: Colors.white),
-              ),
-            ),
-            label: const Text(
-              "Add a question",
-              style: TextStyle(
-                color: Color(0xFF2B7FD0),
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-
-          const SizedBox(height: 30),
-
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              // Cancel button
-              SizedBox(
-                height: 50,
-                width: 120,
-                child: OutlinedButton(
-                  onPressed: () {},
-                  style: OutlinedButton.styleFrom(
-                    side: const BorderSide(color: Color(0xFF2B7FD0)),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
+            // Extra questions
+            Column(
+              children: List.generate(extraQuestionControllers.length, (index) {
+                return Padding(
+                  padding: const EdgeInsets.only(top: 16.0),
+                  child: _buildQuestionField(
+                    extraQuestionControllers[index],
+                    "Ask a question",
                   ),
-                  child: const Text(
-                    'Cancel',
-                    style: TextStyle(
-                      color: Color(0xFF2B7FD0),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
+                );
+              }),
+            ),
+
+            const SizedBox(height: 16),
+
+            // Add question button
+            TextButton.icon(
+              onPressed: addQuestion,
+              icon: Container(
+                decoration: BoxDecoration(
+                  color: const Color(0xFF2B7FD0),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const Padding(
+                  padding: EdgeInsets.all(2.0),
+                  child: Icon(Icons.add, color: Colors.white),
+                ),
+              ),
+              label: const Text(
+                "Add a question",
+                style: TextStyle(
+                  color: Color(0xFF2B7FD0),
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 30),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                // Cancel button
+                SizedBox(
+                  height: 50,
+                  width: 120,
+                  child: OutlinedButton(
+                    onPressed: () {},
+                    style: OutlinedButton.styleFrom(
+                      side: const BorderSide(color: Color(0xFF2B7FD0)),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    child: const Text(
+                      'Cancel',
+                      style: TextStyle(
+                        color: Color(0xFF2B7FD0),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(width: 20),
-              // Next button
-              SizedBox(
-                height: 50,
-                width: 120,
-                child: ElevatedButton(
-                  onPressed: () {
-                    // Store all questions in controller
-                    controller.customQuestion.value = [
-                      firstQuestionController.text.trim(),
-                      ...extraQuestionControllers
-                          .map((c) => c.text.trim())
-                          .where((q) => q.isNotEmpty)
-                    ];
-                    controller.nextStep();
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF2B7FD0),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
+                const SizedBox(width: 20),
+                // Next button
+                SizedBox(
+                  height: 50,
+                  width: 120,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      // Store all questions in controller
+                      controller.customQuestion.value = [
+                        firstQuestionController.text.trim(),
+                        ...extraQuestionControllers
+                            .map((c) => c.text.trim())
+                            .where((q) => q.isNotEmpty),
+                      ];
+                      controller.nextStep();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF2B7FD0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
                     ),
-                  ),
-                  child: const Text(
-                    'Next',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
+                    child: const Text(
+                      'Next',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 50),
-        ],
+              ],
+            ),
+            const SizedBox(height: 50),
+          ],
+        ),
       ),
-    ));
+    );
   }
 
   Widget _buildQuestionField(TextEditingController controller, String label) {
@@ -173,7 +181,10 @@ class CustomQuestionsStep extends StatelessWidget {
               borderRadius: BorderRadius.circular(6),
               borderSide: const BorderSide(color: Colors.grey),
             ),
-            contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 12,
+              vertical: 8,
+            ),
           ),
           maxLines: 2,
         ),

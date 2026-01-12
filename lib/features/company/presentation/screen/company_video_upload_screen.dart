@@ -1,4 +1,3 @@
-
 // import 'package:flutter/material.dart';
 // import 'package:get/get.dart';
 // import 'package:karlfive/core/common/widgets/app_scaffold.dart';
@@ -7,7 +6,6 @@
 // import '../../../recruiter_account/presentation/controller/recruiter_controller.dart';
 // import '../../../recruiter_account/presentation/controller/upload_elevator_pitch.dart';
 // import '../controller/company_details_controller.dart';
-
 
 // class CompanyVideoUploadScreen extends StatefulWidget {
 //   // Add this flag to know if it's for company or recruiter

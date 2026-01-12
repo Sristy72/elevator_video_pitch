@@ -342,11 +342,15 @@ class _PaymentScreenState extends State<PaymentScreen> {
     final userId = userProfileService.userInfo?.id ?? '';
     final token = userProfileService.userInfo?.refreshToken ?? '';
 
-    print('🔵 Capturing Payment: OrderID: $orderId, UserID: $userId, PlanID: ${widget.planId}');
+    print(
+      '🔵 Capturing Payment: OrderID: $orderId, UserID: $userId, PlanID: ${widget.planId}',
+    );
 
     try {
       final response = await http.post(
-        Uri.parse('http://10.10.5.67:5007/api/v1/payments/paypal/capture-order'),
+        Uri.parse(
+          'http://10.10.5.67:5007/api/v1/payments/paypal/capture-order',
+        ),
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
@@ -354,7 +358,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
         body: json.encode({
           "orderId": orderId,
           "userId": userId,
-          "planId": widget.planId
+          "planId": widget.planId,
         }),
       );
 
@@ -363,7 +367,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         print('✅ Payment Captured Successfully');
-        
+
         Get.snackbar(
           'Success',
           'Payment captured successfully!',
@@ -433,7 +437,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
       "note_to_payer": "Contact us for any questions on your order.",
       "redirect_urls": {
         "return_url": "return.example.com",
-        "cancel_url": "cancel.example.com"
+        "cancel_url": "cancel.example.com",
       },
     };
     return temp;
@@ -458,25 +462,28 @@ class _PaymentScreenState extends State<PaymentScreen> {
       final services = PaypalServices();
       print('🔵 Card Payment: Getting access token...');
       final accessToken = await services.getAccessToken();
-      
+
       if (accessToken != null) {
         print('✅ Card Payment: Access token received');
         final transactions = _getOrderParams();
         print('🔵 Card Payment: Creating payment...');
-        final res = await services.createPaypalPayment(transactions, accessToken);
-        
-        if (res != null && res['token'] != null && res['token']!.isNotEmpty) {
-           String token = res['token']!;
-           _currentPayPalOrderId = token; // Store for capture
-           print('✅ Card Payment: Token received: $token');
-            
-           // Generate session IDs
-           final timestamp = DateTime.now().millisecondsSinceEpoch;
-           final sessionID = 'uid_${timestamp}_session';
-           final buttonSessionID = 'uid_${timestamp}_button';
+        final res = await services.createPaypalPayment(
+          transactions,
+          accessToken,
+        );
 
-           // Construct the URL with the exact parameters from requirements
-           final cardFieldsUrl =
+        if (res != null && res['token'] != null && res['token']!.isNotEmpty) {
+          String token = res['token']!;
+          _currentPayPalOrderId = token; // Store for capture
+          print('✅ Card Payment: Token received: $token');
+
+          // Generate session IDs
+          final timestamp = DateTime.now().millisecondsSinceEpoch;
+          final sessionID = 'uid_${timestamp}_session';
+          final buttonSessionID = 'uid_${timestamp}_button';
+
+          // Construct the URL with the exact parameters from requirements
+          final cardFieldsUrl =
               'https://www.sandbox.paypal.com/smart/card-fields'
               '?token=$token'
               '&sessionID=$sessionID'
@@ -494,7 +501,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
           // Initialize WebView controller
           final controller = WebViewController();
-          
+
           controller
             ..setJavaScriptMode(JavaScriptMode.unrestricted)
             ..setBackgroundColor(Colors.white)
@@ -506,7 +513,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 // Navigate to capture payment
                 // Use the stored token/orderId
                 if (_currentPayPalOrderId != null) {
-                   _capturePayment(_currentPayPalOrderId!);
+                  _capturePayment(_currentPayPalOrderId!);
                 }
               },
             )
@@ -528,7 +535,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 },
                 onPageFinished: (String url) {
                   print('✅ Card Fields: Page finished loading: $url');
-                  
+
                   // Inject JavaScript to intercept GraphQL requests
                   controller.runJavaScript('''
                     (function() {
@@ -584,35 +591,35 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 },
                 onNavigationRequest: (NavigationRequest request) {
                   print('🔵 Navigation request: ${request.url}');
-                  
+
                   // Check for success/cancel URLs logic (similar to PaypalWebViewScreen)
                   if (request.url.contains('return.example.com')) {
-                     // Handle success!
-                     // The token/orderId was used to create the session. 
-                     // In the web flow, we often capture using the OrderID we created initially.
-                     // The token passed to the URL is the OrderID (or related to it).
-                     // We extracted 'token' in _handleDebitCardPayment which was used as the OrderID in create-order response.
-                     // We should pass THAT orderId (token) to capture.
-                     // IMPORTANT: We need access to the 'token' variable from the outer scope here.
-                     // Since we can't easily access local variable 'token' here without modifying structure,
-                     // We will rely on extracting it from the URL if present, or better: 
-                     // Store the 'currentOrderId' in the class state when we create it.
-                     
-                     // For now, let's assume we need to store it. 
-                     // But wait, allow me to just call _capturePayment with the token we have.
-                     // Ah, I cannot access 'token' from inside this callback easily if it's local.
-                     // I will update the state to store _currentPayPalOrderId.
-                     _capturePayment(_currentPayPalOrderId ?? '');
-                     return NavigationDecision.prevent;
+                    // Handle success!
+                    // The token/orderId was used to create the session.
+                    // In the web flow, we often capture using the OrderID we created initially.
+                    // The token passed to the URL is the OrderID (or related to it).
+                    // We extracted 'token' in _handleDebitCardPayment which was used as the OrderID in create-order response.
+                    // We should pass THAT orderId (token) to capture.
+                    // IMPORTANT: We need access to the 'token' variable from the outer scope here.
+                    // Since we can't easily access local variable 'token' here without modifying structure,
+                    // We will rely on extracting it from the URL if present, or better:
+                    // Store the 'currentOrderId' in the class state when we create it.
+
+                    // For now, let's assume we need to store it.
+                    // But wait, allow me to just call _capturePayment with the token we have.
+                    // Ah, I cannot access 'token' from inside this callback easily if it's local.
+                    // I will update the state to store _currentPayPalOrderId.
+                    _capturePayment(_currentPayPalOrderId ?? '');
+                    return NavigationDecision.prevent;
                   }
-                  
+
                   if (request.url.contains('cancel.example.com')) {
                     setState(() {
                       _showCardFieldsWebView = false;
                       _cardFieldsUrl = null;
                       _cardFieldsController = null;
                     });
-                     Get.snackbar(
+                    Get.snackbar(
                       'Cancelled',
                       'Payment was cancelled',
                       snackPosition: SnackPosition.BOTTOM,
@@ -744,128 +751,131 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     style: TextStyle(
                       fontSize: 28,
                       fontWeight: FontWeight.w700,
-                  color: Color(0xFF0070BA),
-                ),
-              ),
-              const SizedBox(height: 12),
-
-              // Subtitle
-              const Text(
-                'Complete your secure payment using our trusted\npayment methods.',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                  color: Color(0xFF2C2C2C),
-                  height: 1.4,
-                ),
-              ),
-              const SizedBox(height: 32),
-
-              // Pay with PayPal section
-              const Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'Pay with PayPal',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-
-              // PayPal Button (Yellow)
-              SizedBox(
-                width: double.infinity,
-                height: 50,
-                child: ElevatedButton(
-                  onPressed: _isProcessing ? null : _handlePayPalPayment,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFFFC439),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(4),
+                      color: Color(0xFF0070BA),
                     ),
-                    elevation: 0,
                   ),
-                  child: _isProcessing
-                      ? const SizedBox(
-                          width: 24,
-                          height: 24,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            valueColor: AlwaysStoppedAnimation(
-                              Color(0xFF003087),
+                  const SizedBox(height: 12),
+
+                  // Subtitle
+                  const Text(
+                    'Complete your secure payment using our trusted\npayment methods.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: Color(0xFF2C2C2C),
+                      height: 1.4,
+                    ),
+                  ),
+                  const SizedBox(height: 32),
+
+                  // Pay with PayPal section
+                  const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Pay with PayPal',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+
+                  // PayPal Button (Yellow)
+                  SizedBox(
+                    width: double.infinity,
+                    height: 50,
+                    child: ElevatedButton(
+                      onPressed: _isProcessing ? null : _handlePayPalPayment,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFFFFC439),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        elevation: 0,
+                      ),
+                      child: _isProcessing
+                          ? const SizedBox(
+                              width: 24,
+                              height: 24,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                valueColor: AlwaysStoppedAnimation(
+                                  Color(0xFF003087),
+                                ),
+                              ),
+                            )
+                          : Image.asset(
+                              'assets/images/paypal_logo.png',
+                              height: 24,
+                              errorBuilder: (context, error, stackTrace) {
+                                return const Text(
+                                  'PayPal',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w700,
+                                    color: Color(0xFF003087),
+                                  ),
+                                );
+                              },
+                            ),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+
+                  // Debit or Credit Card Button (Black)
+                  SizedBox(
+                    width: double.infinity,
+                    height: 50,
+                    child: ElevatedButton(
+                      onPressed: _handleDebitCardPayment,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF2C2E2F),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        elevation: 0,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 4,
+                            ),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Colors.white,
+                                width: 1.5,
+                              ),
+                              borderRadius: BorderRadius.circular(2),
+                            ),
+                            child: const Icon(
+                              Icons.credit_card,
+                              color: Colors.white,
+                              size: 20,
                             ),
                           ),
-                        )
-                      : Image.asset(
-                          'assets/images/paypal_logo.png',
-                          height: 24,
-                          errorBuilder: (context, error, stackTrace) {
-                            return const Text(
-                              'PayPal',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w700,
-                                color: Color(0xFF003087),
-                              ),
-                            );
-                          },
-                        ),
-                ),
-              ),
-              const SizedBox(height: 12),
-
-              // Debit or Credit Card Button (Black)
-              SizedBox(
-                width: double.infinity,
-                height: 50,
-                child: ElevatedButton(
-                  onPressed: _handleDebitCardPayment,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF2C2E2F),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(4),
+                          const SizedBox(width: 10),
+                          const Text(
+                            'Debit or Credit Card',
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                    elevation: 0,
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 4,
-                        ),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.white, width: 1.5),
-                          borderRadius: BorderRadius.circular(2),
-                        ),
-                        child: const Icon(
-                          Icons.credit_card,
-                          color: Colors.white,
-                          size: 20,
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      const Text(
-                        'Debit or Credit Card',
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
                 ],
               ),
             ),
-            
+
             // PayPal Card Fields WebView (Inline) - Below the button, full width
             if (_showCardFieldsWebView && _cardFieldsController != null)
               Column(
@@ -881,39 +891,39 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         border: Border.all(color: Colors.grey[300]!),
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      child: WebViewWidget(
-                        controller: _cardFieldsController!,
-                      ),
+                      child: WebViewWidget(controller: _cardFieldsController!),
                     ),
                   ),
                   const SizedBox(height: 20),
-            ],
-          ),
+                ],
+              ),
 
-          // Loading Indicator for Capture
-          if (_isCapturing)
-             Padding(
-               padding: const EdgeInsets.all(20.0),
-               child: Center(
-                 child: Column(
-                   children: [
-                     const CircularProgressIndicator(
-                       valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF0070BA)),
-                     ),
-                     const SizedBox(height: 16),
-                     Text(
-                       'Processing Payment...',
-                       style: TextStyle(
-                         fontSize: 16,
-                         fontWeight: FontWeight.w500,
-                         color: Colors.grey[700],
-                       ),
-                     ),
-                   ],
-                 ),
-               ),
-             ),
-            
+            // Loading Indicator for Capture
+            if (_isCapturing)
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Center(
+                  child: Column(
+                    children: [
+                      const CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          Color(0xFF0070BA),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        'Processing Payment...',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.grey[700],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
               child: Column(
@@ -926,265 +936,268 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         : CrossFadeState.showFirst,
                     firstChild: const SizedBox.shrink(),
                     secondChild: _buildCardPaymentForm(),
-              ),
-
-              const SizedBox(height: 8),
-
-              // Summary Section
-              const Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'Summary',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.black,
                   ),
-                ),
-              ),
-              const SizedBox(height: 16),
 
-              // Payment Details
-              const Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'Payment Details:',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 12),
+                  const SizedBox(height: 8),
 
-              // Plan ID
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      '•  ',
+                  // Summary Section
+                  const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Summary',
                       style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
                         color: Colors.black,
                       ),
                     ),
-                    Expanded(
-                      child: RichText(
-                        text: TextSpan(
-                          style: const TextStyle(
+                  ),
+                  const SizedBox(height: 16),
+
+                  // Payment Details
+                  const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Payment Details:',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+
+                  // Plan ID
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          '•  ',
+                          style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
                             color: Colors.black,
                           ),
-                          children: [
-                            const TextSpan(text: 'Plan ID: '),
-                            TextSpan(
-                              text:
-                                  widget.orderId ?? '68f5d69263f7f2594042c309',
-                              style: const TextStyle(fontFamily: 'monospace'),
-                            ),
-                          ],
                         ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 8),
-
-              // Charges info
-              const Padding(
-                padding: EdgeInsets.only(left: 8.0),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '•  ',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.black,
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        'Charges include Applicable VAT/GST and/or Sales Taxes',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 24),
-
-              // Total Amount
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                decoration: const BoxDecoration(
-                  border: Border(
-                    top: BorderSide(color: Color(0xFFE0E0E0), width: 1),
-                    bottom: BorderSide(color: Color(0xFFE0E0E0), width: 1),
-                  ),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      'Total Amount:',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.black,
-                      ),
-                    ),
-                    Text(
-                      '\$${widget.amount.toStringAsFixed(2)}',
-                      style: const TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w700,
-                        color: Color(0xFF0070BA),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 24),
-
-              // Safe & secure payment
-              const Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  'Safe & secure payment',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 12),
-
-              // Description text
-              const Text(
-                'Your payment information is processed securely. We do not store your credit card details.',
-                style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w400,
-                  color: Color(0xFF4A4A4A),
-                  height: 1.4,
-                ),
-              ),
-              const SizedBox(height: 20),
-
-              // Payment method icons
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  // Visa/Mastercard
-                  Container(
-                    width: 70,
-                    height: 45,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(4),
-                      gradient: const LinearGradient(
-                        colors: [Color(0xFF1A1F71), Color(0xFFED1C24)],
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
-                      ),
-                    ),
-                    child: Center(
-                      child: Image.asset(
-                        'assets/images/visa_card.png',
-                        height: 30,
-                        errorBuilder: (context, error, stackTrace) {
-                          return const Icon(
-                            Icons.credit_card,
-                            color: Colors.white,
-                            size: 24,
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-
-                  // PayPal
-                  Container(
-                    width: 70,
-                    height: 45,
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(4),
-                      border: Border.all(
-                        color: const Color(0xFFE0E0E0),
-                        width: 1,
-                      ),
-                    ),
-                    child: Image.asset(
-                      'assets/images/paypal_logo.png',
-                      fit: BoxFit.contain,
-                      errorBuilder: (context, error, stackTrace) {
-                        return const Center(
-                          child: Text(
-                            'PP',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
-                              color: Color(0xFF0070BA),
+                        Expanded(
+                          child: RichText(
+                            text: TextSpan(
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.black,
+                              ),
+                              children: [
+                                const TextSpan(text: 'Plan ID: '),
+                                TextSpan(
+                                  text:
+                                      widget.orderId ??
+                                      '68f5d69263f7f2594042c309',
+                                  style: const TextStyle(
+                                    fontFamily: 'monospace',
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                        );
-                      },
+                        ),
+                      ],
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  const SizedBox(height: 8),
 
-                  // Generic Card
+                  // Charges info
+                  const Padding(
+                    padding: EdgeInsets.only(left: 8.0),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '•  ',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.black,
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            'Charges include Applicable VAT/GST and/or Sales Taxes',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+
+                  // Total Amount
                   Container(
-                    width: 70,
-                    height: 45,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(4),
-                      gradient: const LinearGradient(
-                        colors: [Color(0xFFF79E1B), Color(0xFFFF6B00)],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    decoration: const BoxDecoration(
+                      border: Border(
+                        top: BorderSide(color: Color(0xFFE0E0E0), width: 1),
+                        bottom: BorderSide(color: Color(0xFFE0E0E0), width: 1),
                       ),
                     ),
-                    child: const Icon(
-                      Icons.credit_card,
-                      color: Colors.white,
-                      size: 28,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          'Total Amount:',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.black,
+                          ),
+                        ),
+                        Text(
+                          '\$${widget.amount.toStringAsFixed(2)}',
+                          style: const TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w700,
+                            color: Color(0xFF0070BA),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  const SizedBox(height: 24),
 
-                  // Security Badge
-                  Container(
-                    width: 70,
-                    height: 45,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF0070BA),
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    child: const Icon(
-                      Icons.security,
-                      color: Colors.white,
-                      size: 28,
+                  // Safe & secure payment
+                  const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Safe & secure payment',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black,
+                      ),
                     ),
                   ),
-                ],
-              ),
-              const SizedBox(height: 32),
+                  const SizedBox(height: 12),
+
+                  // Description text
+                  const Text(
+                    'Your payment information is processed securely. We do not store your credit card details.',
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w400,
+                      color: Color(0xFF4A4A4A),
+                      height: 1.4,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+
+                  // Payment method icons
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      // Visa/Mastercard
+                      Container(
+                        width: 70,
+                        height: 45,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4),
+                          gradient: const LinearGradient(
+                            colors: [Color(0xFF1A1F71), Color(0xFFED1C24)],
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight,
+                          ),
+                        ),
+                        child: Center(
+                          child: Image.asset(
+                            'assets/images/visa_card.png',
+                            height: 30,
+                            errorBuilder: (context, error, stackTrace) {
+                              return const Icon(
+                                Icons.credit_card,
+                                color: Colors.white,
+                                size: 24,
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+
+                      // PayPal
+                      Container(
+                        width: 70,
+                        height: 45,
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(4),
+                          border: Border.all(
+                            color: const Color(0xFFE0E0E0),
+                            width: 1,
+                          ),
+                        ),
+                        child: Image.asset(
+                          'assets/images/paypal_logo.png',
+                          fit: BoxFit.contain,
+                          errorBuilder: (context, error, stackTrace) {
+                            return const Center(
+                              child: Text(
+                                'PP',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                  color: Color(0xFF0070BA),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+
+                      // Generic Card
+                      Container(
+                        width: 70,
+                        height: 45,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4),
+                          gradient: const LinearGradient(
+                            colors: [Color(0xFFF79E1B), Color(0xFFFF6B00)],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                        ),
+                        child: const Icon(
+                          Icons.credit_card,
+                          color: Colors.white,
+                          size: 28,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+
+                      // Security Badge
+                      Container(
+                        width: 70,
+                        height: 45,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFF0070BA),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: const Icon(
+                          Icons.security,
+                          color: Colors.white,
+                          size: 28,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 32),
                 ],
               ),
             ),

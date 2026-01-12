@@ -21,21 +21,24 @@ class CandidateResumeResponseModel {
   factory CandidateResumeResponseModel.fromJson(Map<String, dynamic> json) {
     return CandidateResumeResponseModel(
       deactivate: json['deactivate'] ?? false,
-      resume:
-          json['resume'] != null ? Resume.fromJson(json['resume']) : null,
-      experiences: (json['experiences'] as List<dynamic>?)
+      resume: json['resume'] != null ? Resume.fromJson(json['resume']) : null,
+      experiences:
+          (json['experiences'] as List<dynamic>?)
               ?.map((e) => Experience.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
-      education: (json['education'] as List<dynamic>?)
+      education:
+          (json['education'] as List<dynamic>?)
               ?.map((e) => Education.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
-      awardsAndHonors: (json['awardsAndHonors'] as List<dynamic>?)
+      awardsAndHonors:
+          (json['awardsAndHonors'] as List<dynamic>?)
               ?.map((e) => Award.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
-      elevatorPitch: (json['elevatorPitch'] as List<dynamic>?)
+      elevatorPitch:
+          (json['elevatorPitch'] as List<dynamic>?)
               ?.map((e) => ElevatorPitch.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
@@ -116,19 +119,23 @@ class Resume {
       country: json['country'] as String?,
       city: json['city'] as String?,
       email: json['email'] as String?,
-      certifications: (json['certifications'] as List<dynamic>?)
+      certifications:
+          (json['certifications'] as List<dynamic>?)
               ?.map((e) => e.toString())
               .toList() ??
           [],
-      languages: (json['languages'] as List<dynamic>?)
+      languages:
+          (json['languages'] as List<dynamic>?)
               ?.map((e) => e.toString())
               .toList() ??
           [],
-      sLink: (json['sLink'] as List<dynamic>?)
+      sLink:
+          (json['sLink'] as List<dynamic>?)
               ?.map((e) => e.toString())
               .toList() ??
           [],
-      skills: (json['skills'] as List<dynamic>?)
+      skills:
+          (json['skills'] as List<dynamic>?)
               ?.map((e) => e.toString())
               .toList() ??
           [],
@@ -216,8 +223,9 @@ class Experience {
       startDate: json['startDate'] != null
           ? DateTime.tryParse(json['startDate'])
           : null,
-      endDate:
-          json['endDate'] != null ? DateTime.tryParse(json['endDate']) : null,
+      endDate: json['endDate'] != null
+          ? DateTime.tryParse(json['endDate'])
+          : null,
       country: json['country'] as String? ?? '',
       city: json['city'] as String? ?? '',
       zip: json['zip'] as String? ?? '',
@@ -505,11 +513,7 @@ class LocalPaths {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'original': original,
-      'hls': hls,
-      'key': key,
-    };
+    return {'original': original, 'hls': hls, 'key': key};
   }
 }
 
@@ -532,7 +536,9 @@ class VideoMetadata {
 
   factory VideoMetadata.fromJson(Map<String, dynamic> json) {
     return VideoMetadata(
-      duration: (json['duration'] is num) ? (json['duration'] as num).toDouble() : null,
+      duration: (json['duration'] is num)
+          ? (json['duration'] as num).toDouble()
+          : null,
       format: json['format'] as String?,
       vcodec: json['vcodec'] as String?,
       rotation: json['rotation'] as int?,

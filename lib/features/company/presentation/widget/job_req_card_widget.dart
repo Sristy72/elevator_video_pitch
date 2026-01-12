@@ -34,25 +34,32 @@ class JobRequestCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(name,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.w600, fontSize: 15)),
+                  Text(
+                    name,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 15,
+                    ),
+                  ),
                   const SizedBox(height: 2),
-                  Text("$position\n$company",
-                      style:
-                          const TextStyle(fontSize: 13, color: Colors.grey)),
+                  Text(
+                    "$position\n$company",
+                    style: const TextStyle(fontSize: 13, color: Colors.grey),
+                  ),
                 ],
               ),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text("Job Title:",
-                    style:
-                        TextStyle(fontSize: 13, fontWeight: FontWeight.w600)),
-                Text(jobTitle,
-                    style:
-                        const TextStyle(fontSize: 13, color: Colors.black54)),
+                const Text(
+                  "Job Title:",
+                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
+                ),
+                Text(
+                  jobTitle,
+                  style: const TextStyle(fontSize: 13, color: Colors.black54),
+                ),
               ],
             ),
             const SizedBox(width: 12),
@@ -60,13 +67,18 @@ class JobRequestCard extends StatelessWidget {
               onPressed: onViewDetails,
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color(0xFF2B7FD0),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 8,
+                ),
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20)),
+                  borderRadius: BorderRadius.circular(20),
+                ),
               ),
-              child: const Text("View Details",
-                  style: TextStyle(fontSize: 12, color: Colors.white)),
+              child: const Text(
+                "View Details",
+                style: TextStyle(fontSize: 12, color: Colors.white),
+              ),
             ),
           ],
         ),

@@ -25,7 +25,10 @@ class EditProfileModel {
       phone: json['phoneNumber'] ?? json['phone'] ?? '',
       birthday: json['birthday'] ?? '',
       gender: json['gender'] ?? '',
-      imageUrl: json['profileImage'] ?? json['imageUrl'] ?? 'assets/images/profile.png',
+      imageUrl:
+          json['profileImage'] ??
+          json['imageUrl'] ??
+          'assets/images/profile.png',
     );
   }
 
@@ -44,7 +47,8 @@ class EditProfileModel {
 
 class ReportData {
   final String user;
-  final String even; // note: API key is "even". If it's a typo, rename to "event"
+  final String
+  even; // note: API key is "even". If it's a typo, rename to "event"
   final String description;
   final String? reportImage;
   final String id;

@@ -35,33 +35,28 @@ class Bio extends StatelessWidget {
             maxLines: 8,
             minLines: 3,
             onChanged: (value) {
-              int currentWords = descriptionController
-                  .countWords(value);
+              int currentWords = descriptionController.countWords(value);
 
-              if (currentWords >
-                  descriptionController.maxWords) {
+              if (currentWords > descriptionController.maxWords) {
                 final words = value
                     .trim()
                     .split(RegExp(r'\s+'))
                     .take(descriptionController.maxWords);
                 _descriptionTController.text = words.join(' ');
-                _descriptionTController
-                    .selection = TextSelection.fromPosition(
+                _descriptionTController.selection = TextSelection.fromPosition(
                   TextPosition(offset: _descriptionTController.text.length),
                 );
                 descriptionController.wordCount.value =
                     descriptionController.maxWords;
               } else {
-                descriptionController.wordCount.value =
-                    currentWords;
+                descriptionController.wordCount.value = currentWords;
               }
             },
 
             decoration: InputDecoration(
               filled: true,
               fillColor: const Color(0xFFFAFAFA),
-              hintText:
-              'Write your description (max 400 words)',
+              hintText: 'Write your description (max 400 words)',
               hintStyle: const TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w400,
@@ -71,8 +66,7 @@ class Bio extends StatelessWidget {
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
                 //  Makes it circular
-                borderSide:
-                BorderSide.none, // Removes border line
+                borderSide: BorderSide.none, // Removes border line
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(8),
@@ -88,20 +82,17 @@ class Bio extends StatelessWidget {
           ),
           const SizedBox(height: 6),
           Obx(
-                () =>
-                Text(
-                  '${descriptionController.wordCount
-                      .value} / ${descriptionController
-                      .maxWords} words',
-                  style: TextStyle(
-                    fontSize: 12,
-                    color:
+            () => Text(
+              '${descriptionController.wordCount.value} / ${descriptionController.maxWords} words',
+              style: TextStyle(
+                fontSize: 12,
+                color:
                     descriptionController.wordCount.value >
                         descriptionController.maxWords
-                        ? Colors.red
-                        : Colors.grey,
-                  ),
-                ),
+                    ? Colors.red
+                    : Colors.grey,
+              ),
+            ),
           ),
         ],
       ),

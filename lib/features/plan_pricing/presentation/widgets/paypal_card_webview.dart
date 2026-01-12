@@ -64,21 +64,22 @@ class _PaypalCardWebViewState extends State<PaypalCardWebView> {
           },
           onNavigationRequest: (NavigationRequest request) {
             print('🔵 Navigation Request: ${request.url}');
-            
+
             // Check for success/cancel URLs if the web implementation redirects
             // Intercept redirects to success page
             if (request.url.contains(returnURL)) {
               final uri = Uri.parse(request.url);
               // Extract transactionId if possible, or use orderId as fallback
-              final transactionId = uri.queryParameters['transactionId'] ?? widget.orderId;
-              
+              final transactionId =
+                  uri.queryParameters['transactionId'] ?? widget.orderId;
+
               if (widget.onFinish != null) {
                 widget.onFinish!(transactionId);
               }
               Get.back();
               return NavigationDecision.prevent;
             }
-            
+
             if (request.url.contains(cancelURL)) {
               Get.back();
               Get.snackbar(
@@ -88,7 +89,7 @@ class _PaypalCardWebViewState extends State<PaypalCardWebView> {
               );
               return NavigationDecision.prevent;
             }
-            
+
             return NavigationDecision.navigate;
           },
         ),
@@ -119,7 +120,7 @@ class _PaypalCardWebViewState extends State<PaypalCardWebView> {
               borderRadius: BorderRadius.circular(2),
             ),
           ),
-          
+
           // Header with close button
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -141,9 +142,9 @@ class _PaypalCardWebViewState extends State<PaypalCardWebView> {
               ],
             ),
           ),
-          
+
           const Divider(height: 1),
-          
+
           // WebView content
           Expanded(
             child: Stack(
@@ -151,9 +152,7 @@ class _PaypalCardWebViewState extends State<PaypalCardWebView> {
                 WebViewWidget(controller: _controller),
                 if (_isLoading)
                   const Center(
-                    child: CircularProgressIndicator(
-                      color: Color(0xFF0070BA),
-                    ),
+                    child: CircularProgressIndicator(color: Color(0xFF0070BA)),
                   ),
               ],
             ),

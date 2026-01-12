@@ -93,25 +93,13 @@ class SocialLink {
   final String label;
   final String url;
 
-  SocialLink({
-    required this.id,
-    required this.label,
-    required this.url,
-  });
+  SocialLink({required this.id, required this.label, required this.url});
 
   factory SocialLink.fromJson(Map<String, dynamic> json) {
-    return SocialLink(
-      id: json['_id'],
-      label: json['label'],
-      url: json['url'],
-    );
+    return SocialLink(id: json['_id'], label: json['label'], url: json['url']);
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      '_id': id,
-      'label': label,
-      'url': url,
-    };
+    return {'_id': id, 'label': label, 'url': url};
   }
 }

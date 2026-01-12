@@ -38,7 +38,10 @@ class EmploymentTypeController extends GetxController {
 
   String getDisplayName(String backendValue) {
     return employmentTypeMap.entries
-        .firstWhere((e) => e.value == backendValue, orElse: () => const MapEntry('', ''))
+        .firstWhere(
+          (e) => e.value == backendValue,
+          orElse: () => const MapEntry('', ''),
+        )
         .key;
   }
 }

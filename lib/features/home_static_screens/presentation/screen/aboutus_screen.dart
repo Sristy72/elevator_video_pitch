@@ -32,7 +32,7 @@ class AboutUs extends StatelessWidget {
             controller.aboutContent.value == null) {
           return const Center(child: CircularProgressIndicator());
         }
-      
+
         if (controller.error.value != null &&
             controller.aboutContent.value == null) {
           return Center(
@@ -42,12 +42,12 @@ class AboutUs extends StatelessWidget {
             ),
           );
         }
-      
+
         final about = controller.aboutContent.value;
         if (about == null) {
           return const Center(child: Text("No data available"));
         }
-      
+
         return RefreshIndicator(
           onRefresh: () async =>
               controller.fetchAboutContent(forceRefresh: true),

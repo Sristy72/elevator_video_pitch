@@ -14,8 +14,9 @@ class ProfileDashboardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final GetUserProfileService profileService = Get.find<GetUserProfileService>();
-    
+    final GetUserProfileService profileService =
+        Get.find<GetUserProfileService>();
+
     return AppScaffold(
       // backgroundColor: Colors.white,
       appBar: AppBar(
@@ -51,7 +52,7 @@ class ProfileDashboardScreen extends StatelessWidget {
                         Get.to(() => const CandidateDashboardScreen());
                       },
                     ),
-                  
+
                   _menuTile(
                     "assets/icons/personalinfo.png",
                     "Personal Information",
@@ -59,9 +60,13 @@ class ProfileDashboardScreen extends StatelessWidget {
                       Get.to(() => const PersonalInfoScreen());
                     },
                   ),
-                  _menuTile("assets/icons/changepass.png", "Change Password", () {
-                    Get.to(() => ChangePasswordScreen());
-                  }),
+                  _menuTile(
+                    "assets/icons/changepass.png",
+                    "Change Password",
+                    () {
+                      Get.to(() => ChangePasswordScreen());
+                    },
+                  ),
                   _menuTile("assets/icons/jobhistory.png", "Job History", () {
                     Get.to(() => const JobHistoryScreen());
                   }),
@@ -72,8 +77,7 @@ class ProfileDashboardScreen extends StatelessWidget {
                       Get.to(() => const PaymentHistoryScreen());
                     },
                   ),
-                  _menuTile(
-                      "assets/icons/logout.png", "Log out", () {
+                  _menuTile("assets/icons/logout.png", "Log out", () {
                     Get.find<AuthController>().logout();
                   }),
 
@@ -94,7 +98,12 @@ class ProfileDashboardScreen extends StatelessWidget {
   Widget _menuTile(String iconPath, String title, VoidCallback onTap) {
     return ListTile(
       onTap: onTap,
-      leading: Image.asset(iconPath, width: 22, height: 24, color: Colors.black,),
+      leading: Image.asset(
+        iconPath,
+        width: 22,
+        height: 24,
+        color: Colors.black,
+      ),
       title: Text(
         title,
         style: const TextStyle(

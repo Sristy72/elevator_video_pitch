@@ -25,6 +25,7 @@ class ElevatorResumeScreen extends StatelessWidget {
     return AppScaffold(
       removePadding: true,
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.black),
         elevation: 0,
         title: const Text(
           'Create Your Profile',
@@ -38,15 +39,6 @@ class ElevatorResumeScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // ===================== TITLE + SUBTITLE =====================
-              Center(
-                child: Text(
-                  'Fill in your details to create a professional resume',
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    color: Colors.grey[700],
-                  ),
-                ),
-              ),
               const SizedBox(height: 24),
 
               // ===================== VIDEO + BANNER =====================
@@ -55,7 +47,8 @@ class ElevatorResumeScreen extends StatelessWidget {
                 children: [
                   // ---------- Upload Video Pitch ----------
                   Obx(() {
-                    final hasVideo = controller.elevatorVideoPath.value.isNotEmpty;
+                    final hasVideo =
+                        controller.elevatorVideoPath.value.isNotEmpty;
                     final isUploaded = controller.isVideoUploaded.value;
 
                     if (!hasVideo) {
@@ -120,7 +113,9 @@ class ElevatorResumeScreen extends StatelessWidget {
                                         vertical: 12,
                                       ),
                                       shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(999),
+                                        borderRadius: BorderRadius.circular(
+                                          999,
+                                        ),
                                       ),
                                     ),
                                     child: const Text(
@@ -164,15 +159,19 @@ class ElevatorResumeScreen extends StatelessWidget {
                                               .value
                                               .aspectRatio,
                                           child: VideoPlayer(
-                                              controller.videoPlayerController!),
+                                            controller.videoPlayerController!,
+                                          ),
                                         ),
                                       ),
                                       GestureDetector(
                                         onTap: controller.togglePlayPause,
                                         child: AnimatedOpacity(
-                                          opacity:
-                                              controller.isPlaying.value ? 0.0 : 1.0,
-                                          duration: const Duration(milliseconds: 300),
+                                          opacity: controller.isPlaying.value
+                                              ? 0.0
+                                              : 1.0,
+                                          duration: const Duration(
+                                            milliseconds: 300,
+                                          ),
                                           child: Icon(
                                             controller.isPlaying.value
                                                 ? Icons.pause_circle_filled
@@ -188,7 +187,9 @@ class ElevatorResumeScreen extends StatelessWidget {
                                         right: 0,
                                         child: Container(
                                           padding: const EdgeInsets.symmetric(
-                                              horizontal: 0, vertical: 0),
+                                            horizontal: 0,
+                                            vertical: 0,
+                                          ),
                                           decoration: const BoxDecoration(
                                             color: Colors.black26,
                                             borderRadius: BorderRadius.only(
@@ -200,54 +201,76 @@ class ElevatorResumeScreen extends StatelessWidget {
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
                                               Obx(() {
-                                                final progress = controller
+                                                final progress =
+                                                    controller
                                                             .totalDuration
                                                             .value
                                                             .inMilliseconds ==
                                                         0
                                                     ? 0.0
-                                                    : controller.currentPosition.value
-                                                            .inMilliseconds /
-                                                        controller.totalDuration.value
-                                                            .inMilliseconds;
+                                                    : controller
+                                                              .currentPosition
+                                                              .value
+                                                              .inMilliseconds /
+                                                          controller
+                                                              .totalDuration
+                                                              .value
+                                                              .inMilliseconds;
                                                 return Slider(
-                                                  value: progress.clamp(0.0, 1.0),
+                                                  value: progress.clamp(
+                                                    0.0,
+                                                    1.0,
+                                                  ),
                                                   onChanged: (value) {
                                                     final newPosition = Duration(
-                                                        milliseconds: (controller
-                                                                    .totalDuration
-                                                                    .value
-                                                                    .inMilliseconds *
-                                                                value)
-                                                            .toInt());
-                                                    controller.seekTo(newPosition);
+                                                      milliseconds:
+                                                          (controller
+                                                                      .totalDuration
+                                                                      .value
+                                                                      .inMilliseconds *
+                                                                  value)
+                                                              .toInt(),
+                                                    );
+                                                    controller.seekTo(
+                                                      newPosition,
+                                                    );
                                                   },
                                                   activeColor: Colors.white,
                                                   inactiveColor: Colors.grey,
                                                 );
                                               }),
                                               Padding(
-                                                padding: const EdgeInsets.symmetric(
-                                                    horizontal: 16, vertical: 8),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                      horizontal: 16,
+                                                      vertical: 8,
+                                                    ),
                                                 child: Row(
                                                   mainAxisAlignment:
-                                                      MainAxisAlignment.spaceBetween,
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
                                                   children: [
                                                     Text(
                                                       controller.formatDuration(
-                                                          controller
-                                                              .currentPosition.value),
+                                                        controller
+                                                            .currentPosition
+                                                            .value,
+                                                      ),
                                                       style: const TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 12),
+                                                        color: Colors.white,
+                                                        fontSize: 12,
+                                                      ),
                                                     ),
                                                     Text(
                                                       controller.formatDuration(
-                                                          controller
-                                                              .totalDuration.value),
+                                                        controller
+                                                            .totalDuration
+                                                            .value,
+                                                      ),
                                                       style: const TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 12),
+                                                        color: Colors.white,
+                                                        fontSize: 12,
+                                                      ),
                                                     ),
                                                   ],
                                                 ),
@@ -260,7 +283,8 @@ class ElevatorResumeScreen extends StatelessWidget {
                                   )
                                 : const Center(
                                     child: CircularProgressIndicator(
-                                        color: Colors.white),
+                                      color: Colors.white,
+                                    ),
                                   ),
                           ),
                         ),
@@ -298,9 +322,7 @@ class ElevatorResumeScreen extends StatelessWidget {
                             decoration: BoxDecoration(
                               color: Colors.green.shade50,
                               borderRadius: BorderRadius.circular(8),
-                              border: Border.all(
-                                color: Colors.green.shade200,
-                              ),
+                              border: Border.all(color: Colors.green.shade200),
                             ),
                             child: Row(
                               children: [
@@ -447,7 +469,7 @@ class ElevatorResumeScreen extends StatelessWidget {
                       ],
                     );
                   }),
-                ]
+                ],
               ),
 
               const SizedBox(height: 16),
@@ -966,11 +988,13 @@ class ElevatorResumeScreen extends StatelessWidget {
               // ===================== SUBMIT BUTTON =====================
               Obx(() {
                 final isUploading = controller.isUploadingResume.value;
-                
+
                 return SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: isUploading ? null : controller.onUploadElevatorPitchFirst,
+                    onPressed: isUploading
+                        ? null
+                        : controller.onUploadElevatorPitchFirst,
                     style: ElevatedButton.styleFrom(
                       minimumSize: const Size(double.infinity, 52),
                       backgroundColor: isUploading ? Colors.grey : null,
@@ -990,7 +1014,7 @@ class ElevatorResumeScreen extends StatelessWidget {
                                 ),
                               ),
                               SizedBox(width: 12),
-                              Text('Uploading Resume...')
+                              Text('Uploading Resume...'),
                             ],
                           )
                         : const Text('Upload Elevator Pitch'),
@@ -1005,19 +1029,20 @@ class ElevatorResumeScreen extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Icon(
-                          hasVideo ? Icons.check_circle : Icons.info,
-                          color: hasVideo ? Colors.green : Colors.orange,
-                          size: 16,
-                        ),
+                        // Icon(
+                        //   hasVideo ? Icons.check_circle : Icons.info,
+                        //   color: hasVideo ? Colors.green : Colors.orange,
+                        //   size: 16,
+                        // ),
                         const SizedBox(width: 8),
                         Expanded(
                           child: Text(
                             hasVideo
                                 ? 'Elevator pitch video uploaded. You can now submit your resume.'
-                                : 'Elevator pitch video upload is optional but recommended.',
+                                : 'Please upload your Elevator Video Pitch© video before submitting the form.',
+                            textAlign: TextAlign.center,
                             style: theme.textTheme.bodySmall?.copyWith(
-                              color: hasVideo ? Colors.green : Colors.orange,
+                              color: hasVideo ? Colors.green : Colors.red,
                             ),
                           ),
                         ),
@@ -1182,8 +1207,11 @@ class _SearchableDropdownState extends State<SearchableDropdown> {
                           _filteredItems = widget.items;
                         } else {
                           _filteredItems = widget.items
-                              .where((item) =>
-                                  item.toLowerCase().contains(query.toLowerCase()))
+                              .where(
+                                (item) => item.toLowerCase().contains(
+                                  query.toLowerCase(),
+                                ),
+                              )
                               .toList();
                         }
                       });

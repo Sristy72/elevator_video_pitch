@@ -34,10 +34,7 @@ class Usage {
   final int monthlyUsed;
   final int annualUsed;
 
-  Usage({
-    required this.monthlyUsed,
-    required this.annualUsed,
-  });
+  Usage({required this.monthlyUsed, required this.annualUsed});
 
   factory Usage.fromJson(Map<String, dynamic> json) {
     return Usage(
@@ -47,9 +44,6 @@ class Usage {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'monthlyUsed': monthlyUsed,
-      'annualUsed': annualUsed,
-    };
+    return {'monthlyUsed': monthlyUsed, 'annualUsed': annualUsed};
   }
 }

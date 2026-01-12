@@ -21,7 +21,7 @@
 //   void initState() {
 //     super.initState();
 //     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      
+
 //       await controller.fetchEmployee();
 //     }); // Hit API once here
 //   }
@@ -51,7 +51,7 @@
 //           return const Center(child: Text("No recruiters found"));
 //         }
 
-//         return 
+//         return
 //         SingleChildScrollView(
 //           scrollDirection: Axis.horizontal,
 //           child: IntrinsicWidth(
@@ -94,8 +94,7 @@ class CompanyEmployeesScreen extends StatefulWidget {
   const CompanyEmployeesScreen({super.key});
 
   @override
-  State<CompanyEmployeesScreen> createState() =>
-      _CompanyEmployeesScreenState();
+  State<CompanyEmployeesScreen> createState() => _CompanyEmployeesScreenState();
 }
 
 class _CompanyEmployeesScreenState extends State<CompanyEmployeesScreen> {
@@ -126,10 +125,7 @@ class _CompanyEmployeesScreenState extends State<CompanyEmployeesScreen> {
         backgroundColor: const Color(0xFF2B7FD0),
         title: const Text(
           "Internal Recruiters",
-          style: TextStyle(
-            fontWeight: FontWeight.w700,
-            color: Colors.white,
-          ),
+          style: TextStyle(fontWeight: FontWeight.w700, color: Colors.white),
         ),
       ),
       body: Obx(() {
@@ -157,9 +153,7 @@ class _CompanyEmployeesScreenState extends State<CompanyEmployeesScreen> {
                 columnSpacing: 28,
                 dividerThickness: 1,
                 border: TableBorder(
-                  horizontalInside: BorderSide(
-                    color: Colors.grey.shade300,
-                  ),
+                  horizontalInside: BorderSide(color: Colors.grey.shade300),
                 ),
 
                 /// -------- TABLE HEADERS --------
@@ -213,8 +207,7 @@ class _CompanyEmployeesScreenState extends State<CompanyEmployeesScreen> {
                     cells: [
                       DataCell(
                         Padding(
-                          padding:
-                              const EdgeInsets.symmetric(horizontal: 8),
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
                           child: Text(
                             e.name,
                             style: const TextStyle(
@@ -227,8 +220,7 @@ class _CompanyEmployeesScreenState extends State<CompanyEmployeesScreen> {
                       ),
                       DataCell(
                         Padding(
-                          padding:
-                              const EdgeInsets.symmetric(horizontal: 8),
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
                           child: Text(
                             e.role,
                             style: const TextStyle(
@@ -246,8 +238,7 @@ class _CompanyEmployeesScreenState extends State<CompanyEmployeesScreen> {
                               color: Colors.red,
                               size: 20,
                             ),
-                            onPressed: () =>
-                                controller.removeRecruiter(e.id),
+                            onPressed: () => controller.removeRecruiter(e.id),
                           ),
                         ),
                       ),

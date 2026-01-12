@@ -128,8 +128,9 @@ class ArchieveJobRequestModel {
   Map<String, dynamic> toJson() {
     return {
       'adminApprove': adminApprove,
-      'applicationRequirement':
-      applicationRequirement?.map((e) => e.toJson()).toList(),
+      'applicationRequirement': applicationRequirement
+          ?.map((e) => e.toJson())
+          .toList(),
       'arcrivedJob': arcrivedJob,
       'benefits': benefits,
       'billingPlanType': billingPlanType,
@@ -185,11 +186,7 @@ class ApplicationRequirement {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'requirement': requirement,
-      'status': status,
-      '_id': id,
-    };
+    return {'requirement': requirement, 'status': status, '_id': id};
   }
 }
 
@@ -200,16 +197,10 @@ class CustomQuestion {
   CustomQuestion({this.question, this.id});
 
   factory CustomQuestion.fromJson(Map<String, dynamic> json) {
-    return CustomQuestion(
-      question: json['question'],
-      id: json['_id'],
-    );
+    return CustomQuestion(question: json['question'], id: json['_id']);
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'question': question,
-      '_id': id,
-    };
+    return {'question': question, '_id': id};
   }
 }

@@ -294,15 +294,9 @@ class CustomQuestion {
   final String question;
   final String id;
 
-  CustomQuestion({
-    required this.question,
-    required this.id,
-  });
+  CustomQuestion({required this.question, required this.id});
 
   factory CustomQuestion.fromJson(Map<String, dynamic> json) {
-    return CustomQuestion(
-      question: json['question'],
-      id: json['_id'],
-    );
+    return CustomQuestion(question: json['question'], id: json['_id']);
   }
 }

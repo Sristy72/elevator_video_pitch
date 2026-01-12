@@ -5,8 +5,6 @@ class ConnectCompanyRequest {
 
   // Convert the model to JSON
   Map<String, dynamic> toJson() {
-    return {
-      'companyId': companyId,
-    };
+    return {'companyId': companyId};
   }
 }

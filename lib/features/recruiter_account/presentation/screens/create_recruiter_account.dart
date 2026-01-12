@@ -30,8 +30,10 @@ class _CreateRecruiterAccountState extends State<CreateRecruiterAccount> {
   final TextEditingController _firstNameTEController = TextEditingController();
   final TextEditingController _surNameTEController = TextEditingController();
   final TextEditingController _emailTEController = TextEditingController();
-  final TextEditingController _phoneNumberTEController = TextEditingController();
-  final TextEditingController _currentPositionTEController = TextEditingController();
+  final TextEditingController _phoneNumberTEController =
+      TextEditingController();
+  final TextEditingController _currentPositionTEController =
+      TextEditingController();
   final TextEditingController _postalCodeTEController = TextEditingController();
   final TextEditingController _linkedINTEController = TextEditingController();
   final TextEditingController _twitterTEController = TextEditingController();
@@ -46,7 +48,8 @@ class _CreateRecruiterAccountState extends State<CreateRecruiterAccount> {
 
   final ImageController imagePickerController = Get.put(ImageController());
   final CompanyImageController bannerPickerController = Get.put(
-      CompanyImageController());
+    CompanyImageController(),
+  );
 
   final FocusNode _firstNameFocusNode = FocusNode();
   final FocusNode _surNameFocusNode = FocusNode();
@@ -72,23 +75,24 @@ class _CreateRecruiterAccountState extends State<CreateRecruiterAccount> {
 
   _submit() {
     recruiterController.createRecruiterScreen(
-        bannerPickerController.selectedImage.value!,
-        imagePickerController.selectedImage.value!,
-        _descriptionTController.text,
-        _firstNameTEController.text,
-        _surNameTEController.text,
-        _emailTEController.text,
-        _phoneNumberTEController.text,
-        _currentPositionTEController.text,
-        controller.selectedCountry.toString(),
-        controller.selectedCity.toString(),
-        zipCode,
-        _linkedINTEController.text,
-        _twitterTEController.text,
-        _upworkTEController.text,
-        _facebookTEController.text,
-        _tiktokTEController.text,
-        _instaTEController.text);
+      bannerPickerController.selectedImage.value!,
+      imagePickerController.selectedImage.value!,
+      _descriptionTController.text,
+      _firstNameTEController.text,
+      _surNameTEController.text,
+      _emailTEController.text,
+      _phoneNumberTEController.text,
+      _currentPositionTEController.text,
+      controller.selectedCountry.toString(),
+      controller.selectedCity.toString(),
+      zipCode,
+      _linkedINTEController.text,
+      _twitterTEController.text,
+      _upworkTEController.text,
+      _facebookTEController.text,
+      _tiktokTEController.text,
+      _instaTEController.text,
+    );
   }
 
   @override
@@ -126,8 +130,9 @@ class _CreateRecruiterAccountState extends State<CreateRecruiterAccount> {
                   children: [
                     Expanded(
                       child: Text(
-                        'Upload a 60-second elevator video''pitch introducing your agency and what'
-                            'makes you stand out from the rest!',
+                        'Upload a 60-second elevator video'
+                        'pitch introducing your agency and what'
+                        'makes you stand out from the rest!',
                         style: TextStyle(
                           fontSize: 10,
                           fontWeight: FontWeight.w400,
@@ -145,7 +150,9 @@ class _CreateRecruiterAccountState extends State<CreateRecruiterAccount> {
                   },
                   child: Obx(() {
                     if (recruiterController.successVideoUploaded.value &&
-                        recruiterController.uploadedVideoPath.value
+                        recruiterController
+                            .uploadedVideoPath
+                            .value
                             .isNotEmpty) {
                       return Container(
                         decoration: BoxDecoration(
@@ -157,8 +164,8 @@ class _CreateRecruiterAccountState extends State<CreateRecruiterAccount> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(4),
                           child: VideoPlayerWidget(
-                            videoPath: recruiterController.uploadedVideoPath
-                                .value,
+                            videoPath:
+                                recruiterController.uploadedVideoPath.value,
                           ),
                         ),
                       );
@@ -176,20 +183,25 @@ class _CreateRecruiterAccountState extends State<CreateRecruiterAccount> {
                             const SizedBox(
                               height: 18,
                               width: 18,
-                              child: Image(image: AssetImage(
-                                  'assets/icons/gallery.png')),
+                              child: Image(
+                                image: AssetImage('assets/icons/gallery.png'),
+                              ),
                             ),
                             const SizedBox(height: 7),
                             const Text(
                               'Drop your files here',
                               style: TextStyle(
-                                  fontSize: 12, color: Colors.white),
+                                fontSize: 12,
+                                color: Colors.white,
+                              ),
                             ),
                             const SizedBox(height: 9.5),
                             const Text(
                               'Choose file',
                               style: TextStyle(
-                                  fontSize: 12, color: Colors.white),
+                                fontSize: 12,
+                                color: Colors.white,
+                              ),
                             ),
                           ],
                         ),
@@ -223,30 +235,30 @@ class _CreateRecruiterAccountState extends State<CreateRecruiterAccount> {
                           ),
                           child: Center(
                             child:
-                            bannerPickerController.selectedImage.value !=
-                                null
+                                bannerPickerController.selectedImage.value !=
+                                    null
                                 ? ClipRRect(
-                              borderRadius: BorderRadius.circular(8),
-                              // same as container
-                              child: Image.file(
-                                bannerPickerController
-                                    .selectedImage
-                                    .value!,
-                                width: double.infinity,
-                                height: 150,
-                                fit: BoxFit
-                                    .cover, // makes image fill the container
-                              ),
-                            )
+                                    borderRadius: BorderRadius.circular(8),
+                                    // same as container
+                                    child: Image.file(
+                                      bannerPickerController
+                                          .selectedImage
+                                          .value!,
+                                      width: double.infinity,
+                                      height: 150,
+                                      fit: BoxFit
+                                          .cover, // makes image fill the container
+                                    ),
+                                  )
                                 : const Text(
-                              'company banner',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 13,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black,
-                              ),
-                            ),
+                                    'company banner',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.black,
+                                    ),
+                                  ),
                           ),
                         );
                       }),
@@ -275,30 +287,30 @@ class _CreateRecruiterAccountState extends State<CreateRecruiterAccount> {
                               ),
                               child: Center(
                                 child:
-                                imagePickerController.selectedImage.value !=
-                                    null
+                                    imagePickerController.selectedImage.value !=
+                                        null
                                     ? ClipRRect(
-                                  borderRadius: BorderRadius.circular(8),
-                                  // same as container
-                                  child: Image.file(
-                                    imagePickerController
-                                        .selectedImage
-                                        .value!,
-                                    height: 130,
-                                    width: 130,
-                                    fit: BoxFit
-                                        .cover, // makes image fill the container
-                                  ),
-                                )
+                                        borderRadius: BorderRadius.circular(8),
+                                        // same as container
+                                        child: Image.file(
+                                          imagePickerController
+                                              .selectedImage
+                                              .value!,
+                                          height: 130,
+                                          width: 130,
+                                          fit: BoxFit
+                                              .cover, // makes image fill the container
+                                        ),
+                                      )
                                     : const Text(
-                                  'photo/recruiter logo',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.black,
-                                  ),
-                                ),
+                                        'photo/recruiter logo',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.black,
+                                        ),
+                                      ),
                               ),
                             );
                           }),
@@ -310,17 +322,28 @@ class _CreateRecruiterAccountState extends State<CreateRecruiterAccount> {
 
                     SizedBox(width: 15),
 
-                    Bio(descriptionTController: _descriptionTController, descriptionController: descriptionController),
+                    Bio(
+                      descriptionTController: _descriptionTController,
+                      descriptionController: descriptionController,
+                    ),
                   ],
                 ),
 
                 SizedBox(height: 14),
 
-                Name(firstNameTEController: _firstNameTEController, firstNameFocusNode: _firstNameFocusNode, surNameTEController: _surNameTEController, surNameFocusNode: _surNameFocusNode),
+                Name(
+                  firstNameTEController: _firstNameTEController,
+                  firstNameFocusNode: _firstNameFocusNode,
+                  surNameTEController: _surNameTEController,
+                  surNameFocusNode: _surNameFocusNode,
+                ),
 
                 SizedBox(height: 9),
 
-                PhoneNumberAndEmail(emailTEController: _emailTEController, emailFocusNode: _emailFocusNode),
+                PhoneNumberAndEmail(
+                  emailTEController: _emailTEController,
+                  emailFocusNode: _emailFocusNode,
+                ),
 
                 SizedBox(height: 9),
 
@@ -454,18 +477,20 @@ class _CreateRecruiterAccountState extends State<CreateRecruiterAccount> {
                   ],
                 ),
 
-                SocialLink(linkedINTEController: _linkedINTEController,
-                    linkedINFocusNode: _linkedINFocusNode,
-                    twitterTEController: _twitterTEController,
-                    twitterFocusNode: _twitterFocusNode,
-                    upworkTEController: _upworkTEController,
-                    upworkFocusNode: _upworkFocusNode,
-                    facebookTEController: _facebookTEController,
-                    facebookFocusNode: _facebookFocusNode,
-                    tiktokTEController: _tiktokTEController,
-                    tiktokFocusNode: _tiktokFocusNode,
-                    instaTEController: _instaTEController,
-                    instaFocusNode: _instaFocusNode),
+                SocialLink(
+                  linkedINTEController: _linkedINTEController,
+                  linkedINFocusNode: _linkedINFocusNode,
+                  twitterTEController: _twitterTEController,
+                  twitterFocusNode: _twitterFocusNode,
+                  upworkTEController: _upworkTEController,
+                  upworkFocusNode: _upworkFocusNode,
+                  facebookTEController: _facebookTEController,
+                  facebookFocusNode: _facebookFocusNode,
+                  tiktokTEController: _tiktokTEController,
+                  tiktokFocusNode: _tiktokFocusNode,
+                  instaTEController: _instaTEController,
+                  instaFocusNode: _instaFocusNode,
+                ),
 
                 SizedBox(height: 15),
 
@@ -501,7 +526,6 @@ class _CreateRecruiterAccountState extends State<CreateRecruiterAccount> {
   }
 }
 
-
 class SocialLink extends StatelessWidget {
   const SocialLink({
     super.key,
@@ -517,7 +541,18 @@ class SocialLink extends StatelessWidget {
     required FocusNode tiktokFocusNode,
     required TextEditingController instaTEController,
     required FocusNode instaFocusNode,
-  }) : _linkedINTEController = linkedINTEController, _linkedINFocusNode = linkedINFocusNode, _twitterTEController = twitterTEController, _twitterFocusNode = twitterFocusNode, _upworkTEController = upworkTEController, _upworkFocusNode = upworkFocusNode, _facebookTEController = facebookTEController, _facebookFocusNode = facebookFocusNode, _tiktokTEController = tiktokTEController, _tiktokFocusNode = tiktokFocusNode, _instaTEController = instaTEController, _instaFocusNode = instaFocusNode;
+  }) : _linkedINTEController = linkedINTEController,
+       _linkedINFocusNode = linkedINFocusNode,
+       _twitterTEController = twitterTEController,
+       _twitterFocusNode = twitterFocusNode,
+       _upworkTEController = upworkTEController,
+       _upworkFocusNode = upworkFocusNode,
+       _facebookTEController = facebookTEController,
+       _facebookFocusNode = facebookFocusNode,
+       _tiktokTEController = tiktokTEController,
+       _tiktokFocusNode = tiktokFocusNode,
+       _instaTEController = instaTEController,
+       _instaFocusNode = instaFocusNode;
 
   final TextEditingController _linkedINTEController;
   final FocusNode _linkedINFocusNode;
@@ -547,10 +582,7 @@ class SocialLink extends StatelessWidget {
               Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  border: Border.all(
-                    color: Color(0xFF999999),
-                    width: 1,
-                  ),
+                  border: Border.all(color: Color(0xFF999999), width: 1),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Padding(
@@ -588,8 +620,7 @@ class SocialLink extends StatelessWidget {
                         focusNode: _linkedINFocusNode,
                         keyboardType: TextInputType.name,
                         textInputAction: TextInputAction.next,
-                        decoration: context.primaryInputDecoration
-                            .copyWith(
+                        decoration: context.primaryInputDecoration.copyWith(
                           hintText: "Enter Here",
                           hintStyle: TextStyle(
                             color: Color(0xFF787878),
@@ -614,8 +645,7 @@ class SocialLink extends StatelessWidget {
                         focusNode: _twitterFocusNode,
                         keyboardType: TextInputType.name,
                         textInputAction: TextInputAction.next,
-                        decoration: context.primaryInputDecoration
-                            .copyWith(
+                        decoration: context.primaryInputDecoration.copyWith(
                           hintText: "Enter Here",
                           hintStyle: TextStyle(
                             color: Color(0xFF787878),
@@ -640,8 +670,7 @@ class SocialLink extends StatelessWidget {
                         focusNode: _upworkFocusNode,
                         keyboardType: TextInputType.name,
                         textInputAction: TextInputAction.next,
-                        decoration: context.primaryInputDecoration
-                            .copyWith(
+                        decoration: context.primaryInputDecoration.copyWith(
                           hintText: "Enter Here",
                           hintStyle: TextStyle(
                             color: Color(0xFF787878),
@@ -666,8 +695,7 @@ class SocialLink extends StatelessWidget {
                         focusNode: _facebookFocusNode,
                         keyboardType: TextInputType.name,
                         textInputAction: TextInputAction.next,
-                        decoration: context.primaryInputDecoration
-                            .copyWith(
+                        decoration: context.primaryInputDecoration.copyWith(
                           hintText: "Enter Here",
                           hintStyle: TextStyle(
                             color: Color(0xFF787878),
@@ -692,8 +720,7 @@ class SocialLink extends StatelessWidget {
                         focusNode: _tiktokFocusNode,
                         keyboardType: TextInputType.name,
                         textInputAction: TextInputAction.next,
-                        decoration: context.primaryInputDecoration
-                            .copyWith(
+                        decoration: context.primaryInputDecoration.copyWith(
                           hintText: "Enter Here",
                           hintStyle: TextStyle(
                             color: Color(0xFF787878),
@@ -718,8 +745,7 @@ class SocialLink extends StatelessWidget {
                         focusNode: _instaFocusNode,
                         keyboardType: TextInputType.name,
                         textInputAction: TextInputAction.next,
-                        decoration: context.primaryInputDecoration
-                            .copyWith(
+                        decoration: context.primaryInputDecoration.copyWith(
                           hintText: "Enter Here",
                           hintStyle: TextStyle(
                             color: Color(0xFF787878),
@@ -740,8 +766,3 @@ class SocialLink extends StatelessWidget {
     );
   }
 }
-
-
-
-
-

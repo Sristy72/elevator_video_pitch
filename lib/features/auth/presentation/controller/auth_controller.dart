@@ -108,13 +108,12 @@ class AuthController extends BaseController {
             secureStore.storeData('password', password);
           }
           setLoading(false);
-          
-          if (user.email.isNotEmpty) {
-             Get.offAll(() => const RecruiterPageScreen());
-          } else {
-             Get.offAll(() => CreateRecruiterAccount());
-          }
 
+          if (user.email.isNotEmpty) {
+            Get.offAll(() => const RecruiterPageScreen());
+          } else {
+            Get.offAll(() => CreateRecruiterAccount());
+          }
         } else if (user.role == 'company') {
           await _authStorageService.storeAuthData(
             accessToken: success.data.accessToken,
@@ -122,7 +121,7 @@ class AuthController extends BaseController {
             userId: success.data.user.id,
             userRole: user.role,
           );
-          
+
           if (rememberMeController!.rememberMe.value) {
             final secureStore = SecureStoreServices();
             secureStore.storeData('email', email);
@@ -131,11 +130,10 @@ class AuthController extends BaseController {
           setLoading(false);
 
           if (user.email.isNotEmpty) {
-             Get.offAll(() => CompanyDetailsPage());
+            Get.offAll(() => CompanyDetailsPage());
           } else {
-             Get.offAll(() => CreateCompanyAccountPage());
+            Get.offAll(() => CreateCompanyAccountPage());
           }
-          
         } else {
           setError("You are not authorized to login as candidate");
           setLoading(false);

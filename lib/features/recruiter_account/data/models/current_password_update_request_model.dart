@@ -8,9 +8,6 @@ class UpdatePasswordRequestModel {
   });
 
   Map<String, dynamic> toJson() {
-    return {
-      "currentPassword": currentPassword,
-      "newPassword": newPassword,
-    };
+    return {"currentPassword": currentPassword, "newPassword": newPassword};
   }
 }

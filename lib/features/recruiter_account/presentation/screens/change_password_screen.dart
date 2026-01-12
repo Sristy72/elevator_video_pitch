@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutx_core/flutx_core.dart';
 import 'package:get/get.dart';
@@ -8,7 +7,6 @@ import '../../../../core/theme/app_buttoms.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/input_decoration_extensions.dart';
 import '../../../auth/presentation/controller/auth_controller.dart';
-
 
 class ChangePasswordScreen extends StatefulWidget {
   const ChangePasswordScreen({super.key});
@@ -45,7 +43,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     super.dispose();
   }
 
-  Future _submit () async{
+  Future _submit() async {
     if (!_formKey.currentState!.validate()) return;
     _recruiterCtrl.changePassword(_currentCtrl.text, _confirmCtrl.text);
   }
@@ -201,7 +199,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
           // ────── FIXED SAVE BUTTON ──────
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-            child: PrimaryButton(onPressed: _submit, text: "Save", ),
+            child: PrimaryButton(onPressed: _submit, text: "Save"),
           ),
         ],
       ),

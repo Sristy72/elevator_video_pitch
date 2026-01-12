@@ -227,7 +227,7 @@ class CompanyRepoImplementation extends CompanyRepository {
     );
   }
 
-   @override
+  @override
   NetworkResult<List<ResumeUpdatedResponseModel>> fetchResume(
     String candidateUserId,
   ) {
@@ -250,7 +250,7 @@ class CompanyRepoImplementation extends CompanyRepository {
     );
   }
 
-    @override
+  @override
   NetworkResult<RecCompanyResponseModel> updateRecCompany(
     String recId,
     Map<String, dynamic> data,
@@ -262,7 +262,7 @@ class CompanyRepoImplementation extends CompanyRepository {
     );
   }
 
-    @override
+  @override
   NetworkResult<JobUsageResponseModel> fetchJobUsage() {
     return _apiClient.get(
       ApiConstants.company.getJobUsage,

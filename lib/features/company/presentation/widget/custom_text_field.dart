@@ -7,7 +7,6 @@
 //   final TextInputType keyboardType;
 //   final int maxLines;
 //   final bool isRequired;
-  
 
 //   // Styling
 //   final double fontSize;
@@ -127,7 +126,6 @@
 //   }
 // }
 
-
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatefulWidget {
@@ -138,8 +136,8 @@ class CustomTextField extends StatefulWidget {
   final int maxLines;
   final bool isRequired;
 
-  final VoidCallback? onTap;      // ⬅ NEW
-  final bool readOnly;            // ⬅ NEW
+  final VoidCallback? onTap; // ⬅ NEW
+  final bool readOnly; // ⬅ NEW
 
   // Styling
   final double fontSize;
@@ -158,8 +156,8 @@ class CustomTextField extends StatefulWidget {
     this.keyboardType = TextInputType.text,
     this.maxLines = 1,
     this.isRequired = false,
-    this.onTap,                   // ⬅ NEW
-    this.readOnly = false,        // ⬅ NEW
+    this.onTap, // ⬅ NEW
+    this.readOnly = false, // ⬅ NEW
     this.fontSize = 12,
     this.labelColor = const Color(0xFF2A2A2A),
     this.hintColor = const Color(0xFF707070),
@@ -216,8 +214,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
             controller: _controller,
             keyboardType: widget.keyboardType,
             maxLines: widget.maxLines,
-            readOnly: widget.readOnly,     // ⬅ NEW
-            onTap: widget.onTap,           // ⬅ NEW
+            readOnly: widget.readOnly, // ⬅ NEW
+            onTap: widget.onTap, // ⬅ NEW
 
             validator: (value) {
               if (widget.isRequired && (value == null || value.isEmpty)) {

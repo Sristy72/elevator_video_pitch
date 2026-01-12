@@ -36,12 +36,11 @@ class ApplicantListController extends GetxController {
           'name': 'Sarah Khan',
           'appliedDate': 'Jan 27, 2025',
           'status': 'Reviewed',
-        }
+        },
       ];
 
       // If real API returns empty, applicants will remain empty
       // applicants.value = apiResponseList;
-
     } catch (e) {
       print("Error fetching applicants: $e");
     } finally {

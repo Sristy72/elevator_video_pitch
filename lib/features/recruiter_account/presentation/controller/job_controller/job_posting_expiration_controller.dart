@@ -22,11 +22,13 @@ class JobPostingExpirationController extends GetxController {
     '90 days': 90,
   };
 
-  List<String> get jobPostingExpiration => jobPostingExpirationMap.keys.toList();
+  List<String> get jobPostingExpiration =>
+      jobPostingExpirationMap.keys.toList();
 
   /// Calculates and updates the final deadline date
   void calculateDeadline(DateTime selectedPublishDate) {
-    final days = jobPostingExpirationMap[selectedJobPostingExpiration.value] ?? 0;
+    final days =
+        jobPostingExpirationMap[selectedJobPostingExpiration.value] ?? 0;
     if (days > 0) {
       final calculatedDate = selectedPublishDate.add(Duration(days: days));
       finalDeadlineDate.value = calculatedDate;

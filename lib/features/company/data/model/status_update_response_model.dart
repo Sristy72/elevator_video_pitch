@@ -25,15 +25,14 @@ class StatusUpdateResponseModel {
       jobId: JobInfo.fromJson(json['jobId']),
       userId: UserInfo.fromJson(json['userId']),
       status: json['status'] ?? '',
-      answer: (json['answer'] as List<dynamic>?)
+      answer:
+          (json['answer'] as List<dynamic>?)
               ?.map((e) => ApplicantAnswer.fromJson(e))
               .toList() ??
           [],
       resumeId: json['resumeId'] ?? '',
-      createdAt:
-          DateTime.tryParse(json['createdAt'] ?? '') ?? DateTime.now(),
-      updatedAt:
-          DateTime.tryParse(json['updatedAt'] ?? '') ?? DateTime.now(),
+      createdAt: DateTime.tryParse(json['createdAt'] ?? '') ?? DateTime.now(),
+      updatedAt: DateTime.tryParse(json['updatedAt'] ?? '') ?? DateTime.now(),
     );
   }
 
@@ -55,23 +54,14 @@ class JobInfo {
   final String id;
   final String title;
 
-  JobInfo({
-    required this.id,
-    required this.title,
-  });
+  JobInfo({required this.id, required this.title});
 
   factory JobInfo.fromJson(Map<String, dynamic> json) {
-    return JobInfo(
-      id: json['_id'] ?? '',
-      title: json['title'] ?? '',
-    );
+    return JobInfo(id: json['_id'] ?? '', title: json['title'] ?? '');
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      '_id': id,
-      'title': title,
-    };
+    return {'_id': id, 'title': title};
   }
 }
 
@@ -80,11 +70,7 @@ class UserInfo {
   final String name;
   final String email;
 
-  UserInfo({
-    required this.id,
-    required this.name,
-    required this.email,
-  });
+  UserInfo({required this.id, required this.name, required this.email});
 
   factory UserInfo.fromJson(Map<String, dynamic> json) {
     return UserInfo(
@@ -95,11 +81,7 @@ class UserInfo {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      '_id': id,
-      'name': name,
-      'email': email,
-    };
+    return {'_id': id, 'name': name, 'email': email};
   }
 }
 
@@ -123,10 +105,6 @@ class ApplicantAnswer {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'question': question,
-      'ans': ans,
-      '_id': id,
-    };
+    return {'question': question, 'ans': ans, '_id': id};
   }
 }

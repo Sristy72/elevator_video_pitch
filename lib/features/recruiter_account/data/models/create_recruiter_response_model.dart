@@ -49,9 +49,10 @@ class CreateRecruiterResponseModel {
       zipCode: json['zipCode'] ?? '',
       emailAddress: json['emailAddress'] ?? '',
       phoneNumber: json['phoneNumber'] ?? '',
-      sLink: (json['sLink'] as List<dynamic>?)
-          ?.map((e) => SocialLink.fromJson(e))
-          .toList() ??
+      sLink:
+          (json['sLink'] as List<dynamic>?)
+              ?.map((e) => SocialLink.fromJson(e))
+              .toList() ??
           [],
       id: json['_id'] ?? '',
       createdAt: json['createdAt'] ?? '',
@@ -86,11 +87,7 @@ class SocialLink {
   final String? url;
   final String id;
 
-  SocialLink({
-    required this.label,
-    this.url,
-    required this.id,
-  });
+  SocialLink({required this.label, this.url, required this.id});
 
   factory SocialLink.fromJson(Map<String, dynamic> json) {
     return SocialLink(
@@ -101,10 +98,6 @@ class SocialLink {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'label': label,
-      'url': url,
-      '_id': id,
-    };
+    return {'label': label, 'url': url, '_id': id};
   }
 }

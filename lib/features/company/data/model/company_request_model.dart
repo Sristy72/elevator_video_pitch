@@ -76,7 +76,7 @@ import 'dart:io';
 
 class CompanyRequestModel {
   File? banner; // binary file
-  File? clogo;  // binary file
+  File? clogo; // binary file
   String cname;
   String country;
   String city;
@@ -106,19 +106,19 @@ class CompanyRequestModel {
   });
 
   Map<String, dynamic> toJson() => {
-        // Banner and clogo usually sent as multipart, not JSON
-        'cname': cname,
-        'country': country,
-        'city': city,
-        'zipcode': zipcode,
-        'cemail': cemail,
-        'aboutUs': aboutUs,
-        'industry': industry,
-        'sLink': sLink.map((x) => x.toJson()).toList(),
-        'service': service,
-        'employeesId': employeesId,
-        'AwardsAndHonors': awardsAndHonors.map((x) => x.toJson()).toList(),
-      };
+    // Banner and clogo usually sent as multipart, not JSON
+    'cname': cname,
+    'country': country,
+    'city': city,
+    'zipcode': zipcode,
+    'cemail': cemail,
+    'aboutUs': aboutUs,
+    'industry': industry,
+    'sLink': sLink.map((x) => x.toJson()).toList(),
+    'service': service,
+    'employeesId': employeesId,
+    'AwardsAndHonors': awardsAndHonors.map((x) => x.toJson()).toList(),
+  };
 }
 
 class SocialLink {
@@ -127,15 +127,10 @@ class SocialLink {
 
   SocialLink({required this.label, required this.url});
 
-  factory SocialLink.fromJson(Map<String, dynamic> json) => SocialLink(
-        label: json['label'],
-        url: json['url'],
-      );
+  factory SocialLink.fromJson(Map<String, dynamic> json) =>
+      SocialLink(label: json['label'], url: json['url']);
 
-  Map<String, dynamic> toJson() => {
-        'label': label,
-        'url': url,
-      };
+  Map<String, dynamic> toJson() => {'label': label, 'url': url};
 }
 
 class AwardHonor {
@@ -152,16 +147,16 @@ class AwardHonor {
   });
 
   factory AwardHonor.fromJson(Map<String, dynamic> json) => AwardHonor(
-        title: json['title'],
-        programeName: json['programeName'],
-        programeDate: DateTime.parse(json['programeDate']),
-        description: json['description'],
-      );
+    title: json['title'],
+    programeName: json['programeName'],
+    programeDate: DateTime.parse(json['programeDate']),
+    description: json['description'],
+  );
 
   Map<String, dynamic> toJson() => {
-        'title': title,
-        'programeName': programeName,
-        'programeDate': programeDate.toIso8601String(),
-        'description': description,
-      };
+    'title': title,
+    'programeName': programeName,
+    'programeDate': programeDate.toIso8601String(),
+    'description': description,
+  };
 }

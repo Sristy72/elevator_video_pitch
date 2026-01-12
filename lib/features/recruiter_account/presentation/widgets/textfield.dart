@@ -14,9 +14,7 @@ Widget buildField(String label, TextEditingController controller) {
         decoration: InputDecoration(
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
-            borderSide: BorderSide(
-              color: Colors.grey,
-            ), // default border color
+            borderSide: BorderSide(color: Colors.grey), // default border color
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
