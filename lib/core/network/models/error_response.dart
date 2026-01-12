@@ -16,8 +16,8 @@ class ErrorResponse extends BaseResponse<void> {
       message: json['message'] ?? '',
       errorSources: json['errorSources'] != null
           ? (json['errorSources'] as List)
-              .map((e) => ErrorSource.fromJson(e))
-              .toList()
+                .map((e) => ErrorSource.fromJson(e))
+                .toList()
           : [],
     );
   }
