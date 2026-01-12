@@ -12,6 +12,11 @@ import '../widgets/experience_form_section.dart';
 import '../widgets/photo_bio_section.dart';
 import '../widgets/skills_section.dart';
 
+// Helper function to check if path is a URL
+bool _isUrl(String path) {
+  return path.startsWith('http://') || path.startsWith('https://');
+}
+
 class ElevatorResumeScreen extends StatelessWidget {
   const ElevatorResumeScreen({super.key});
 
@@ -33,7 +38,29 @@ class ElevatorResumeScreen extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
+      body: Obx(() {
+        // Show loading indicator while initial data is being fetched
+        if (controller.isInitialLoading.value) {
+          return const Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircularProgressIndicator(),
+                SizedBox(height: 16),
+                Text(
+                  'Loading your profile...',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.grey,
+                  ),
+                ),
+              ],
+            ),
+          );
+        }
+
+        // Show the actual form once data is loaded
+        return SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 24.0),
           child: Column(
@@ -46,10 +73,16 @@ class ElevatorResumeScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   // ---------- Upload Video Pitch ----------
+                  // Only show video upload section if video hasn't been uploaded yet
                   Obx(() {
                     final hasVideo =
                         controller.elevatorVideoPath.value.isNotEmpty;
                     final isUploaded = controller.isVideoUploaded.value;
+
+                    // If video already uploaded from previous session, skip this section
+                    if (isUploaded && !hasVideo) {
+                      return const SizedBox.shrink();
+                    }
 
                     if (!hasVideo) {
                       // Show upload area when no video selected
@@ -442,10 +475,27 @@ class ElevatorResumeScreen extends StatelessWidget {
                           ),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(12),
-                            child: Image.file(
-                              File(controller.bannerImagePath.value!),
-                              fit: BoxFit.cover,
-                            ),
+                            child: _isUrl(controller.bannerImagePath.value!)
+                                ? Image.network(
+                                    controller.bannerImagePath.value!,
+                                    fit: BoxFit.cover,
+                                    errorBuilder: (context, error, stackTrace) {
+                                      return Container(
+                                        color: Colors.grey.shade200,
+                                        child: const Center(
+                                          child: Icon(
+                                            Icons.broken_image,
+                                            size: 50,
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  )
+                                : Image.file(
+                                    File(controller.bannerImagePath.value!),
+                                    fit: BoxFit.cover,
+                                  ),
                           ),
                         ),
                         const SizedBox(height: 12),
@@ -988,7 +1038,90 @@ class ElevatorResumeScreen extends StatelessWidget {
               // ===================== SUBMIT BUTTON =====================
               Obx(() {
                 final isUploading = controller.isUploadingResume.value;
+                final isVideoUploaded = controller.isVideoUploaded.value;
+                final hasLocalVideo = controller.elevatorVideoPath.value.isNotEmpty;
+                final isEditMode = isVideoUploaded && !hasLocalVideo;
 
+                // Show two buttons (Update Profile + Cancel) in edit mode
+                if (isEditMode) {
+                  return Row(
+                    children: [
+
+                      // Update Profile Button
+                      Expanded(
+                        flex: 2,
+                        child: ElevatedButton(
+                          onPressed: isUploading
+                              ? null
+                              : controller.onUploadElevatorPitchFirst,
+                          style: ElevatedButton.styleFrom(
+                            minimumSize: const Size(double.infinity, 52),
+                            backgroundColor: isUploading 
+                                ? Colors.grey 
+                                : Colors.blue,
+                          ),
+                          child: isUploading
+                              ? Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: const [
+                                    SizedBox(
+                                      width: 20,
+                                      height: 20,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 2,
+                                        valueColor: AlwaysStoppedAnimation<Color>(
+                                          Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(width: 12),
+                                    Text(
+                                      'Updating...',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                  ],
+                                )
+                              : const Text(
+                                  'Update Profile',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+
+
+                      // Cancel Button
+                      Expanded(
+                        child: OutlinedButton(
+                          onPressed: isUploading ? null : () => Get.back(),
+                          style: OutlinedButton.styleFrom(
+                            minimumSize: const Size(double.infinity, 52),
+                            side: BorderSide(
+                              color: isUploading ? Colors.grey : theme.primaryColor,
+                              width: 2,
+                            ),
+                          ),
+                          child: Text(
+                            'Cancel',
+                            style: TextStyle(
+                              color: isUploading ? Colors.grey : theme.primaryColor,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      
+                    ],
+                  );
+                }
+
+                // Show single button for new profile creation
                 return SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
@@ -1014,7 +1147,7 @@ class ElevatorResumeScreen extends StatelessWidget {
                                 ),
                               ),
                               SizedBox(width: 12),
-                              Text('Uploading Resume...'),
+                              Text('Saving Changes...'),
                             ],
                           )
                         : const Text('Upload Elevator Pitch'),
@@ -1024,16 +1157,19 @@ class ElevatorResumeScreen extends StatelessWidget {
               const SizedBox(height: 8),
               Obx(() {
                 final hasVideo = controller.elevatorVideoPath.value.isNotEmpty;
+                final isVideoUploaded = controller.isVideoUploaded.value;
+                final isEditMode = isVideoUploaded && !hasVideo;
+                
+                // Don't show any message in edit mode since video already exists
+                if (isEditMode) {
+                  return const SizedBox.shrink();
+                }
+                
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
-                        // Icon(
-                        //   hasVideo ? Icons.check_circle : Icons.info,
-                        //   color: hasVideo ? Colors.green : Colors.orange,
-                        //   size: 16,
-                        // ),
                         const SizedBox(width: 8),
                         Expanded(
                           child: Text(
@@ -1055,7 +1191,8 @@ class ElevatorResumeScreen extends StatelessWidget {
             ],
           ),
         ),
-      ),
+      ); // End of SingleChildScrollView
+    }), // End of Obx
     );
   }
 }
