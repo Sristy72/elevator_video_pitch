@@ -3,12 +3,13 @@ import 'package:flutx_core/core/debug_print.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart' show DateFormat;
 import 'package:karlfive/core/common/widgets/app_scaffold.dart';
+import 'package:karlfive/core/network/constants/api_constants.dart';
 import 'package:karlfive/features/recruiter_account/presentation/controller/recruiter_controller.dart';
 import 'package:karlfive/features/recruiter_account/presentation/widgets/drawer.dart';
 import 'package:karlfive/features/recruiter_account/presentation/widgets/elevator_pitch.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../../create_job/presentation/screen/create_job_screen.dart';
 import '../widgets/social_media.dart';
+import 'package:karlfive/core/network/services/auth_storage_service.dart';
 
 class RecruiterPageScreen extends StatefulWidget {
   const RecruiterPageScreen({super.key});
@@ -18,16 +19,23 @@ class RecruiterPageScreen extends StatefulWidget {
 }
 
 class _RecruiterPageScreenState extends State<RecruiterPageScreen> {
-  final RecruiterController recruiterController = Get.find<RecruiterController>();
+  final RecruiterController recruiterController =
+      Get.find<RecruiterController>();
   final ScrollController horizontalScrollController = ScrollController();
-
+  String? _accessToken;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final token = await Get.find<AuthStorageService>().getAccessToken();
+      if (mounted) {
+        setState(() {
+          _accessToken = token;
+        });
+      }
       await recruiterController.fetchProfile();
-      await recruiterController.getJob();   // <-- ADD THIS LINE
+      await recruiterController.getJob(); // <-- ADD THIS LINE
     });
   }
 
@@ -44,7 +52,9 @@ class _RecruiterPageScreenState extends State<RecruiterPageScreen> {
         backgroundColor: const Color(0xFF2B7FD0),
         elevation: 0,
 
-        iconTheme: const IconThemeData(color: Colors.white), // <-- Drawer icon visible
+        iconTheme: const IconThemeData(
+          color: Colors.white,
+        ), // <-- Drawer icon visible
       ),
       body: SafeArea(
         child: Obx(() {
@@ -63,7 +73,7 @@ class _RecruiterPageScreenState extends State<RecruiterPageScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 10,),
+                SizedBox(height: 10),
                 // Banner + Photo + Edit Button
                 SizedBox(
                   height: 300,
@@ -82,9 +92,9 @@ class _RecruiterPageScreenState extends State<RecruiterPageScreen> {
                             color: Colors.grey.shade300,
                             image: user.banner.isNotEmpty
                                 ? DecorationImage(
-                              image: NetworkImage(user.banner),
-                              fit: BoxFit.cover,
-                            )
+                                    image: NetworkImage(user.banner),
+                                    fit: BoxFit.cover,
+                                  )
                                 : null,
                           ),
                         ),
@@ -103,9 +113,9 @@ class _RecruiterPageScreenState extends State<RecruiterPageScreen> {
                             color: Colors.grey.shade300,
                             image: user.photo.isNotEmpty
                                 ? DecorationImage(
-                              image: NetworkImage(user.photo),
-                              fit: BoxFit.cover,
-                            )
+                                    image: NetworkImage(user.photo),
+                                    fit: BoxFit.cover,
+                                  )
                                 : null,
                           ),
                         ),
@@ -154,7 +164,10 @@ class _RecruiterPageScreenState extends State<RecruiterPageScreen> {
                     const SizedBox(height: 6),
                     Text(
                       user.title,
-                      style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+                      style: const TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                     const SizedBox(height: 6),
                     Text(
@@ -184,17 +197,25 @@ class _RecruiterPageScreenState extends State<RecruiterPageScreen> {
                   spacing: 8,
                   runSpacing: 8,
                   children: (user.sLink)
-                      .map((link) => GestureDetector(
-                    onTap: () async {
-                      final Uri url = Uri.parse(link.url ?? '');
-                      if (await canLaunchUrl(url)) {
-                        await launchUrl(url, mode: LaunchMode.externalApplication);
-                      } else {
-                        Get.snackbar('Error', 'Could not open ${link.url}');
-                      }
-                    },
-                    child: SocialMedia(image: _getSocialIcon(link.label)),
-                  ))
+                      .map(
+                        (link) => GestureDetector(
+                          onTap: () async {
+                            final Uri url = Uri.parse(link.url ?? '');
+                            if (await canLaunchUrl(url)) {
+                              await launchUrl(
+                                url,
+                                mode: LaunchMode.externalApplication,
+                              );
+                            } else {
+                              Get.snackbar(
+                                'Error',
+                                'Could not open ${link.url}',
+                              );
+                            }
+                          },
+                          child: SocialMedia(image: _getSocialIcon(link.label)),
+                        ),
+                      )
                       .toList(),
                 ),
 
@@ -208,80 +229,13 @@ class _RecruiterPageScreenState extends State<RecruiterPageScreen> {
                       'Try It Free — Post Your First Job at No Cost!',
                       style: TextStyle(fontSize: 17),
                     ),
-                    // SingleChildScrollView(
-                    //   scrollDirection: Axis.horizontal,
-                    //   child: Row(
-                    //     mainAxisAlignment: MainAxisAlignment.start,
-                    //     children: [
-                    //       ElevatedButton(
-                    //         onPressed: () {
-                    //           Get.dialog(ConnectCompanyDialog());
-                    //         },
-                    //         style: ElevatedButton.styleFrom(
-                    //           backgroundColor: const Color(0xFF2B7FD0),
-                    //           shape: RoundedRectangleBorder(
-                    //             borderRadius: BorderRadius.circular(8),
-                    //           ),
-                    //         ),
-                    //         child: const Text(
-                    //           'Connect with a Company',
-                    //           style: TextStyle(
-                    //             color: Colors.white,
-                    //             fontWeight: FontWeight.w600,
-                    //           ),
-                    //         ),
-                    //       ),
-                    //
-                    //       const SizedBox(width: 20),
-                    //
-                    //       ElevatedButton(
-                    //         onPressed: () {
-                    //           Get.to(PublicViewScreen());
-                    //         },
-                    //         style: ElevatedButton.styleFrom(
-                    //           backgroundColor: const Color(0xFF2B7FD0),
-                    //           shape: RoundedRectangleBorder(
-                    //             borderRadius: BorderRadius.circular(8),
-                    //           ),
-                    //         ),
-                    //         child: const Text(
-                    //           'Public View',
-                    //           style: TextStyle(
-                    //             color: Colors.white,
-                    //             fontWeight: FontWeight.w600,
-                    //           ),
-                    //         ),
-                    //       ),
-                    //       const SizedBox(width: 20),
-                    //       ElevatedButton(
-                    //         onPressed: () {
-                    //           Get.to(() => CreateJobScreen());
-                    //         },
-                    //         style: ElevatedButton.styleFrom(
-                    //           backgroundColor: const Color(0xFF2B7FD0),
-                    //           shape: RoundedRectangleBorder(
-                    //             borderRadius: BorderRadius.circular(8),
-                    //           ),
-                    //         ),
-                    //         child: const Text(
-                    //           'Post A Job',
-                    //           style: TextStyle(
-                    //             color: Colors.white,
-                    //             fontWeight: FontWeight.w600,
-                    //           ),
-                    //         ),
-                    //       ),
-                    //       const SizedBox(width: 20),
-                    //     ],
-                    //   ),
-                    // )
                   ],
                 ),
                 const SizedBox(height: 20),
 
-                Divider(color: Color(0xFF999999),),
+                Divider(color: Color(0xFF999999)),
 
-                SizedBox(height: 20,),
+                SizedBox(height: 20),
                 Container(
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -298,16 +252,25 @@ class _RecruiterPageScreenState extends State<RecruiterPageScreen> {
                       borderRadius: BorderRadius.circular(4),
                       color: const Color(0xFF191919),
                     ),
-                    height: 160,
+                    height: 270,
                     width: double.infinity,
-                    child: ElevatorPitchSection(
-                      videoUrl: user.elevatorPitch?.video.hlsUrl,
-                      httpHeaders: {
-                        'Accept': '*/*',
-                        'Accept-Encoding': 'identity',
+                    child: Builder(
+                      builder: (context) {
+                        DPrint.log("DEBUG: VIDEO INFO CLEAN TEST");
+                        DPrint.log(
+                          "Video URL: ${ApiConstants.baseUrl}/elevator-pitch/stream/${user.elevatorPitch?.id ?? ''}",
+                        );
 
-                        "Authorization": "Bearer ${user.elevatorPitch?.video.encryptionKeyUrl}",
-                        "Custom-Header": "value",
+                        return ElevatorPitchSection(
+                          videoUrl:
+                              "${ApiConstants.baseUrl}/elevator-pitch/stream/${user.elevatorPitch?.id ?? ''}",
+                          httpHeaders: {
+                            "Custom-Header": "value",
+                            if (_accessToken != null) ...{
+                              "Authorization": "Bearer $_accessToken",
+                            },
+                          },
+                        );
                       },
                     ),
                   ),
@@ -438,7 +401,6 @@ class _RecruiterPageScreenState extends State<RecruiterPageScreen> {
                 //
                 //
                 // }),
-
               ],
             ),
           );
@@ -466,7 +428,6 @@ class _RecruiterPageScreenState extends State<RecruiterPageScreen> {
     }
   }
 
-
   // /// Safe date formatter — accepts String or DateTime (or null)
   // String formatDate(dynamic date) {
   //   if (date == null) return '';
@@ -485,5 +446,4 @@ class _RecruiterPageScreenState extends State<RecruiterPageScreen> {
   //     return date.toString();
   //   }
   // }
-
 }

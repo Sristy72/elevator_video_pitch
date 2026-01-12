@@ -7,6 +7,7 @@ import 'package:karlfive/features/company/data/model/archieve_response_model.dar
 import 'package:karlfive/features/company/data/model/candidate_resume_response_model.dart';
 import 'package:karlfive/features/company/data/model/company_applicant_list_response_model.dart';
 import 'package:karlfive/features/company/data/model/employee_fetch_single_model.dart';
+
 import 'package:karlfive/features/company/data/model/remove_recruiter_request_model.dart';
 import 'package:karlfive/features/company/data/model/remove_recruiter_response_model.dart';
 import 'package:karlfive/features/company/data/model/resume_updated_response_model.dart';
@@ -14,6 +15,8 @@ import 'package:karlfive/features/company/data/model/status_update_response_mode
 import '../../../../core/network/services/auth_storage_service.dart';
 import '../../data/model/all_user_response_model.dart';
 import '../../data/model/company_details_model.dart';
+import '../../data/model/job_usage_response_model.dart';
+import '../../data/model/rec_company_request_model.dart';
 import '../../data/model/single_Company_response_model.dart';
 import '../../domain/repo/company_repo.dart';
 import '../screen/company_details_screen.dart';
@@ -28,11 +31,14 @@ class CompanyDetailsController extends BaseController {
   // Change from Rxn (problematic) to Rx with explicit null
   final userInfo = Rx<SingleCompanyResponseModel?>(null);
   final employee = Rx<EmployeeFetchSingleModel?>(null);
-    var resume = <ResumeUpdatedResponseModel>[].obs;
+  final usage = Rx<JobUsageResponseModel?>(null);
+
+  var resume = <ResumeUpdatedResponseModel>[].obs;
   final remove = Rx<RemoveRecruiterResponseModel?>(
     null,
   ); // <AllUserResponseModel>
   var recruiters = <AllUserResponseModel>[].obs;
+  final isJobUsageLoading = false.obs;
 
   Rx<ArchieveResponseModel?> jobData = Rx<ArchieveResponseModel?>(null);
 
@@ -330,30 +336,97 @@ class CompanyDetailsController extends BaseController {
     );
   }
 
+  Future<void> fetchResume(String candidateUserId) async {
+    setLoading(true);
+    setError("");
 
-Future<void> fetchResume(String candidateUserId) async {
-  setLoading(true);
-  setError("");
+    if (candidateUserId.isEmpty) {
+      setError('Invalid candidate ID');
+      setLoading(false);
+      return;
+    }
 
-  if (candidateUserId.isEmpty) {
-    setError('Invalid candidate ID');
-    setLoading(false);
-    return;
+    final result = await _companyRepo.fetchResume(candidateUserId);
+
+    result.fold(
+      (fail) {
+        setError(fail.message);
+        DPrint.log('data fetch failed: ${fail.message}');
+        setLoading(false);
+      },
+      (success) {
+        DPrint.log('data fetch successfully: ${success.message}');
+        resume.value = success.data;
+        setLoading(false);
+      },
+    );
   }
 
-  final result = await _companyRepo.fetchResume(candidateUserId);
+  // In CompanyDetailsController
 
-  result.fold(
-    (fail) {
-      setError(fail.message);
-      DPrint.log('data fetch failed: ${fail.message}');
-      setLoading(false);
-    },
-    (success) {
-      DPrint.log('data fetch successfully: ${success.message}');
-      resume.value = success.data;
-      setLoading(false);
-    },
-  );
-}
+  Future<void> updateRecCompany({
+    required String id, // request document _id (recId) → goes in URL
+    required String
+    recruiterUserId, // ← THIS IS CRITICAL: the user who requested
+    required String companyId, // company _id
+    required String status, // 'accepted' or 'rejected'
+  }) async {
+    setLoading(true);
+    setError("");
+
+    // We do NOT use the currently logged-in user here
+    // We use the recruiterUserId passed from the UI (the applicant)
+
+    final data = RecCompanyRequestModel(
+      status: status,
+      companyId: companyId,
+      userId: recruiterUserId, // ← the recruiter who wants to join
+    ).toJson();
+
+    final result = await _companyRepo.updateRecCompany(id, data);
+
+    result.fold(
+      (fail) {
+        setError(fail.message);
+        Get.snackbar(
+          "Error",
+          fail.message,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      },
+      (success) {
+        Get.snackbar(
+          "Success",
+          "Request $status successfully",
+          backgroundColor: Colors.green,
+          colorText: Colors.white,
+        );
+
+        // Refresh the lists
+        fetchEmployee(); // This will now show the correct recruiter
+        // If requests are part of the same fetch, it will update too
+      },
+    );
+
+    setLoading(false);
+  }
+
+  Future<void> fetchJobUsage() async {
+    isJobUsageLoading.value = true;
+    setError("");
+
+    final result = await _companyRepo.fetchJobUsage();
+
+    result.fold(
+      (fail) {
+        setError(fail.message);
+      },
+      (success) {
+        usage.value = success.data;
+      },
+    );
+
+    isJobUsageLoading.value = false;
+  }
 }
