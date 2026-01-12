@@ -81,6 +81,9 @@ class Resume {
   final int? v;
   final String? type;
   final String? zipCode;
+  final String? experiences;
+  final String? awardsAndHonors;
+ 
 
   Resume({
     this.id,
@@ -104,6 +107,8 @@ class Resume {
     this.v,
     this.type,
     this.zipCode,
+    this.experiences,
+    this.awardsAndHonors,
   });
 
   factory Resume.fromJson(Map<String, dynamic> json) {
@@ -149,6 +154,8 @@ class Resume {
       v: json['__v'] as int?,
       type: json['type'] as String?,
       zipCode: json['zipCode'] as String?,
+      experiences: json['experiences'] as String?,
+      awardsAndHonors: json['awardsAndHonors'] as String?,
     );
   }
 
@@ -175,6 +182,8 @@ class Resume {
       '__v': v,
       'type': type,
       'zipCode': zipCode,
+      'experiences': experiences,
+      'awardsAndHonors': awardsAndHonors,
     };
   }
 }
@@ -196,6 +205,8 @@ class Experience {
   final DateTime? createdAt;
   final DateTime? updatedAt;
   final int? v;
+  
+
 
   Experience({
     this.id,
@@ -347,6 +358,7 @@ class Award {
   final DateTime? createdAt;
   final DateTime? updatedAt;
   final int? v;
+  final String? awardsAndHonors;
 
   Award({
     this.id,
@@ -358,6 +370,7 @@ class Award {
     this.createdAt,
     this.updatedAt,
     this.v,
+    this.awardsAndHonors,
   });
 
   factory Award.fromJson(Map<String, dynamic> json) {
