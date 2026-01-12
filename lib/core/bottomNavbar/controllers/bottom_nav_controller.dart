@@ -6,7 +6,9 @@ class BottomNavController extends GetxController {
   BottomNavController() {
     // Explicitly set to 0 on creation
     currentIndex.value = 0;
-    print('✅ BottomNavController initialized with index: ${currentIndex.value}');
+    print(
+      '✅ BottomNavController initialized with index: ${currentIndex.value}',
+    );
   }
 
   void changeIndex(int index) {
