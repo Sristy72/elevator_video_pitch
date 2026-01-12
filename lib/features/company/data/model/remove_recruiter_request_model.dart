@@ -18,11 +18,6 @@ class RemoveRecruiterRequestModel {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'employeeId': employeeId,
-      'companyId': companyId,
-    };
+    return {'employeeId': employeeId, 'companyId': companyId};
   }
 }
-
-
