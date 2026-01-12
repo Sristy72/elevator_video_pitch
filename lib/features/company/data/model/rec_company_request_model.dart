@@ -18,10 +18,6 @@ class RecCompanyRequestModel {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'status': status,
-      'companyId': companyId,
-      'userId': userId,
-    };
+    return {'status': status, 'companyId': companyId, 'userId': userId};
   }
 }
