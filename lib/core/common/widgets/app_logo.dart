@@ -5,7 +5,12 @@ class AppLogo extends StatelessWidget {
   final double width;
   final String images;
 
-  const AppLogo({super.key, this.height = 120, this.width = 120, required this.images});
+  const AppLogo({
+    super.key,
+    this.height = 120,
+    this.width = 120,
+    required this.images,
+  });
 
   @override
   Widget build(BuildContext context) {
