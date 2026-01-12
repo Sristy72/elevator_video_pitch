@@ -151,7 +151,7 @@
 import 'dart:convert';
 
 class RecruiterAddedResponseModel {
-  final String id;                    // _id
+  final String id; // _id
   final String userId;
   final String? clogo;
   final String? banner;
@@ -210,16 +210,19 @@ class RecruiterAddedResponseModel {
       city: json['city'] as String?,
       zipcode: json['zipcode'] as String?,
       cemail: json['cemail'] as String?,
-      sLink: (json['sLink'] as List<dynamic>?)
+      sLink:
+          (json['sLink'] as List<dynamic>?)
               ?.map((e) => SocialLink.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
       industry: json['industry'] as String?,
-      service: (json['service'] as List<dynamic>?)
+      service:
+          (json['service'] as List<dynamic>?)
               ?.map((e) => e.toString())
               .toList() ??
           [],
-      employeesId: (json['employeesId'] as List<dynamic>?)
+      employeesId:
+          (json['employeesId'] as List<dynamic>?)
               ?.map((e) => e.toString())
               .toList() ??
           [],
@@ -236,25 +239,25 @@ class RecruiterAddedResponseModel {
   }
 
   Map<String, dynamic> toJson() => {
-        '_id': id,
-        'userId': userId,
-        'clogo': clogo,
-        'banner': banner,
-        'aboutUs': aboutUs,
-        'slug': slug,
-        'cname': cname,
-        'country': country,
-        'city': city,
-        'zipcode': zipcode,
-        'cemail': cemail,
-        'sLink': sLink.map((e) => e.toJson()).toList(),
-        'industry': industry,
-        'service': service,
-        'employeesId': employeesId,
-        'createdAt': createdAt?.toIso8601String(),
-        'updatedAt': updatedAt?.toIso8601String(),
-        '__v': v,
-      };
+    '_id': id,
+    'userId': userId,
+    'clogo': clogo,
+    'banner': banner,
+    'aboutUs': aboutUs,
+    'slug': slug,
+    'cname': cname,
+    'country': country,
+    'city': city,
+    'zipcode': zipcode,
+    'cemail': cemail,
+    'sLink': sLink.map((e) => e.toJson()).toList(),
+    'industry': industry,
+    'service': service,
+    'employeesId': employeesId,
+    'createdAt': createdAt?.toIso8601String(),
+    'updatedAt': updatedAt?.toIso8601String(),
+    '__v': v,
+  };
 
   static RecruiterAddedResponseModel fromRawJson(String str) =>
       RecruiterAddedResponseModel.fromJson(json.decode(str));
@@ -267,11 +270,7 @@ class SocialLink {
   final String url;
   final String id;
 
-  SocialLink({
-    required this.label,
-    required this.url,
-    required this.id,
-  });
+  SocialLink({required this.label, required this.url, required this.id});
 
   factory SocialLink.fromJson(Map<String, dynamic> json) {
     return SocialLink(
@@ -281,9 +280,5 @@ class SocialLink {
     );
   }
 
-  Map<String, dynamic> toJson() => {
-        'label': label,
-        'url': url,
-        '_id': id,
-      };
+  Map<String, dynamic> toJson() => {'label': label, 'url': url, '_id': id};
 }
