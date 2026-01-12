@@ -213,8 +213,9 @@ class _CandidateDashboardScreenState extends State<CandidateDashboardScreen> {
                     ],
                   ),
                 ),
-
+                Divider(color: Colors.grey.shade300, thickness: 1),
                 const SizedBox(height: 16),
+            
 
                 // Location
                 Padding(
@@ -238,6 +239,20 @@ class _CandidateDashboardScreenState extends State<CandidateDashboardScreen> {
 
                 const SizedBox(height: 32),
 
+                // Availibility
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: _buildInfoRow(
+                    "Availability",
+                    resume?.immediatelyAvailable == true
+                        ? "Immediately Available"
+                        : "Not Immediately",
+                  ),
+                ),
+                Divider(color: Colors.grey.shade300, thickness: 1),
+
+                const SizedBox(height: 32),
+
                 // ==================== ELEVATOR VIDEO PITCH ====================
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -251,20 +266,20 @@ class _CandidateDashboardScreenState extends State<CandidateDashboardScreen> {
                           color: Colors.black,
                         ),
                       ),
-                      const SizedBox(width: 8),
+                      const SizedBox(width: 2),
                       Container(
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 8,
+                          horizontal: 0,
                           vertical: 2,
                         ),
-                        decoration: BoxDecoration(
-                          color: Colors.grey.shade200,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
+                        // decoration: BoxDecoration(
+                        //   color: Colors.grey.shade200,
+                        //   borderRadius: BorderRadius.circular(12),
+                        // ),
                         child: const Icon(
-                          Icons.info_outline,
+                          Icons.copyright,
                           size: 16,
-                          color: Colors.grey,
+                          color: Colors.black,
                         ),
                       ),
                     ],
@@ -420,8 +435,10 @@ class _CandidateDashboardScreenState extends State<CandidateDashboardScreen> {
                       style: TextStyle(fontSize: 14, color: Color(0xFF666666)),
                     ),
                   ),
-
-                const SizedBox(height: 32),
+                  const SizedBox(height: 24),
+                  Divider(color: Colors.grey.shade300, thickness: 1),
+                  const SizedBox(height: 32),
+                
 
                 // ==================== SKILLS SECTION ====================
                 const Padding(
@@ -475,7 +492,329 @@ class _CandidateDashboardScreenState extends State<CandidateDashboardScreen> {
                     ),
                   ),
 
+                 const SizedBox(height: 24),
+                  Divider(color: Colors.grey.shade300, thickness: 1),
+                  const SizedBox(height: 32),
+
+                // ==================== Certifications SECTION ====================
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Text(
+                    "Certifications",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 12),
+
+                if (resume?.certifications != null &&
+                    resume!.certifications.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: resume.certifications.map((certification) {
+                        return Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 8,
+                          ),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFDCEDFF),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Text(
+                            certification,
+                            style: const TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w500,
+                              color: Color(0xFF1E40AF),
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  )
+                else
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Text(
+                      "No Certifications added yet",
+                      style: TextStyle(fontSize: 14, color: Color(0xFF666666)),
+                    ),
+                  ), 
+                  const SizedBox(height: 24),
+                  Divider(color: Colors.grey.shade300, thickness: 1),
+                  const SizedBox(height: 32),
+
+                // ==================== Languages SECTION ====================
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Text(
+                    "Languages",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 12),
+
+                if (resume?.languages != null && resume!.languages.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: resume.languages.map((language) {
+                        return Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 8,
+                          ),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFDCEDFF),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Text(
+                            language,
+                            style: const TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w500,
+                              color: Color(0xFF1E40AF),
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  )
+                else
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Text(
+                      "No Languages added yet",
+                      style: TextStyle(fontSize: 14, color: Color(0xFF666666)),
+                    ),
+                  ),
+
+                 const SizedBox(height: 24),
+                  Divider(color: Colors.grey.shade300, thickness: 1),
+                  const SizedBox(height: 32),
+
+                // ==================== Experience SECTION ====================
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Text(
+                    "Experience",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 12),
+
+                if (resumeData?.experiences != null &&
+                    resumeData!.experiences.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: resumeData.experiences.map((experience) {
+                        return Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 8,
+                          ),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFDCEDFF),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Text(
+                            experience.position.isNotEmpty
+                                ? experience.position
+                                : experience.company,
+                            style: const TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w500,
+                              color: Color(0xFF1E40AF),
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  )
+                else
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Text(
+                      "No experience added yet",
+                      style: TextStyle(fontSize: 14, color: Color(0xFF666666)),
+                    ),
+                  ),
+
+                 const SizedBox(height: 24),
+                  Divider(color: Colors.grey.shade300, thickness: 1),
+                  const SizedBox(height: 32),
+
+                // ==================== Education SECTION ====================
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Text(
+                    "Education",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 12),
+
+                if (resumeData?.education != null &&
+                    resumeData!.education.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: resumeData.education.map((edu) {
+                        return Container(
+                          margin: const EdgeInsets.only(bottom: 16),
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFF7FAFC),
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(color: const Color(0xFFE2E8F0)),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              if (edu.degree.isNotEmpty)
+                                Text(
+                                  edu.degree,
+                                  style: const TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              if (edu.fieldOfStudy.isNotEmpty) ...[
+                                const SizedBox(height: 4),
+                                Text(
+                                  edu.fieldOfStudy,
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    color: Color(0xFF4A5568),
+                                  ),
+                                ),
+                              ],
+                              if (edu.instituteName.isNotEmpty) ...[
+                                const SizedBox(height: 4),
+                                Text(
+                                  edu.instituteName,
+                                  style: const TextStyle(
+                                    fontSize: 13,
+                                    color: Color(0xFF718096),
+                                  ),
+                                ),
+                              ],
+                              if (edu.city.isNotEmpty ||
+                                  edu.country.isNotEmpty) ...[
+                                const SizedBox(height: 4),
+                                Text(
+                                  "${edu.city}${edu.city.isNotEmpty && edu.country.isNotEmpty ? ', ' : ''}${edu.country}",
+                                  style: const TextStyle(
+                                    fontSize: 13,
+                                    color: Color(0xFF718096),
+                                  ),
+                                ),
+                              ],
+                            ],
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  )
+                else
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Text(
+                      "No education added yet",
+                      style: TextStyle(fontSize: 14, color: Color(0xFF666666)),
+                    ),
+                  ),
+
                 const SizedBox(height: 40),
+
+                // ==================== Awards and Honors SECTION ====================
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Text(
+                    "Awards and Honors",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 12),
+
+                if (resumeData?.awardsAndHonors != null &&
+                    resumeData!.awardsAndHonors.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Wrap(
+                      spacing: 8,
+                      runSpacing: 8,
+                      children: resumeData.awardsAndHonors.map((award) {
+                        return Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 8,
+                          ),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFDCEDFF),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Text(
+                            award.title.isNotEmpty
+                                ? award.title
+                                : award.description,
+                            style: const TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w500,
+                              color: Color(0xFF1E40AF),
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  )
+                else
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Text(
+                      "No Awards and Honors added yet",
+                      style: TextStyle(fontSize: 14, color: Color(0xFF666666)),
+                    ),
+                  ),
+
+                const SizedBox(height: 24),
+                  Divider(color: Colors.grey.shade300, thickness: 1),
+                  const SizedBox(height: 32),
               ],
             ),
           );
