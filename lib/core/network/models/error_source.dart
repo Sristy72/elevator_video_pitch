@@ -13,8 +13,5 @@ class ErrorSource {
     );
   }
 
-  Map<String, dynamic> toJson() => {
-    'path': path,
-    'message': message,
-  };
+  Map<String, dynamic> toJson() => {'path': path, 'message': message};
 }
