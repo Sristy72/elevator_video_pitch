@@ -19,9 +19,6 @@ class RecruiterAddedRequestModel {
 
   /// Convert Model → JSON
   Map<String, dynamic> toJson() {
-    return {
-      'companyId': companyId,
-      'employeeIds': employeeIds,
-    };
+    return {'companyId': companyId, 'employeeIds': employeeIds};
   }
 }
