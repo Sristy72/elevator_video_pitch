@@ -43,6 +43,15 @@ class ElevatorResumeController extends GetxController {
 
   /// Profile data loading state
   var isProfileDataLoaded = false.obs;
+  var isInitialLoading = true.obs; // Track initial data loading
+  
+  // Cache flags to avoid redundant API calls
+  bool _countriesLoaded = false;
+  bool _languagesLoaded = false;
+  
+  // Edit mode tracking
+  var isEditMode = false.obs;
+  Map<String, dynamic>? _originalResumeData; // Store original data for comparison
 
   /// Check if resume upload is in progress
   var isUploadingResume = false.obs;
@@ -173,15 +182,32 @@ class ElevatorResumeController extends GetxController {
     aboutMeQuillController = quill.QuillController.basic();
     aboutMeQuillController.addListener(_updateWordCountFromQuill);
 
-    // Fetch dynamic data from APIs
-    fetchCountriesWithCities();
-    fetchLanguages();
-
-    // Load user profile data immediately (no delay)
-    _loadUserProfileData();
+    // Initialize data in correct order
+    _initializeData();
 
     // Also listen to userInfoRx for reactive updates
     _setupUserProfileListener();
+  }
+
+  /// Initialize data - fetch countries/languages first, then resume data
+  Future<void> _initializeData() async {
+    try {
+      isInitialLoading.value = true;
+      
+      // Load user profile data (synchronous)
+      _loadUserProfileData();
+
+      // Fetch countries and languages first (in parallel)
+      await Future.wait([
+        if (!_countriesLoaded) fetchCountriesWithCities(),
+        if (!_languagesLoaded) fetchLanguages(),
+      ]);
+
+      // After countries are loaded, fetch resume data so cities can populate
+      await fetchExistingResumeData();
+    } finally {
+      isInitialLoading.value = false;
+    }
   }
 
   void _updateWordCountFromQuill() {
@@ -215,6 +241,264 @@ class ElevatorResumeController extends GetxController {
     fiverrController.dispose();
     portfolioController.dispose();
     super.onClose();
+  }
+
+  /// ================== FETCH EXISTING RESUME DATA ==================
+  Future<void> fetchExistingResumeData() async {
+    try {
+      print('========== FETCHING EXISTING RESUME DATA ==========');
+
+      final secureStorage = SecureStoreServices();
+      final token = await secureStorage.retrieveData(KeyConstants.accessToken);
+      if (token == null || token.isEmpty) {
+        print('No token found, cannot fetch resume data');
+        return;
+      }
+
+      final endpoint = '${ApiConstants.baseUrl}/create-resume/get-resume';
+      print('Fetching from: $endpoint');
+
+      final response = await http.get(
+        Uri.parse(endpoint),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      print('Response status: ${response.statusCode}');
+
+      if (response.statusCode == 200) {
+        final jsonData = json.decode(response.body);
+        print('Resume data fetched successfully');
+
+        if (jsonData['success'] == true && jsonData['data'] != null) {
+          // Store original data for comparison
+          _originalResumeData = jsonData['data'];
+          isEditMode.value = true;
+          _populateResumeData(jsonData['data']);
+        }
+      } else {
+        print('Failed to fetch resume data: ${response.statusCode}');
+        print('Response body: ${response.body}');
+      }
+    } catch (e, stackTrace) {
+      print('Error fetching resume data: $e');
+      print('Stack trace: $stackTrace');
+    }
+  }
+
+  void _populateResumeData(Map<String, dynamic> data) {
+    try {
+      print('========== POPULATING RESUME DATA ==========');
+
+      final resume = data['resume'];
+      if (resume != null) {
+        // Populate basic info
+        firstNameController.text = resume['firstName'] ?? '';
+        surnameController.text = resume['lastName'] ?? '';
+
+        // Populate country and city efficiently
+        if (resume['country'] != null) {
+          selectedCountry.value = resume['country'];
+          // Load cities for the country
+          if (countryCityMap.containsKey(resume['country'])) {
+            cities.value = countryCityMap[resume['country']] ?? [];
+          }
+          
+          // Set city directly if available
+          if (resume['city'] != null) {
+            selectedCity.value = resume['city'];
+          }
+        }
+
+        emailController.text = resume['email'] ?? '';
+        immediatelyAvailable.value = resume['immediatelyAvailable'] ?? false;
+
+        // Populate photo and banner
+        if (resume['photo'] != null && resume['photo'].isNotEmpty) {
+          photoPath.value = resume['photo'];
+        }
+        if (resume['banner'] != null && resume['banner'].isNotEmpty) {
+          bannerImagePath.value = resume['banner'];
+        }
+
+        // Populate about us
+        if (resume['aboutUs'] != null && resume['aboutUs'].isNotEmpty) {
+          // For now, use plain text from HTML (you might need vellum_bloc or html parser)
+          final aboutText = resume['aboutUs'].toString();
+          // Remove HTML tags for simple text
+          final plainText = aboutText.replaceAll(RegExp(r'<[^>]*>'), '');
+          final document = quill.Document()..insert(0, plainText);
+          aboutMeQuillController = quill.QuillController(
+            document: document,
+            selection: const TextSelection.collapsed(offset: 0),
+          );
+          aboutMeQuillController.addListener(_updateWordCountFromQuill);
+          _updateWordCountFromQuill();
+        }
+
+        // Populate skills
+        if (resume['skills'] != null) {
+          skillsList.value = List<String>.from(resume['skills']);
+        }
+
+        // Populate certifications
+        if (resume['certifications'] != null) {
+          certifications.value = List<String>.from(resume['certifications']);
+        }
+
+        // Populate languages
+        if (resume['languages'] != null) {
+          languages.value = List<String>.from(resume['languages']);
+        }
+
+        // Populate social links
+        if (resume['sLink'] != null && resume['sLink'] is List) {
+          final links = resume['sLink'] as List;
+          if (links.isNotEmpty) {
+            for (int i = 0; i < links.length; i++) {
+              final link = links[i];
+              final url = link is Map ? link['url'] : link.toString();
+
+              switch (i) {
+                case 0:
+                  linkedinController.text = url ?? '';
+                  break;
+                case 1:
+                  twitterController.text = url ?? '';
+                  break;
+                case 2:
+                  facebookController.text = url ?? '';
+                  break;
+                case 3:
+                  tiktokController.text = url ?? '';
+                  break;
+                case 4:
+                  instagramController.text = url ?? '';
+                  break;
+                case 5:
+                  upworkController.text = url ?? '';
+                  break;
+                case 6:
+                  fiverrController.text = url ?? '';
+                  break;
+                case 7:
+                  portfolioController.text = url ?? '';
+                  break;
+              }
+            }
+          }
+        }
+      }
+
+      // Populate experiences
+      if (data['experiences'] != null && data['experiences'] is List) {
+        final experiences = data['experiences'] as List;
+        experienceList.clear();
+        for (var exp in experiences) {
+          experienceList.add({
+            'company': exp['company'] ?? '',
+            'position': exp['position'] ?? '',
+            'startMonth': exp['startDate'] != null
+                ? _getMonthFromDate(exp['startDate'])
+                : null,
+            'startYear': exp['startDate'] != null
+                ? _getYearFromDate(exp['startDate'])
+                : null,
+            'endMonth': exp['endDate'] != null
+                ? _getMonthFromDate(exp['endDate'])
+                : null,
+            'endYear': exp['endDate'] != null
+                ? _getYearFromDate(exp['endDate'])
+                : null,
+            'country': exp['country'] ?? '',
+            'city': exp['city'] ?? '',
+            'currentlyWorking': exp['endDate'] == null,
+          });
+        }
+      }
+
+      // Populate education
+      if (data['education'] != null && data['education'] is List) {
+        final education = data['education'] as List;
+        educationList.clear();
+        for (var edu in education) {
+          educationList.add({
+            'institution': edu['instituteName'] ?? '',
+            'degree': edu['degree'] ?? '',
+            'fieldOfStudy': edu['fieldOfStudy'] ?? '',
+            'startMonth': edu['startDate'] != null
+                ? _getMonthFromDate(edu['startDate'])
+                : null,
+            'startYear': edu['startDate'] != null
+                ? _getYearFromDate(edu['startDate'])
+                : null,
+            'gradMonth': edu['graduationDate'] != null
+                ? _getMonthFromDate(edu['graduationDate'])
+                : null,
+            'gradYear': edu['graduationDate'] != null
+                ? _getYearFromDate(edu['graduationDate'])
+                : null,
+            'country': edu['country'] ?? '',
+            'city': edu['city'] ?? '',
+            'presentlyAttendHere': edu['graduationDate'] == null,
+          });
+        }
+      }
+
+      // Populate awards
+      if (data['awardsAndHonors'] != null && data['awardsAndHonors'] is List) {
+        final awards = data['awardsAndHonors'] as List;
+        awardsList.clear();
+        for (var award in awards) {
+          awardsList.add({
+            'title': award['title'] ?? '',
+            'programeName': award['programeName'] ?? '',
+            'programeDate': award['programeDate'],
+            'description': award['description'] ?? '',
+          });
+        }
+      }
+
+      // Populate elevator pitch video
+      if (data['elevatorPitch'] != null && data['elevatorPitch'] is List) {
+        final pitches = data['elevatorPitch'] as List;
+        if (pitches.isNotEmpty) {
+          final pitch = pitches.first;
+          if (pitch['video'] != null && pitch['video']['hlsUrl'] != null) {
+            // Mark as uploaded (but don't set the local path since it's remote)
+            isVideoUploaded.value = true;
+            print('Elevator pitch video exists: ${pitch['video']['hlsUrl']}');
+          }
+        }
+      }
+
+      print('========== RESUME DATA POPULATION COMPLETE ==========');
+    } catch (e, stackTrace) {
+      print('Error populating resume data: $e');
+      print('Stack trace: $stackTrace');
+    }
+  }
+
+  String? _getMonthFromDate(String? dateString) {
+    if (dateString == null) return null;
+    try {
+      final date = DateTime.parse(dateString);
+      return months[date.month - 1];
+    } catch (e) {
+      return null;
+    }
+  }
+
+  String? _getYearFromDate(String? dateString) {
+    if (dateString == null) return null;
+    try {
+      final date = DateTime.parse(dateString);
+      return date.year.toString();
+    } catch (e) {
+      return null;
+    }
   }
 
   /// ================== LOAD USER PROFILE ==================
@@ -537,6 +821,7 @@ class ElevatorResumeController extends GetxController {
         }
 
         countries.value = countryCityMap.keys.toList();
+        _countriesLoaded = true; // Mark as cached
         print("✅ Countries loaded: ${countries.length}");
       } else {
         print("❌ Failed to load countries - Status: ${response.statusCode}");
@@ -566,6 +851,7 @@ class ElevatorResumeController extends GetxController {
               .map((item) => item['name'] as String)
               .where((name) => name != 'name') // Filter out the invalid entry
               .toList();
+          _languagesLoaded = true; // Mark as cached
           print("✅ Languages loaded: ${availableLanguages.length}");
         }
       } else {
@@ -845,22 +1131,38 @@ class ElevatorResumeController extends GetxController {
       print('  - Education count: ${educationData.length}');
       print('  - Awards count: ${awardsData.length}');
 
-      // Add photo file if selected
+      // Add photo file if selected (only if it's a local file, not a URL)
       if (photoPath.value != null) {
-        print('Adding photo file: ${photoPath.value}');
-        request.files.add(
-          await http.MultipartFile.fromPath('photo', photoPath.value!),
-        );
+        final isPhotoUrl = photoPath.value!.startsWith('http://') || 
+                          photoPath.value!.startsWith('https://');
+        
+        if (isPhotoUrl) {
+          print('Photo is already uploaded (URL): ${photoPath.value}');
+          // Keep existing photo URL - don't upload
+        } else {
+          print('Adding new photo file: ${photoPath.value}');
+          request.files.add(
+            await http.MultipartFile.fromPath('photo', photoPath.value!),
+          );
+        }
       } else {
         print('No photo selected');
       }
 
-      // Add banner file if selected
+      // Add banner file if selected (only if it's a local file, not a URL)
       if (bannerImagePath.value != null) {
-        print('Adding banner file: ${bannerImagePath.value}');
-        request.files.add(
-          await http.MultipartFile.fromPath('banner', bannerImagePath.value!),
-        );
+        final isBannerUrl = bannerImagePath.value!.startsWith('http://') || 
+                           bannerImagePath.value!.startsWith('https://');
+        
+        if (isBannerUrl) {
+          print('Banner is already uploaded (URL): ${bannerImagePath.value}');
+          // Keep existing banner URL - don't upload
+        } else {
+          print('Adding new banner file: ${bannerImagePath.value}');
+          request.files.add(
+            await http.MultipartFile.fromPath('banner', bannerImagePath.value!),
+          );
+        }
       } else {
         print('No banner selected');
       }
@@ -915,10 +1217,9 @@ class ElevatorResumeController extends GetxController {
             duration: const Duration(seconds: 3),
           );
 
-          // Clear form and navigate back
-          clearForm();
-          Future.delayed(const Duration(seconds: 2), () {
-            Get.back();
+          // Navigate back to dashboard
+          Future.delayed(const Duration(seconds: 1), () {
+            Get.offAllNamed('/candidate-dashboard');
           });
         } catch (e) {
           print('Error parsing success response: $e');
@@ -929,10 +1230,9 @@ class ElevatorResumeController extends GetxController {
             colorText: Colors.white,
           );
 
-          // Clear form and navigate back
-          clearForm();
-          Future.delayed(const Duration(seconds: 2), () {
-            Get.back();
+          // Navigate back to dashboard
+          Future.delayed(const Duration(seconds: 1), () {
+            Get.offAllNamed('/candidate-dashboard');
           });
         }
       } else {
