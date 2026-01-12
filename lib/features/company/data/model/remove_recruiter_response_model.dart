@@ -101,14 +101,20 @@ class RemoveRecruiterResponseModel {
       city: json['city'] as String?,
       zipcode: json['zipcode'] as String?,
       cemail: json['cemail'] as String?,
-      sLink: (json['sLink'] as List<dynamic>?)
-          ?.map((e) => SLink.fromJson(e as Map<String, dynamic>))
-          .toList() ?? [],
+      sLink:
+          (json['sLink'] as List<dynamic>?)
+              ?.map((e) => SLink.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
       industry: json['industry'] as String?,
       service: json['service'] as List<dynamic>?,
       employeesId: json['employeesId'] as List<dynamic>?,
-      createdAt: json['createdAt'] == null ? null : DateTime.parse(json['createdAt'] as String),
-      updatedAt: json['updatedAt'] == null ? null : DateTime.parse(json['updatedAt'] as String),
+      createdAt: json['createdAt'] == null
+          ? null
+          : DateTime.parse(json['createdAt'] as String),
+      updatedAt: json['updatedAt'] == null
+          ? null
+          : DateTime.parse(json['updatedAt'] as String),
       v: json['__v'] as int?,
     );
   }
@@ -164,11 +170,7 @@ class SLink {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'label': label,
-      'url': url,
-      '_id': id,
-    };
+    return {'label': label, 'url': url, '_id': id};
   }
 }
 
