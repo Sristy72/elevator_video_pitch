@@ -52,4 +52,5 @@ extension InputDecorationExtensions on BuildContext {
     ),
   );
 }
+
 //
